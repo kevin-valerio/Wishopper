@@ -50,7 +50,12 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "vue/no-unused-components": ["error", {
+        "ignoreWhenBindingPresent": true
+      }]
+
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
