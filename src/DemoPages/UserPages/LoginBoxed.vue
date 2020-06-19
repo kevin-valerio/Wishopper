@@ -37,7 +37,7 @@
                                 <div class="divider"/>
                                 <h6 class="mb-0">
                                     Pas encore de compte ?
-                                    <a href="javascript:void(0);" class="text-primary">Créer un compte</a>
+                                    <a href="/#/register/" class="text-primary">Créer un compte</a>
                                 </h6>
                             </div>
                             <div class="modal-footer clearfix">

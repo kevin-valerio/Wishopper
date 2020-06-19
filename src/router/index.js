@@ -24,7 +24,7 @@ export default new Router({
             component: () => import('../DemoPages/UserPages/LoginBoxed.vue'),
         },
         {
-            path: '/pages/register-boxed',
+            path: '/register',
             name: 'register-boxed',
             meta: {layout: 'userpages'},
             component: () => import('../DemoPages/UserPages/RegisterBoxed.vue'),
