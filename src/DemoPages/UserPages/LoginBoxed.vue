@@ -10,17 +10,17 @@
                             <div class="modal-body">
                                 <div class="h5 modal-title text-center">
                                     <h4 class="mt-2">
-                                        <div>Welcome back,</div>
-                                        <span>Please sign in to your account below.</span>
+                                        <div>Bienvenue sur Wishopper</div>
+                                        <span>Veuillez vous identifier</span>
                                     </h4>
                                 </div>
                                 <b-form-group id="exampleInputGroup1"
                                               label-for="exampleInput1"
-                                              description="We'll never share your email with anyone else.">
+                                            >
                                     <b-form-input id="exampleInput1"
                                                   type="email"
                                                   required
-                                                  placeholder="Enter email...">
+                                                  placeholder="Adresse mail">
                                     </b-form-input>
                                 </b-form-group>
                                 <b-form-group id="exampleInputGroup2"
@@ -28,31 +28,30 @@
                                     <b-form-input id="exampleInput2"
                                                   type="password"
                                                   required
-                                                  placeholder="Enter password...">
+                                                  placeholder="Mot de passe">
                                     </b-form-input>
                                 </b-form-group>
                                 <b-form-checkbox name="check" id="exampleCheck">
-                                    Keep me logged in
+                                    Garder ma session ouverte
                                 </b-form-checkbox>
                                 <div class="divider"/>
                                 <h6 class="mb-0">
-                                    No account?
-                                    <a href="javascript:void(0);" class="text-primary">Sign up now</a>
+                                    Pas encore de compte ?
+                                    <a href="javascript:void(0);" class="text-primary">Créer un compte</a>
                                 </h6>
                             </div>
                             <div class="modal-footer clearfix">
                                 <div class="float-left">
-                                    <a href="javascript:void(0);" class="btn-lg btn btn-link">Recover
-                                        Password</a>
+                                    <a href="javascript:void(0);" class="btn-lg btn btn-link">Mot de passe oublié</a>
                                 </div>
                                 <div class="float-right">
-                                    <b-button variant="primary" size="lg">Login to Dashboard</b-button>
+                                    <b-button variant="primary" size="lg">S'authentifier</b-button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="text-center text-white opacity-8 mt-3">
-                        Copyright &copy; ArchitectUI 2019
+                        Copyright &copy; Wishopper
                     </div>
                 </b-col>
             </div>

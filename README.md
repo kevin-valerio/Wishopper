@@ -1,1 +1,2 @@
-# architectui-vue-theme-free
+#Wishopper front-end sources
+The whole frontend project is hosted here

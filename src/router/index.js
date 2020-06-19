@@ -9,18 +9,16 @@ export default new Router({
     },
     routes: [
 
-        // Dashboards
 
         {
-            path: '/',
+            path: '/analytics',
             name: 'analytics',
             component: () => import('../DemoPages/Dashboards/Analytics.vue'),
         },
 
-        // Pages
 
         {
-            path: '/pages/login-boxed',
+            path: '/',
             name: 'login-boxed',
             meta: {layout: 'userpages'},
             component: () => import('../DemoPages/UserPages/LoginBoxed.vue'),
