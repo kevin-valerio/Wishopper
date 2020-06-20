@@ -19,14 +19,10 @@
                         </b-dropdown>
                     </div>
                     <div class="widget-content-left  ml-3 header-user-info">
-                        <div class="widget-heading">Alina Mclourd</div>
-                        <div class="widget-subheading">VP People Manager</div>
+                        <div class="widget-heading">Kevin Valerio</div>
+                        <div class="widget-subheading">Administrateur</div>
                     </div>
-                    <div class="widget-content-right header-user-info ml-3">
-                        <b-btn v-b-tooltip.hover title="Tooltip Example" class="btn-shadow p-1" size="sm" variant="info">
-                            <font-awesome-icon icon="calendar-alt" class="mr-1 ml-1"/>
-                        </b-btn>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -34,7 +30,6 @@
 </template>
 
 <script>
-    import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {
@@ -49,7 +44,6 @@
         faFilePdf,
         faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
-    import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
     library.add(
         faAngleDown,
@@ -66,9 +60,7 @@
 
     export default {
         components: {
-            VuePerfectScrollbar,
-            'font-awesome-icon': FontAwesomeIcon,
-        },
+          },
         data: () => ({
 
         }),

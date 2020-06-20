@@ -5,15 +5,20 @@ Vue.use(Router);
 
 export default new Router({
     scrollBehavior() {
-        return window.scrollTo({ top: 0, behavior: 'smooth' });
+        return window.scrollTo({top: 0, behavior: 'smooth'});
     },
     routes: [
 
 
         {
-            path: '/analytics',
-            name: 'analytics',
-            component: () => import('../DemoPages/Dashboards/Analytics.vue'),
+            path: '/annonces/online',
+            name: 'Offres en ligne',
+            component: () => import('../DemoPages/Dashboards/GestionAnnonceOnline.vue'),
+        },
+        {
+            path: '/annonces/history',
+            name: 'Offres archivées',
+            component: () => import('../DemoPages/Dashboards/GestionAnnonceHistory.vue'),
         },
 
 
@@ -66,7 +71,7 @@ export default new Router({
         {
             path: '/elements/list-group',
             name: 'list-group',
-            component: () => import('../DemoPages/Elements/ListGroups.vue'),
+            component: () => import('../DemoPages/Elements/AnnonceTuile.vue'),
         },
         {
             path: '/elements/timelines',

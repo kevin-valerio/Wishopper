@@ -1,7 +1,7 @@
 <template>
     <div class="app-footer">
         <div class="app-footer__inner text-center">
-            Copyright 2019 DashboardPack.com
+            Copyright &copy; Wishopper
         </div>
     </div>
 </template>
@@ -12,7 +12,7 @@
     import {faEllipsisV,} from '@fortawesome/free-solid-svg-icons'
 
     library.add(
-        faEllipsisV,
+        faEllipsisV ,
     );
     export default {
         name: "Footer",

@@ -13,15 +13,15 @@
                     </div>
                 </div>
             </div>
-            <div class="page-title-actions">
-                <button type="button" class="btn-shadow mr-3 btn btn-dark">
-                    <font-awesome-icon icon="star"/>
-                </button>
-                <button type="button" class="btn-shadow d-inline-flex align-items-center btn btn-success">
-                    <font-awesome-icon class="mr-2" icon="plus"/>
-                    Create New
-                </button>
-            </div>
+<!--            <div class="page-title-actions">-->
+<!--                <button type="button" class="btn-shadow mr-3 btn btn-dark">-->
+<!--                    <font-awesome-icon icon="star"/>-->
+<!--                </button>-->
+<!--                <button type="button" class="btn-shadow d-inline-flex align-items-center btn btn-success">-->
+<!--                    <font-awesome-icon class="mr-2" icon="plus"/>-->
+<!--                    Create New-->
+<!--                </button>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
@@ -29,7 +29,6 @@
 <script>
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {faPlus, faStar} from '@fortawesome/free-solid-svg-icons'
-    import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
     library.add(
         faStar,
@@ -38,7 +37,7 @@
 
     export default {
         components: {
-            'font-awesome-icon': FontAwesomeIcon,
+            // 'font-awesome-icon': FontAwesomeIcon,
         },
         props: {
             icon: String,

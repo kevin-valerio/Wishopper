@@ -2,9 +2,7 @@
     <div class="app-header header-shadow">
 <!--        <div class="logo-src"/>-->
         <div class="app-header__content">
-            <div class="app-header-left">
-                <SearchBox/>
-            </div>
+
             <div class="app-header-right">
                 <UserArea/>
             </div>
@@ -32,7 +30,7 @@
 
 <script>
 
-    import SearchBox from './Header/SearchBox';
+    // eslint-disable-next-line no-unused-vars
     import UserArea from './Header/HeaderUserArea';
 
     import {library} from '@fortawesome/fontawesome-svg-core'
@@ -45,7 +43,7 @@
     export default {
         name: "Header",
         components: {
-            SearchBox,
+            // SearchBox,
             UserArea,
             'font-awesome-icon': FontAwesomeIcon,
         },
