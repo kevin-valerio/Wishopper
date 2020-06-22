@@ -10,17 +10,23 @@ export default new Router({
     routes: [
 
 
+
         {
             path: '/annonces/online',
             name: 'Offres en ligne',
             component: () => import('../DemoPages/Dashboards/GestionAnnonceOnline.vue'),
+        },
+
+        {
+            path: '/account/',
+            name: 'Compte',
+            component: () => import('../DemoPages/UserPages/Account.vue'),
         },
         {
             path: '/annonces/history',
             name: 'Offres archivées',
             component: () => import('../DemoPages/Dashboards/GestionAnnonceHistory.vue'),
         },
-
 
         {
             path: '/',
@@ -41,7 +47,7 @@ export default new Router({
             component: () => import('../DemoPages/UserPages/ForgotPasswordBoxed.vue'),
         },
 
-        // Elements
+        ///// TODO : REMOVE BULLSHIT ///////
 
         {
             path: '/elements/buttons-standard',
@@ -84,7 +90,6 @@ export default new Router({
             component: () => import('../DemoPages/Elements/Utilities.vue'),
         },
 
-        // Components
 
         {
             path: '/components/tabs',
@@ -127,23 +132,17 @@ export default new Router({
             component: () => import('../DemoPages/Components/Maps.vue'),
         },
 
-        // Tables
-
         {
             path: '/tables/regular-tables',
             name: 'regular-tables',
             component: () => import('../DemoPages/Tables/RegularTables.vue'),
         },
 
-        // Dashboard Widgets
-
         {
             path: '/widgets/chart-boxes-3',
             name: 'chart-boxes-3',
             component: () => import('../DemoPages/Widgets/ChartBoxes3.vue'),
         },
-
-        // Forms
 
         {
             path: '/forms/controls',
@@ -155,8 +154,6 @@ export default new Router({
             name: 'layouts',
             component: () => import('../DemoPages/Forms/Elements/Layouts.vue'),
         },
-        // Charts
-
         {
             path: '/charts/chartjs',
             name: 'chartjs',

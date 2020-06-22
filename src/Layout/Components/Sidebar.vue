@@ -49,7 +49,7 @@
                     {
                         icon: 'pe-7s-delete-user',
                         title: 'Gestion des annonceurs',
-                        href: '/acconceurs/',
+                        href: '/annonceurs/',
                     },
                     {
                         header: true,

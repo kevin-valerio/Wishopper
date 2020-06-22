@@ -19,13 +19,35 @@
                                         <b-img thumbnail left src="https://picsum.photos/300/200/"/>
                                     </div>
                                 </div>
+
                                 <div class="widget-content-left">
+                                    <div class="widget-subheading opacity-10">
+                                        <span class="pr-2">
+                                            Posté le <i>23/03/2020,</i>
+                                         </span>
+
+                                        <span>
+                                        valide jusqu'au <b class="text-success">12/04/2021</b>
+                                        </span>
+                                    </div>
+                                    <br>
                                     <div class="widget-heading">Offre numéro une</div>
                                     <div class="widget-subheading">Une description de l'offre numéro une</div>
                                 </div>
+                                <div class="widget-content-right">
+                                    <button class="btn-pill btn-hover-shine btn btn-focus btn-lg">Editer l'annonce
+                                    </button>
+                                </div>
+                                <div class="widget-content-right mr-2">
+                                    <div class="custom-checkbox custom-control">
+                                        <input type="checkbox" id="checkbox2"
+                                               class="custom-control-input">
+                                        <label for="checkbox2" class="custom-control-label">&nbsp;</label>
+                                    </div>
+                                </div>
                                 <div class="widget-content-right widget-content-actions">
                                     <button class="border-0 btn-transition btn btn-outline-success">
-                                        <font-awesome-icon  icon="check"/>
+                                        <font-awesome-icon icon="check"/>
                                     </button>
                                     <button class="border-0 btn-transition btn btn-outline-danger">
                                         <font-awesome-icon icon="trash-alt"/>
