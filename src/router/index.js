@@ -17,6 +17,12 @@ export default new Router({
             component: () => import('../DemoPages/Dashboards/GestionAnnonceOnline.vue'),
         },
 
+  {
+            path: '/faq/',
+            name: 'FAQ',
+            component: () => import('../DemoPages/FAQ.vue'),
+        },
+
         {
             path: '/account/',
             name: 'Compte',
@@ -41,8 +47,8 @@ export default new Router({
             component: () => import('../DemoPages/UserPages/RegisterBoxed.vue'),
         },
         {
-            path: '/pages/forgot-password-boxed',
-            name: 'forgot-password-boxed',
+            path: '/forgot-password',
+            name: 'forgot-password',
             meta: {layout: 'userpages'},
             component: () => import('../DemoPages/UserPages/ForgotPasswordBoxed.vue'),
         },

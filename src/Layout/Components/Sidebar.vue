@@ -59,7 +59,8 @@
                     {
                         title: 'Statistiques',
                         icon: 'pe-7s-graph2',
-                        href: '/stats/'
+                        href: '/stats/',
+                        disabled: true
                     },
                     {
                         icon: 'pe-7s-id',

@@ -9,9 +9,9 @@
                     <h6 tabindex="-1" class="dropdown-header">Dates</h6>
                     <button type="button" tabindex="0" class="dropdown-item">Croissantes</button>
                     <button type="button" tabindex="0" class="dropdown-item">Décroissantes</button>
-                    <div tabindex="-1" class="dropdown-divider"></div>
-                    <button type="button" tabindex="0" class="dropdown-item">Actions</button>
-                    <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                    <div tabindex="-1" class="dropdown-header">Nombre de visionnages</div>
+                    <button type="button" tabindex="0" class="dropdown-item">Croissantes</button>
+                    <button type="button" tabindex="0" class="dropdown-item">Décroissantes</button>
                 </b-dropdown>
 
                 <button class="btn-pill btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-alternate btn-sm">
