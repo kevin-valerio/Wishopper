@@ -5,8 +5,8 @@ import BootstrapVue from "bootstrap-vue"
 
 import App from './App'
 
-import Default from './DemoPages/Views/Wrappers/baseLayout.vue';
-import Pages from './DemoPages/Views/Wrappers/pagesLayout.vue';
+import Default from './sources/Views/Wrappers/baseLayout.vue';
+import Pages from './sources/Views/Wrappers/pagesLayout.vue';
 
 Vue.config.productionTip = false;
 

@@ -31,7 +31,7 @@
 <script>
 
     // eslint-disable-next-line no-unused-vars
-    import UserArea from './Header/HeaderUserArea';
+    import UserArea from './HeaderUserArea';
 
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {faEllipsisV,} from '@fortawesome/free-solid-svg-icons'

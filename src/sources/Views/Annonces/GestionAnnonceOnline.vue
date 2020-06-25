@@ -22,8 +22,8 @@
         faTh,
         faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
-    import AnnonceTuile from "@/DemoPages/Elements/AnnonceTuile";
-    import PageTitle from "@/DemoPages/Components/PageTitle";
+    import AnnonceTuile from "@/sources/Elements/AnnonceTuile";
+    import PageTitle from "@/sources/Components/PageTitle";
 
     library.add(
         faTrashAlt,

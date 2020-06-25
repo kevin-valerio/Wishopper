@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import Header from "../../Components/Header";
+    import Header from "../../Components/Header/Header";
     import Sidebar from "../../Components/Sidebar";
     import Footer from "../../Components/Footer";
 

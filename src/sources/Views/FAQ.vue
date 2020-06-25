@@ -66,7 +66,7 @@
         faTh,
         faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
-    import PageTitle from "@/DemoPages/Components/PageTitle";
+    import PageTitle from "@/sources/Components/PageTitle";
 
     library.add(
         faTrashAlt,
