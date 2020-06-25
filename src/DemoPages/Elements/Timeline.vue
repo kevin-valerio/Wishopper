@@ -99,7 +99,7 @@
 
 <script>
 
-    import PageTitle from "../../Layout/Components/PageTitle.vue";
+    import PageTitle from "../Components/PageTitle.vue";
 
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
