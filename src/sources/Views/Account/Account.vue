@@ -24,13 +24,24 @@
                             </div>
                             <div class="position-relative form-group"><label for="exampleAddress" class="">Dénomination
                                 légale</label><input
-                                name="address" id="exampleAddress" type="text" class="form-control">
+                                name="address" id="exampleAddress" placeholder="SARL" type="text" class="form-control">
                             </div>
                             <div class="position-relative form-group"><label for="exampleAddress2" class="">Email du
                                 compte
                             </label><input name="address2" id="exampleAddress2" placeholder="contact@societe.com"
                                            type="email" class="form-control"></div>
 
+                            <div class="position-relative form-group"><label for="exampleAddress2" class="">Adresse du
+                                siege social
+                            </label><input name="address2" id="exampleAddress2"
+                                           placeholder="123 Avenue Jean-Moulin, Paris"
+                                           type="email" class="form-control"></div>
+
+                            <div class="position-relative form-group"><label for="exampleAddress2" class="">Adresse de
+                                <i>localisation
+                                    du commerce</i>
+                            </label><input name="address2" id="exampleAddress2" placeholder="42 Avenue De Gaulle, Paris"
+                                           type="email" class="form-control"></div>
                             <fieldset class="position-relative row form-group">
                                 <legend class="col-form-label ml-3">Se connecter à un groupe</legend>
                                 <div class="col-sm-10">
@@ -55,9 +66,78 @@
 
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Forfait</h5>
+                    <div class="card-body"><h5 class="card-title">Crédits Wee</h5>
+                        <span> Au <b>14/11/2018</b>, vous disposez d'un crédit de <b>0 Wee</b></span><br><br>
+                        <form class="">
+                            <div class="row">
+                                <div class="ml-3">
+                                    <div
+                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-secondary">
+                                        <div class="widget-chat-wrapper-outer">
+                                            <div class="widget-chart-content ">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="fsize-3 ">
+                                                                <a href="#" style="color: #5A5A5A">Court-terme</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">5€ de crédit Wee</h6>
+                                                <br>
+                                            </div>
+                                        </div>
 
-                      <img src="../../../assets/images/pay.png" alt="oui"/>
+                                    </div>
+                                </div>
+
+                                <div class="ml-3">
+                                    <div
+                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-dark">
+                                        <div class="widget-chat-wrapper-outer">
+                                            <div class="widget-chart-content ">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="fsize-3 ">
+                                                                <a href="#" style="color: #5A5A5A">Moyen-terme</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">10€ de crédit Wee</h6>
+                                                <br>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="ml-3">
+                                    <div
+                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
+                                        <div class="widget-chat-wrapper-outer">
+                                            <div class="widget-chart-content ">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="fsize-3 ">
+                                                                <a href="#" style="color: #5A5A5A">Long-terme</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">20€ de crédit Wee</h6>
+                                                <br>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -224,6 +304,7 @@
     } from '@fortawesome/free-solid-svg-icons'
 
     import PageTitle from "@/sources/Components/PageTitle";
+    import Paiement from "@/sources/Views/Account/Stripe/Paiement";
 
     library.add(
         faTrashAlt,
@@ -241,6 +322,7 @@
 
     export default {
         components: {
+            Paiement,
             PageTitle,
 
         },

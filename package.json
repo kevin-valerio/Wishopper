@@ -12,8 +12,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "animate-sass": "^0.8.2",
-    "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^2.0.0-rc.18",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
     "chart.js": "^2.8.0",
     "es6-promise": "^4.2.6",
     "increase-memory-limit": "^1.0.6",
@@ -22,11 +22,12 @@
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.15.0",
     "sass-loader": "^7.1.0",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-chartjs": "^3.4.2",
     "vue-perfect-scrollbar": "^0.1.0",
     "vue-router": "^3.0.5",
     "vue-sidebar-menu": "^3.7.0",
+    "vue-stripe-checkout": "^3.3.2",
     "vue2-google-maps": "^0.10.6",
     "vuex": "^3.1.0"
   },
@@ -51,10 +52,12 @@
       "eslint:recommended"
     ],
     "rules": {
-      "vue/no-unused-components": ["error", {
-        "ignoreWhenBindingPresent": false
-      }]
-
+      "vue/no-unused-components": [
+        "error",
+        {
+          "ignoreWhenBindingPresent": false
+        }
+      ]
     },
     "parserOptions": {
       "parser": "babel-eslint"

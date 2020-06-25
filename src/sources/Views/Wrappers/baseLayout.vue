@@ -28,12 +28,14 @@
 </template>
 
 <script>
+
     import Header from "../../Components/Header/Header";
     import Sidebar from "../../Components/Sidebar";
     import Footer from "../../Components/Footer";
 
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {faCog,} from '@fortawesome/free-solid-svg-icons'
+    import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
     library.add(
         faCog,
@@ -42,6 +44,7 @@
         name: 'app',
         components: {
             Header,
+            'font-awesome-icon': FontAwesomeIcon,
             Sidebar,
             Footer
         },

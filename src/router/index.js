@@ -9,15 +9,19 @@ export default new Router({
     },
     routes: [
 
-
-
         {
             path: '/annonces/online',
             name: 'Offres en ligne',
             component: () => import('../sources/Views/Annonces/GestionAnnonceOnline.vue'),
         },
 
-  {
+        {
+            path: '/create/',
+            name: 'Créer une annonce',
+            component: () => import('../sources/Views/Annonces/CreateAnnonce'),
+        },
+
+        {
             path: '/faq/',
             name: 'FAQ',
             component: () => import('../sources/Views/FAQ.vue'),
