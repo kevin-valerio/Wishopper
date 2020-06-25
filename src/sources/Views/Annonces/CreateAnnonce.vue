@@ -25,8 +25,7 @@
                             <label for="start">Période de validité</label>
 
                             <input type="date" id="start" name="trip-start" class="input-group"
-                                   value="2018-07-22"
-                                   min="2018-01-01" max="2018-12-31">
+                                   value="2018-07-22">
                         </form>
                     </div>
                 </div>
@@ -42,17 +41,18 @@
                         <form class="">
                             <label>Sexe : </label>
                             <div class="ml-2 position-sticky form-check custom-control-inline"><label
-                                 class="form-check-label">
-                                    <input name="radio1" type="radio" class="form-check-input">Homme</label>
+                                class="form-check-label">
+                                <input name="radio1" type="radio" class="form-check-input">Homme</label>
                             </div>
                             <div class="position-sticky form-check custom-control-inline"><label
                                 class="form-check-label">
-                                    <input name="radio1" type="radio" class="form-check-input">Femme</label>
+                                <input name="radio1" type="radio" class="form-check-input">Femme</label>
                             </div>
 
                             <div class="position-relative form-group">
-                                <label for="exampleSelect">Age de départ</label><select
-                                name="select" id="exampleSelect" class="form-control">
+                                <label for="exampleSelect">Age de départ</label>
+                                <select
+                                name="select" id="exampleSelect" is="18" class="form-control">
                                 <option>1</option>
                                 <option>2</option>
                             </select>
@@ -76,6 +76,91 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Visuel de l'offre</h5>
                         <form class="">
+                            <div class="row">
+                                <div class="ml-3">
+                                    <div
+                                        style="padding: 1px;"
+                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
+                                        <div class="widget-chat-wrapper-outer">
+                                            <div class="widget-chart-content ">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        <div style="margin-left:60%; "
+                                                             class="  widget-chart-flex">
+                                                            <i class="pe-7s-film"></i>
+                                                        </div>
+                                                        <div class="ml-5 fsize-1 ">
+                                                            <input name="radio1" type="radio" class="form-check-input">
+                                                            <a href="#" style="color: #5A5A5A">Vidéo unique</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="widget-subheading opacity-5 center-elem margin-h-center">
+                                                    Mettez une vidéo en ligne</h6>
+                                                <br>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="ml-3">
+                                    <div
+                                        style="padding: 1px;"
+
+                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
+                                        <div class="widget-chat-wrapper-outer">
+                                            <div class="widget-chart-content ">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        <div style="margin-left:55%; "
+                                                             class="  widget-chart-flex">
+                                                            <i class="pe-7s-photo"></i>
+                                                        </div>
+                                                        <div class="fsize-1 ml-5">
+                                                            <input name="radio1" type="radio" class="form-check-input">
+                                                            <a href="#" style="color: #5A5A5A">Image unique</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">
+                                                    Mettez une image en ligne</h6>
+                                                <br>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="ml-3">
+                                    <div
+                                        style="padding: 1px;"
+
+                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
+                                        <div class="widget-chat-wrapper-outer">
+                                            <div class="widget-chart-content ">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        <div style="margin-left:60%; "
+                                                             class="  widget-chart-flex">
+                                                            <i class="pe-7s-photo-gallery"></i>
+                                                        </div>
+                                                        <div class="fsize-1 ml-5">
+                                                            <input name="radio1" type="radio" class="form-check-input">
+                                                            <a href="#" style="color: #5A5A5A">Plusieurs images</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">
+                                                    Mettez plusieurs images en ligne</h6>
+                                                <br>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
 
                         </form>
                     </div>
