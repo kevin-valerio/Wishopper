@@ -42,23 +42,23 @@
                                     du commerce</i>
                             </label><input name="address2" id="exampleAddress2" placeholder="42 Avenue De Gaulle, Paris"
                                            type="email" class="form-control"></div>
-<!--                            <fieldset class="position-relative row form-group">-->
-<!--                                <legend class="col-form-label ml-3">Se connecter à un groupe</legend>-->
-<!--                                <div class="col-sm-10">-->
-<!--                                    <div class="position-sticky form-check custom-control-inline"><label-->
-<!--                                        class="form-check-label"><input name="radio2" type="radio"-->
-<!--                                                                        class="form-check-input"> Oui</label>-->
-<!--                                    </div>-->
-<!--                                    <div class="position-sticky form-check custom-control-inline"><label-->
-<!--                                        class="form-check-label"><input name="radio2" type="radio"-->
-<!--                                                                        class="form-check-input"> Non</label>-->
-<!--                                    </div>-->
-<!--                                    <div class="position-relative form-group custom-control-inline">-->
-<!--                                        <input name="address2" id="idGroupe" placeholder="Identifiant du groupe"-->
-<!--                                               type="text" class="form-control"></div>-->
+                            <!--                            <fieldset class="position-relative row form-group">-->
+                            <!--                                <legend class="col-form-label ml-3">Se connecter à un groupe</legend>-->
+                            <!--                                <div class="col-sm-10">-->
+                            <!--                                    <div class="position-sticky form-check custom-control-inline"><label-->
+                            <!--                                        class="form-check-label"><input name="radio2" type="radio"-->
+                            <!--                                                                        class="form-check-input"> Oui</label>-->
+                            <!--                                    </div>-->
+                            <!--                                    <div class="position-sticky form-check custom-control-inline"><label-->
+                            <!--                                        class="form-check-label"><input name="radio2" type="radio"-->
+                            <!--                                                                        class="form-check-input"> Non</label>-->
+                            <!--                                    </div>-->
+                            <!--                                    <div class="position-relative form-group custom-control-inline">-->
+                            <!--                                        <input name="address2" id="idGroupe" placeholder="Identifiant du groupe"-->
+                            <!--                                               type="text" class="form-control"></div>-->
 
-<!--                                </div>-->
-<!--                            </fieldset>-->
+                            <!--                                </div>-->
+                            <!--                            </fieldset>-->
                         </form>
                     </div>
                 </div>
@@ -240,52 +240,6 @@
                 </div>
             </div>
 
-
-            <!--            <div class="col-lg-6">-->
-            <!--                <div class="main-card mb-3 card">-->
-            <!--                    <div class="card-body"><h5 class="card-title">Information sur votre compte bancaire</h5>-->
-            <!--                        <form class="">-->
-            <!--                            <div class="col-md-6">-->
-            <!--                                <b-dropdown no-flip text="Devise" class="col-md-5" variant="outline-dark">-->
-            <!--                                    <button type="button" tabindex="0" class="dropdown-item">EURO (€)</button>-->
-            <!--                                    <button type="button" tabindex="0" class="dropdown-item">DOLLARS U.S ($)-->
-            <!--                                    </button>-->
-            <!--                                    <button type="button" tabindex="0" class="dropdown-item">POUDS (£)</button>-->
-            <!--                                </b-dropdown>-->
-
-            <!--                                <b-dropdown no-flip text="Pays du compte bancaire" class="col-md-6"-->
-            <!--                                            variant="outline-dark">-->
-            <!--                                    <button type="button" tabindex="0" class="dropdown-item">France</button>-->
-            <!--                                    <button type="button" tabindex="0" class="dropdown-item">Etats-Unis</button>-->
-            <!--                                    <button type="button" tabindex="0" class="dropdown-item">Belgique</button>-->
-            <!--                                </b-dropdown>-->
-
-            <!--                            </div>-->
-            <!--                            <br>-->
-
-            <!--                            <div class="form-row position-relative form-group">-->
-            <!--                                <div class="col-md-6">-->
-            <!--                                    <div class="position-relative form-group"><label for="exampleEmail11"-->
-            <!--                                                                                     class="">IBAN</label><input-->
-            <!--                                        name="email" id="exampleEmail11"-->
-            <!--                                        placeholder="FR35 5000 0000 0549 1000 0003" type="text"-->
-            <!--                                        class="form-control"></div>-->
-            <!--                                </div>-->
-
-            <!--                                <div class="col-md-6">-->
-            <!--                                    <div class="position-relative form-group"><label for="exampleEmail11"-->
-            <!--                                                                                     class="">Confirmation de-->
-            <!--                                        l'IBAN</label><input-->
-            <!--                                        name="email" id="exampleEmail11"-->
-            <!--                                        placeholder="FR35 5000 0000 0549 1000 0003" type="text"-->
-            <!--                                        class="form-control"></div>-->
-            <!--                                </div>-->
-
-            <!--                            </div>-->
-            <!--                        </form>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-
         </div>
 
     </div>
@@ -306,7 +260,6 @@
     } from '@fortawesome/free-solid-svg-icons'
 
     import PageTitle from "@/sources/Views/Structure/PageTitle";
-    import Paiement from "@/sources/Views/Account/Stripe/Paiement";
 
     library.add(
         faTrashAlt,
@@ -324,14 +277,13 @@
 
     export default {
         components: {
-            Paiement,
             PageTitle,
 
         },
         data: () => ({
-            heading: 'Mes informations',
-            subheading: 'Visionnez et modifiez les informations relatives à votre compte ici',
-            icon: 'pe-7s-users icon-gradient bg-tempting-azure',
+            heading: 'Paramètres',
+            subheading: 'Paramètrez les informations de votre entreprise',
+            icon: 'pe-7s-config icon-gradient bg-tempting-azure',
         }),
 
         methods: {},

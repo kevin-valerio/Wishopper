@@ -29,9 +29,9 @@
 
 <script>
 
-    import Header from "../../Components/Header/Header";
-    import Sidebar from "../../Components/Sidebar";
-    import Footer from "../../Components/Footer";
+    import Header from "../Header";
+    import Sidebar from "../Sidebar";
+    import Footer from "../Footer";
 
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {faCog,} from '@fortawesome/free-solid-svg-icons'

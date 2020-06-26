@@ -116,7 +116,7 @@
 
 <script>
 
-    import PageTitle from "../Components/PageTitle.vue";
+    import PageTitle from "../Views/Structure/PageTitle.vue";
 
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 

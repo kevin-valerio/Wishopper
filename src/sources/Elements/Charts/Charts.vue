@@ -44,7 +44,7 @@
 
 <script>
 
-    import PageTitle from "../../Components/PageTitle.vue";
+    import PageTitle from "../../Views/Structure/PageTitle.vue";
 
     import doughnut from './ChartsJS/Doughnut'
     import radar from './ChartsJS/Radar'

@@ -109,7 +109,7 @@
 
 <script>
 
-    import PageTitle from "../Components/PageTitle.vue";
+    import PageTitle from "../Views/Structure/PageTitle.vue";
 
     export default {
     components: {

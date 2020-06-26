@@ -2,7 +2,7 @@
     <div class="content">
         <page-title :heading=heading :subheading=subheading :icon=icon></page-title>
 
-        <div class="row center-elem">
+        <div class="row">
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Informations sur l'offre</h5>
@@ -28,53 +28,13 @@
                                    value="2018-07-22">
                         </form>
                     </div>
+
                 </div>
             </div>
 
-
-        </div>
-
-        <div class="row center-elem">
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Ciblage</h5>
-                        <form class="">
-                            <label>Sexe : </label>
-                            <div class="ml-2 position-sticky form-check custom-control-inline"><label
-                                class="form-check-label">
-                                <input name="radio1" type="radio" class="form-check-input">Homme</label>
-                            </div>
-                            <div class="position-sticky form-check custom-control-inline"><label
-                                class="form-check-label">
-                                <input name="radio1" type="radio" class="form-check-input">Femme</label>
-                            </div>
-
-                            <div class="position-relative form-group">
-                                <label for="exampleSelect">Age de départ</label>
-                                <select
-                                name="select" id="exampleSelect" is="18" class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
-                                <label class="custom-control-inline" for="exampleSelect">Age d'arrivé</label>
-                                <select
-                                    name="select" id="exampleSelect" class="custom-control-inline form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-        <div class="row center-elem">
-            <div class="col-lg-6">
-                <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Visuel de l'offre</h5>
+                    <div class=" card-body"><h5 class="card-title">Visuel de l'offre</h5>
                         <form class="">
                             <div class="row">
                                 <div class="ml-3">
@@ -90,7 +50,8 @@
                                                             <i class="pe-7s-film"></i>
                                                         </div>
                                                         <div class="ml-5 fsize-1 ">
-                                                            <input name="radio1" type="radio" class="form-check-input">
+                                                            <input name="radio1" type="radio"
+                                                                   class="form-check-input">
                                                             <a href="#" style="color: #5A5A5A">Vidéo unique</a>
                                                         </div>
                                                     </div>
@@ -118,8 +79,9 @@
                                                             <i class="pe-7s-photo"></i>
                                                         </div>
                                                         <div class="fsize-1 ml-5">
-                                                            <input name="radio1" type="radio" class="form-check-input">
-                                                            <a href="#" style="color: #5A5A5A">Image unique</a>
+                                                            <input name="radio1" type="radio"
+                                                                   class="form-check-input">
+                                                            <a href="" style="color: #5A5A5A">Image unique</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -146,7 +108,8 @@
                                                             <i class="pe-7s-photo-gallery"></i>
                                                         </div>
                                                         <div class="fsize-1 ml-5">
-                                                            <input name="radio1" type="radio" class="form-check-input">
+                                                            <input name="radio1" type="radio"
+                                                                   class="form-check-input">
                                                             <a href="#" style="color: #5A5A5A">Plusieurs images</a>
                                                         </div>
                                                     </div>
@@ -163,6 +126,14 @@
                             </div>
 
                         </form>
+                        <!--Déposer un média-->
+                        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
+
+                                <h3>Drag and drop to xx content!</h3>
+                                <div class="subtitle">...ou selectionnez directement un fichier depuis votre</div>
+
+                        </vue-dropzone>
+
                     </div>
                 </div>
             </div>
@@ -170,8 +141,84 @@
 
         </div>
 
+        <div class="row">
 
+            <div class="col-lg-6">
+                <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title">Informations complémentaires</h5>
+                        <form class="">
+                            <div class="position-relative form-group">
+
+                                <label for="exampleAddress" class="">Description</label>
+                                <b-textarea name="address" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
+à compter du 18 janvier, pour les 30 ans du magasin !" type="text" class="form-control"/>
+
+                            </div>
+
+                            <div class="position-relative form-group">
+
+                                <label for="exampleAddress" class="">Note personelle</label>
+                                <input name="address" id="exampleAddress"
+                                       placeholder="Premiere annonce de test" type="text" class="form-control"/>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-6 ">
+                <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title">Ciblage</h5>
+                        <form class="">
+                            <label>Sexe : </label>
+                            <div class="ml-2 position-sticky form-check custom-control-inline"><label
+                                class="form-check-label">
+                                <input name="radio1" type="radio" class="form-check-input">Homme</label>
+                            </div>
+                            <div class="position-sticky form-check custom-control-inline"><label
+                                class="form-check-label">
+                                <input name="radio1" type="radio" class="form-check-input">Femme</label>
+                            </div>
+
+                            <div class="position-relative form-group">
+                                <label for="exampleSelect">Age de départ</label>
+                                <select
+                                    name="select" id="exampleSelect" class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                                <label class="custom-control-inline" for="exampleSelect">Age d'arrivé</label>
+                                <select
+                                    name="select" id="exampleSelect" class="custom-control-inline form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="center-elem custom-control mb-3">
+                        <div>
+                            <button type="button" class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
+                                Enregistrer toutes les modifications
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
     </div>
+
+
 </template>
 
 <script>
@@ -187,7 +234,9 @@
         faTh,
         faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
-    import PageTitle from "@/sources/Components/PageTitle";
+    import PageTitle from "@/sources/Views/Structure/PageTitle";
+    import vue2Dropzone from 'vue2-dropzone'
+    import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
     library.add(
         faTrashAlt,
@@ -206,12 +255,20 @@
     export default {
         components: {
             PageTitle,
+            vueDropzone: vue2Dropzone
+
 
         },
         data: () => ({
             heading: 'Création d\'une annonce',
             subheading: 'Mettez en ligne votre nouvelle annonce afin de la rendre visible sur l\'application mobile',
             icon: 'pe-7s-upload icon-gradient bg-tempting-azure',
+            dropzoneOptions: {
+                url: 'https://httpbin.org/post',
+                thumbnailWidth: 200,
+                addRemoveLinks: true,
+                maxFilesize: 3
+            }
         }),
 
         methods: {},

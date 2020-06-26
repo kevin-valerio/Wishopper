@@ -16,7 +16,7 @@
 
 <script>
 
-    import PageTitle from "../Components/PageTitle.vue";
+    import PageTitle from "../Views/Structure/PageTitle.vue";
 
     import Vue from 'vue'
     import * as VueGoogleMaps from 'vue2-google-maps'

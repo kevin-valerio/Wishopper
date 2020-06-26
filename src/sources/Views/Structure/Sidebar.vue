@@ -27,7 +27,7 @@
                 menu: [
                     {
                         header: true,
-                        title: 'Administration',
+                        title: 'Annonces',
                     },
                     {
                         icon: 'pe-7s-upload',
@@ -50,8 +50,14 @@
 
 
                     },
+
                     {
-                        icon: 'pe-7s-delete-user',
+                        header: true,
+                        title: 'Organisation',
+                    },
+
+                    {
+                        icon: 'pe-7s-portfolio',
                         title: 'Gestion des annonceurs',
                         href: '/annonceurs/',
                     },
@@ -62,6 +68,17 @@
                         title: 'Informations',
                     },
 
+
+                    {
+                        icon: 'pe-7s-id',
+                        title: 'Compte',
+                        href: '/account/',
+                    },
+                    {
+                        icon: 'pe-7s-config',
+                        title: 'Paramètres',
+                        href: '/params/',
+                    },
                     {
                         title: 'Statistiques',
                         icon: 'pe-7s-graph2',
@@ -69,12 +86,7 @@
                         disabled: true
                     },
                     {
-                        icon: 'pe-7s-id',
-                        title: 'Compte',
-                        href: '/account/',
-                    },
-                    {
-                        icon: 'pe-7s-graph2',
+                        icon: 'pe-7s-info ',
                         title: 'FAQ',
                         href: '/faq/',
                     },

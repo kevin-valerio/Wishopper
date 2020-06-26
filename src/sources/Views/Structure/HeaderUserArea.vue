@@ -9,7 +9,7 @@
                                 <div class="vertical-timeline-element-content bounce-in">
                                     <h1 class="timeline-title">
                                         <span class="widget-heading" style="color: #555abf">31</span>
-                                        <span class="widget-subheading"> Wee</span>
+                                        <span class="widget-subheading"> Wi</span>
                                     </h1>
                                 </div>
                             </div>
