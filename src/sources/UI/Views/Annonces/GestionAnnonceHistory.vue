@@ -40,8 +40,8 @@
         faTh,
         faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
-    import AnnonceTuile from "@/sources/Elements/AnnonceTuile";
-    import PageTitle from "@/sources/Views/Structure/PageTitle";
+    import AnnonceTuile from "@/sources/UI/Elements/AnnonceTuile";
+    import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
 
     library.add(
         faTrashAlt,

@@ -22,8 +22,8 @@
         faTh,
         faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
-    import AnnonceTuile from "@/sources/Elements/AnnonceTuile";
-    import PageTitle from "@/sources/Views/Structure/PageTitle";
+    import AnnonceTuile from "@/sources/UI/Elements/AnnonceTuile";
+    import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
 
     library.add(
         faTrashAlt,
@@ -46,9 +46,9 @@
 
         },
         data: () => ({
-            heading: 'Annonces en ligne',
-            subheading: 'Vous retrouverez ci-dessous toutes vos annonces actuellement en ligne',
-            icon: 'pe-7s-ribbon icon-gradient bg-tempting-azure',
+            heading: 'Gestion des annonceurs',
+            subheading: 'Gerez les différernts annonceurs de l\'organisation',
+            icon: 'pe-7s-portfolio icon-gradient bg-tempting-azure',
         }),
 
         methods: {},

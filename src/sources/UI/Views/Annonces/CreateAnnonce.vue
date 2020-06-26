@@ -234,7 +234,7 @@
         faTh,
         faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
-    import PageTitle from "@/sources/Views/Structure/PageTitle";
+    import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
     import vue2Dropzone from 'vue2-dropzone'
     import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
