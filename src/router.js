@@ -27,7 +27,7 @@ export default new Router({
         {
             path: '/faq/',
             name: 'FAQ',
-            component: () => import('./sources/UI/Views/FAQ.vue'),
+            component: () => import('./sources/UI/Views/Misc/FAQ.vue'),
         },
 
         {
@@ -48,11 +48,6 @@ export default new Router({
             component: () => import('./sources/UI/Views/Login/LoginBoxed.vue'),
         },
 
-        {
-            path: '/params/',
-            name: 'login-boxed',
-            component: () => import('./sources/UI/Views/Account/Parametres.vue'),
-        },
 
         {
             path: '/register',

@@ -75,11 +75,6 @@
                         href: '/account/',
                     },
                     {
-                        icon: 'pe-7s-config',
-                        title: 'Paramètres',
-                        href: '/params/',
-                    },
-                    {
                         title: 'Statistiques',
                         icon: 'pe-7s-graph2',
                         href: '/stats/',
