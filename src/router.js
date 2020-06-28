@@ -70,7 +70,6 @@ let router = new Router({
             component: () => import('./sources/UI/Views/Login/LoginBoxed.vue'),
         },
 
-
         {
             path: '/register',
             name: 'register-boxed',

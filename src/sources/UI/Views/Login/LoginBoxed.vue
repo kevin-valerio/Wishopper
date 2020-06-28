@@ -81,9 +81,57 @@
 
     export default {
         components: {},
-        data: () => ({}),
+        data() {
+            return {
+                email: "",
+                password: ""
+            }
+        },
 
-        methods: {},
+        methods: {
+            handleSubmit(e) {
+                e.preventDefault()
+                if (this.password.length > 0) {
+                    this.$http.post('http://google.fr/', {
+                        email: this.email,
+                        password: this.password
+                    })
+                        .then(response => {
+                            //TODO : Remove in production
+                            if (this.email === "admin@admin.fr" && this.password === "admin") {
+                                console.log("Setting default account [TESTING MODE]");
+                                localStorage.setItem('user', JSON.parse({
+                                    is_admin: true,
+                                    name: "Kevin Vlr"
+                                }))
+                                localStorage.setItem('jwt', "WTF_TOKEN")
+
+                            }
+                            else {
+                                //TODO : Faire varier les variables (lol)
+
+                                localStorage.setItem('user', JSON.stringify(response.data.user))
+                                localStorage.setItem('jwt', response.data.token)
+                            }
+
+                            if (localStorage.getItem('jwt') != null) {
+                                this.$emit('loggedIn')
+                                if (this.$route.params.nextUrl != null) {
+                                    this.$router.push(this.$route.params.nextUrl)
+                                } else {
+                                    this.$router.push('/annonces/online')
+                                }
+                            }
+
+
+                        })
+                        .catch(function (error) {
+                            console.log(error.response);
+
+                        });
+                }
+            }
+        },
 
     }
 </script>
