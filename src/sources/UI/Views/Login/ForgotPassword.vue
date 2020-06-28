@@ -9,9 +9,9 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <div class="h5 modal-title">
-                                    Forgot your Password?
+                                    Vous avez oublié votre mot de passe ?
                                     <h6 class="mt-1 mb-0 opacity-8">
-                                        <span>Use the form below to recover it.</span>
+                                        <span>Utilisez le formulaire ci-dessous pour faire une demande de renouvellement de mot de passe</span>
                                     </h6>
                                 </div>
                             </div>
@@ -21,9 +21,9 @@
                                         <b-row form>
                                             <b-col md="12">
                                                 <b-form-group>
-                                                    <Label for="exampleEmail">Email</Label>
+                                                    <Label for="exampleEmail">Adresse mail</Label>
                                                     <b-form-input type="email" name="email" id="exampleEmail"
-                                                                  placeholder="Email here..."/>
+                                                                  placeholder="nom@societe.com"/>
                                                 </b-form-group>
                                             </b-col>
                                         </b-row>
@@ -31,21 +31,63 @@
                                 </div>
                                 <div class="divider"/>
                                 <h6 class="mb-0">
-                                    <a href="javascript:void(0);" class="text-primary">Sign in existing account</a>
+                                    <a href="/" class="text-primary">Se connecter</a>
                                 </h6>
                             </div>
                             <div class="modal-footer clearfix">
                                 <div class="float-right">
-                                    <b-button variant="primary" size="lg">Recover Password</b-button>
+                                    <b-button variant="primary" size="lg">Renvoyer un mot de passe</b-button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="text-center text-white opacity-8 mt-3">
-                        Copyright &copy; ArchitectUI 2019
+                        Copyright &copy; Wishopper
                     </div>
                 </b-col>
             </div>
         </div>
     </div>
 </template>
+
+
+<script>
+    import {library} from '@fortawesome/fontawesome-svg-core'
+
+    import {
+        faAngleDown,
+        faAngleUp,
+        faCalendarAlt,
+        faCheck,
+        faPlus,
+        faStar,
+        faTh,
+        faTrashAlt,
+    } from '@fortawesome/free-solid-svg-icons'
+    import AnnonceTuile from "@/sources/UI/Elements/AnnonceTuile";
+    import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
+
+    library.add(
+        faTrashAlt,
+        faCheck,
+        faAngleDown,
+        faAngleUp,
+        faTh,
+        faCalendarAlt,
+    );
+    library.add(
+        faStar,
+        faPlus,
+    );
+
+
+    export default {
+        components: {},
+        data: () => ({}),
+
+        methods: {},
+
+    }
+
+
+</script>

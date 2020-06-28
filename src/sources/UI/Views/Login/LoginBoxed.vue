@@ -16,17 +16,20 @@
                                 </div>
                                 <b-form-group id="exampleInputGroup1"
                                               label-for="exampleInput1"
-                                            >
-                                    <b-form-input id="exampleInput1"
+                                >
+                                    <b-form-input id="email"
                                                   type="email"
                                                   required
+                                                  autofocus
+                                                  v-model="email"
                                                   placeholder="Adresse mail">
                                     </b-form-input>
                                 </b-form-group>
                                 <b-form-group id="exampleInputGroup2"
                                               label-for="exampleInput2">
-                                    <b-form-input id="exampleInput2"
+                                    <b-form-input id="password"
                                                   type="password"
+                                                  v-model="password"
                                                   required
                                                   placeholder="Mot de passe">
                                     </b-form-input>
@@ -42,10 +45,11 @@
                             </div>
                             <div class="modal-footer clearfix">
                                 <div class="float-left">
-                                    <a href="javascript:void(0);" class="btn-lg btn btn-link">Mot de passe oublié</a>
+                                    <a href="/#/password/" class="btn-lg btn btn-link">Mot de passe oublié</a>
                                 </div>
                                 <div class="float-right">
-                                    <b-button variant="primary" size="lg">S'authentifier</b-button>
+                                    <b-button @click="handleSubmit" variant="primary" size="lg">S'authentifier
+                                    </b-button>
                                 </div>
                             </div>
                         </div>
@@ -58,3 +62,28 @@
         </div>
     </div>
 </template>
+
+<script>
+    import {library} from '@fortawesome/fontawesome-svg-core'
+
+    import {
+        faAngleDown,
+        faAngleUp,
+        faCalendarAlt,
+        faCheck,
+        faPlus,
+        faStar,
+        faTh,
+        faTrashAlt,
+    } from '@fortawesome/free-solid-svg-icons'
+
+    library.add(faTrashAlt, faCheck, faAngleDown, faAngleUp, faTh, faStar, faPlus, faCalendarAlt,);
+
+    export default {
+        components: {},
+        data: () => ({}),
+
+        methods: {},
+
+    }
+</script>

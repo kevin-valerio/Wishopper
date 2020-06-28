@@ -19,7 +19,6 @@
                                         <b-img thumbnail left src="https://picsum.photos/300/200/"/>
                                     </div>
                                 </div>
-
                                 <div class="widget-content-left">
                                     <div class="widget-subheading opacity-10">
                                         <span class="pr-2">
@@ -74,17 +73,16 @@
         faTrashAlt,
         faCheck
     );
+    const axios = require('axios').default;
 
     export default {
-        components: {
-            // PageTitle,
-        },
-        data: () => ({
-            heading: 'Annonces en ligne',
-            subheading: 'Vous retrouverez ci-dessous toutes vos annonces actuellement en ligne',
-            icon: 'pe-7s-ribbon icon-gradient bg-tempting-azure',
-        }),
+        components: {},
+        methods: {
 
+
+
+        },
+        data: () => ({}),
 
     }
 </script>
