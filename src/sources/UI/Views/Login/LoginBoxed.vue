@@ -106,10 +106,14 @@
                     console.log("Still creating a fake account");
 
                     console.log("Setting default account [TESTING MODE]");
+
                     localStorage.setItem('user', JSON.stringify({
                         is_admin: true,
-                        name: "Kevin Vlr"
+                        name: "Kevin Valerio",
+                        credit: 108,
+                        role: "Maison mère - Carrefour"
                     }));
+
                     localStorage.setItem('jwt', "WTF_TOKEN");
                     if (localStorage.getItem('jwt') != null) {
                         this.$emit('loggedIn')

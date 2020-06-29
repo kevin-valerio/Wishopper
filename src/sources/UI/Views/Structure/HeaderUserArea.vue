@@ -8,7 +8,8 @@
                             <div><span class="vertical-timeline-element-icon bounce-in"></span>
                                 <div class="vertical-timeline-element-content bounce-in">
                                     <h1 class="timeline-title">
-                                        <span class="widget-heading" style="color: #555abf">31</span>
+                                        <span class="widget-subheading">Crédits : </span>
+                                        <a href="/account/" class="widget-heading" style="color: #555abf">{{ user.credit }}</a>
                                         <span class="widget-subheading"> Wi</span>
                                     </h1>
                                 </div>
@@ -18,8 +19,8 @@
 
                     </div>
                     <div class="widget-content-left  ml-3 header-user-info">
-                        <div class="widget-heading">Kevin Valerio</div>
-                        <div class="widget-subheading">Administrateur</div>
+                        <div class="widget-heading"> {{ user.name }}</div>
+                        <div class="widget-subheading">{{ user.role }}</div>
                     </div>
                     <div class="widget-content-right header-user-info ml-3">
                         <button title="" type="button" @click="disconnect()"
@@ -63,7 +64,9 @@
 
     export default {
         components: {},
-        data: () => ({}),
+        data: () => ({
+            user : JSON.parse(localStorage.getItem('user'))
+        }),
 
         methods: {
             disconnect: function(){

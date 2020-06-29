@@ -161,13 +161,13 @@
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Crédits Wee</h5>
-                        <span> Au <b>14/11/2018</b>, vous disposez d'un crédit de <b>0 Wee</b></span><br><br>
+                        <span> Au <b> {{ new Date().getDate() + "/" + (parseInt(new Date().getMonth().toString()) + 1) + "/" + new Date().getFullYear() }}</b>, vous disposez d'un crédit de <b>{{ user.credit }} Wee</b></span><br><br>
                         <form class="">
                             <div class="row">
                                 <div class="ml-3">
                                     <div
                                         class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-secondary">
-                                        <div class="widget-chat-wrapper-outer">
+                                        <div class="widget-chat-wrapper-outer" id="#offre">
                                             <div class="widget-chart-content ">
                                                 <div class="widget-chart-flex">
                                                     <div class="widget-numbers">
@@ -242,7 +242,7 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Logo</h5>
                         <span>Déposez votre logo ci-dessous, il servira à être affiché sur la plateforme afin de pouvoir être repéré facilement
-                            par les utilisateurs</b></span><br><br>
+                            par les utilisateurs</span><br><br>
                         <form class="">
                             <div class="row">
                                 <div class="ml-3" style="width: 100%;">
@@ -303,6 +303,7 @@
         },
         data: () => ({
             heading: 'Mes informations',
+            user : JSON.parse(localStorage.getItem('user')),
             subheading: 'Visionnez et modifiez les informations relatives à votre compte ici',
             icon: 'pe-7s-users icon-gradient bg-tempting-azure',
             dropzoneOptions: {
