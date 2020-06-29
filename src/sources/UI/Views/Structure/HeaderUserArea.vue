@@ -21,7 +21,11 @@
                         <div class="widget-heading">Kevin Valerio</div>
                         <div class="widget-subheading">Administrateur</div>
                     </div>
-
+                    <div class="widget-content-right header-user-info ml-3">
+                        <button title="" type="button" @click="disconnect()"
+                                class="pe-7s-close-circle  icon-gradient   btn-shadow mr-3 btn btn-danger">
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,7 +65,12 @@
         components: {},
         data: () => ({}),
 
-        methods: {}
+        methods: {
+            disconnect: function(){
+                localStorage.clear();
+                this.$router.push({path: '/'});
+            }
+        }
     }
 
 

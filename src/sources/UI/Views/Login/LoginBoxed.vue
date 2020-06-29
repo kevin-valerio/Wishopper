@@ -9,11 +9,15 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="h5 modal-title text-center">
+                                    <div class="alert alert-warning" v-if="loginError" role="alert">
+                                        Les informations rentrées sont invalides
+                                    </div>
                                     <h4 class="mt-2">
                                         <div>Bienvenue sur Wishopper</div>
                                         <span>Veuillez vous identifier</span>
                                     </h4>
                                 </div>
+
                                 <b-form-group id="exampleInputGroup1"
                                               label-for="exampleInput1"
                                 >
@@ -83,51 +87,72 @@
         components: {},
         data() {
             return {
+                loginError: false,
                 email: "",
                 password: ""
             }
         },
-
+        /*
+        TODO:
+        ATTENTION
+        CA VA BUGGUER. CLEAR LA MEMOIRE
+         */
         methods: {
-            handleSubmit(e) {
-                e.preventDefault()
+
+            //TODO : Remove in production
+            localLogin: function () {
+
+                if (this.email === "admin@admin.fr" && this.password === "admin") {
+                    console.log("Still creating a fake account");
+
+                    console.log("Setting default account [TESTING MODE]");
+                    localStorage.setItem('user', JSON.stringify({
+                        is_admin: true,
+                        name: "Kevin Vlr"
+                    }));
+                    localStorage.setItem('jwt', "WTF_TOKEN");
+                    if (localStorage.getItem('jwt') != null) {
+                        this.$emit('loggedIn')
+                        if (this.$route.params.nextUrl != null) {
+                            this.$router.push({path: this.$route.params.nextUrl});
+                        } else {
+                            this.$router.push({path: '/annonces/online'})
+                        }
+                    }
+                } else {
+                    this.$data.loginError = true;
+
+                }
+            },
+
+            handleSubmit: function () {
                 if (this.password.length > 0) {
                     this.$http.post('http://google.fr/', {
-                        email: this.email,
-                        password: this.password
+                            email: this.email,
+                            password: this.password,
+                        }
+                    ).then(response => {
+
+
+                        //TODO : Faire varier les variables (lol)
+                        localStorage.setItem('user', JSON.stringify(response.data.user))
+                        localStorage.setItem('jwt', response.data.token)
+
+                        if (localStorage.getItem('jwt') != null) {
+                            this.$emit('loggedIn')
+                            if (this.$route.params.nextUrl != null) {
+                                this.$router.push({path: this.$route.params.nextUrl});
+                            } else {
+                                this.$router.push({path: '/annonces/online'})
+                            }
+                        }
+
+
                     })
-                        .then(response => {
-                            //TODO : Remove in production
-                            if (this.email === "admin@admin.fr" && this.password === "admin") {
-                                console.log("Setting default account [TESTING MODE]");
-                                localStorage.setItem('user', JSON.parse({
-                                    is_admin: true,
-                                    name: "Kevin Vlr"
-                                }))
-                                localStorage.setItem('jwt', "WTF_TOKEN")
-
-                            }
-                            else {
-                                //TODO : Faire varier les variables (lol)
-
-                                localStorage.setItem('user', JSON.stringify(response.data.user))
-                                localStorage.setItem('jwt', response.data.token)
-                            }
-
-                            if (localStorage.getItem('jwt') != null) {
-                                this.$emit('loggedIn')
-                                if (this.$route.params.nextUrl != null) {
-                                    this.$router.push(this.$route.params.nextUrl)
-                                } else {
-                                    this.$router.push('/annonces/online')
-                                }
-                            }
-
-
-                        })
-                        .catch(function (error) {
+                        .catch(error => {
+                            this.$data.loginError = true;
                             console.log(error.response);
-
+                            this.localLogin();
                         });
                 }
             }

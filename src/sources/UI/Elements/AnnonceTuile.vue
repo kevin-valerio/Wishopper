@@ -44,14 +44,7 @@
                                         <label for="checkbox2" class="custom-control-label">&nbsp;</label>
                                     </div>
                                 </div>
-                                <div class="widget-content-right widget-content-actions">
-                                    <button class="border-0 btn-transition btn btn-outline-success">
-                                        <font-awesome-icon icon="check"/>
-                                    </button>
-                                    <button class="border-0 btn-transition btn btn-outline-danger">
-                                        <font-awesome-icon icon="trash-alt"/>
-                                    </button>
-                                </div>
+
                             </div>
                         </div>
                     </li>
@@ -73,7 +66,6 @@
         faTrashAlt,
         faCheck
     );
-    const axios = require('axios').default;
 
     export default {
         components: {},
