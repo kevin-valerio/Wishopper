@@ -37,10 +37,13 @@
                     {
                         title: 'Gestion des annonces',
                         icon: 'pe-7s-note2',
+
                         child: [
                             {
+
                                 href: '/annonces/online',
                                 title: 'Offres en ligne',
+
                             },
                             {
                                 href: '/annonces/history',
@@ -78,7 +81,8 @@
                         title: 'Statistiques',
                         icon: 'pe-7s-graph2',
                         href: '/stats/',
-                        disabled: true
+                        disabled: true,
+
                     },
                     {
                         icon: 'pe-7s-info ',
@@ -87,7 +91,10 @@
                     },
 
                 ],
-
+                showChild: {
+                    type: Boolean,
+                    default: true
+                },
                 collapsed: true,
                 windowWidth: 0,
 
@@ -95,6 +102,7 @@
         },
         props: {
             sidebarbg: String,
+
         },
         methods: {
 

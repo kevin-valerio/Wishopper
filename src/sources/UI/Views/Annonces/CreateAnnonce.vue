@@ -205,7 +205,7 @@
                     <div class="center-elem custom-control mb-3">
                         <div>
                             <button type="button" class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
-                                Enregistrer toutes les modifications
+                                <b>Créer et publier l'annonce</b>
                             </button>
                         </div>
 

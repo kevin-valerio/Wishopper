@@ -96,11 +96,7 @@
                 password: ""
             }
         },
-        /*
-        TODO:
-        ATTENTION
-        CA VA BUGGUER. CLEAR LA MEMOIRE
-         */
+
         methods: {
 
             //TODO : Remove in production

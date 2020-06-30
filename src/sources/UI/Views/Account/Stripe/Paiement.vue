@@ -224,6 +224,7 @@
                                 <td class="card-number">4000<span></span>0027<span></span>6000<span></span>3184</td>
                             </tr>
                         </table>
+<!--                        //TODO: Integrer le paiement ASAP-->
                         <p class="note">
                             See the <a href="https://stripe.com/docs/testing#cards" target="_blank">docs</a> for a full
                             list of test cards.
