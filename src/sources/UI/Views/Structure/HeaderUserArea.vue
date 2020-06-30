@@ -9,7 +9,9 @@
                                 <div class="vertical-timeline-element-content bounce-in">
                                     <h1 class="timeline-title">
                                         <span class="widget-subheading">Crédits : </span>
-                                        <a href="/account/" class="widget-heading" style="color: #555abf">{{ user.credit }}</a>
+                                        <router-link to="/account">
+                                            <a class="widget-heading" style="color: #555abf">{{ user.credit }}</a>
+                                        </router-link>
                                         <span class="widget-subheading"> Wi</span>
                                     </h1>
                                 </div>
@@ -65,11 +67,11 @@
     export default {
         components: {},
         data: () => ({
-            user : JSON.parse(localStorage.getItem('user'))
+            user: JSON.parse(localStorage.getItem('user'))
         }),
 
         methods: {
-            disconnect: function(){
+            disconnect: function () {
                 localStorage.clear();
                 this.$router.push({path: '/'});
             }

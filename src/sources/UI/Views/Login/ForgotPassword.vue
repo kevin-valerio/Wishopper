@@ -31,7 +31,10 @@
                                 </div>
                                 <div class="divider"/>
                                 <h6 class="mb-0">
-                                    <a href="/" class="text-primary">Se connecter</a>
+                                    <router-link to="/">
+
+                                        <a class="text-primary">Se connecter</a>
+                                    </router-link>
                                 </h6>
                             </div>
                             <div class="modal-footer clearfix">

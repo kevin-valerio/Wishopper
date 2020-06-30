@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="h-100 bg-premium-dark">
-            <div class="d-flex h-100 justify-content-center align-items-center">
+        <div class="  bg-premium-dark">
+            <div class="d-flex   justify-content-center align-items-center">
                 <b-col md="8" class="mx-auto app-login-box">
                     <div class="app-logo-inverse mx-auto mb-3"/>
 
@@ -72,13 +72,24 @@
                                         </b-form-group>
                                     </div>
                                 </div>
+                                <modal name="cgu">
+                                    <div class="ml-3 mt-3">
+                                        <h5 class="card-title">Conditions d'utilisation</h5>
+                                        <hr>
+                                        <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetuer adipiscing
+                                            elit</h6>
+
+                                    </div>
+                                </modal>
                                 <b-form-checkbox name="check" id="exampleCheck">
-                                    J'accepte les <a href="javascript:void(0);">conditions d'utilisation</a>.
+                                    J'accepte les <a @click="show()" href="#"> conditions d'utilisation</a>.
                                 </b-form-checkbox>
                                 <div class="divider"/>
                                 <h6 class="mb-0">
                                     Vous avez déjà un compte ?
-                                    <a href="/" class="text-primary">S'authentifier</a>
+                                    <router-link to="/">
+                                        <a class="text-primary">S'authentifier</a>
+                                    </router-link>
                                 </h6>
                             </div>
                             <div class="modal-footer d-block text-center">
@@ -87,12 +98,35 @@
                                 </b-button>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-center text-white opacity-8 mt-3">
-                        Copyright &copy; Wishopper
+
+                        <div class="text-center text-white opacity-8 mt-3">
+                            Copyright &copy; Wishopper
+                        </div>
                     </div>
                 </b-col>
             </div>
         </div>
     </div>
 </template>
+
+
+<script>
+
+
+    export default {
+        components: {},
+
+        data() {
+            return {
+                showModal: false
+            }
+        },
+
+        methods: {
+            show() {
+                this.$modal.show('cgu');
+            }
+        }
+
+    }
+</script>

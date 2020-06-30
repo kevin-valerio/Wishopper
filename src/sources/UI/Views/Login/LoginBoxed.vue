@@ -44,12 +44,16 @@
                                 <div class="divider"/>
                                 <h6 class="mb-0">
                                     Pas encore de compte ?
-                                    <a href="/#/register/" class="text-primary">Créer un compte</a>
+                                    <router-link to="/register">
+                                        <a class="text-primary">Créer un compte</a>
+                                    </router-link>
                                 </h6>
                             </div>
                             <div class="modal-footer clearfix">
                                 <div class="float-left">
-                                    <a href="/#/password/" class="btn-lg btn btn-link">Mot de passe oublié</a>
+                                    <router-link to="/forgot-password">
+                                        <a class="btn-lg btn btn-link">Mot de passe oublié</a>
+                                    </router-link>
                                 </div>
                                 <div class="float-right">
                                     <b-button @click="handleSubmit" variant="primary" size="lg">S'authentifier
