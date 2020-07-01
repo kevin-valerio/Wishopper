@@ -18,7 +18,7 @@ let router = new Router({
 
         {
             path: '/annonceurs/',
-            name: 'Gestion des annonceurs',
+            name: 'Gestion des enseignes',
             meta: {
                 requiresAuth: true,
                 is_admin: true

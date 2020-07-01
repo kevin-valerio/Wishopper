@@ -2,51 +2,84 @@
     <div>
         <page-title :heading=heading :subheading=subheading :icon=icon></page-title>
 
-        <annonce-tuile :heading=heading :subheading=subheading :icon=icon></annonce-tuile>
-        <annonce-tuile :heading=heading :subheading=subheading :icon=icon></annonce-tuile>
-        <annonce-tuile :heading=heading :subheading=subheading :icon=icon></annonce-tuile>
+        <div class="main-card mb-3 center-elem ">
+
+            <b-dropdown no-flip text="Filtrer par" class="mb-2 mr-2" variant="outline-dark">
+                <h6 tabindex="-1" class="dropdown-header">Ville</h6>
+                <button type="button" tabindex="0" class="dropdown-item">Croissantes</button>
+                <button type="button" tabindex="0" class="dropdown-item">Décroissantes</button>
+                <div tabindex="-1" class="dropdown-header">Identifiant</div>
+                <button type="button" tabindex="0" class="dropdown-item">Croissantes</button>
+                <button type="button" tabindex="0" class="dropdown-item">Décroissantes</button>
+
+            </b-dropdown>
+
+            <button class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-primary btn-sm">
+               <b>Inviter une enseigne</b>
+            </button>
+        </div>
+
+        <div class="card main-card mb-4">
+            <div class="card-body"><h4 class="card-title">Liste des enseignes</h4>
+                <table aria-busy="false" aria-colcount="3"
+                       class="table b-table table-striped table-hover table-bordered"
+                       id="__BVID__200">
+                    <thead role="rowgroup" class="">
+                    <tr role="row">
+                        <th role="columnheader" scope="col" aria-colindex="1" class="">Nom de l'enseigne</th>
+                        <th role="columnheader" scope="col" aria-colindex="2" class="">Ville</th>
+                        <th role="columnheader" scope="col" aria-colindex="3" class="">Date d'ajout</th>
+                        <th role="columnheader" scope="col" aria-colindex="3" class="">Nombre d'annonces</th>
+                    </tr>
+                    </thead>
+                    <tbody role="rowgroup" class="">
+                    <tr role="row" class="">
+                        <td role="cell" aria-colindex="1" class="">Dickerson</td>
+                        <td role="cell" aria-colindex="2" class="">Macdonald</td>
+                        <td role="cell" aria-colindex="3" class="">40</td>
+                        <td role="cell" aria-colindex="3" class="">40</td>
+                    </tr>
+                    <tr role="row" class="">
+                        <td role="cell" aria-colindex="1" class="">Larsen</td>
+                        <td role="cell" aria-colindex="2" class="">Shaw</td>
+                        <td role="cell" aria-colindex="3" class="">21</td>
+                        <td role="cell" aria-colindex="3" class="">21</td>
+                    </tr>
+                    <tr role="row" class="">
+                        <td role="cell" aria-colindex="1" class="">Geneva</td>
+                        <td role="cell" aria-colindex="2" class="">Wilson</td>
+                        <td role="cell" aria-colindex="2" class="">Wilson</td>
+                        <td role="cell" aria-colindex="3" class="">89</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
     </div>
 
 </template>
 
 <script>
     import {library} from '@fortawesome/fontawesome-svg-core'
-
     import {
-        faAngleDown,
-        faAngleUp,
-        faCalendarAlt,
-        faCheck,
-        faPlus,
-        faStar,
-        faTh,
-        faTrashAlt,
+        faAngleDown, faAngleUp, faCalendarAlt, faCheck, faPlus, faStar, faTh, faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
     import AnnonceTuile from "@/sources/UI/Elements/AnnonceTuile";
     import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
 
-    library.add(
-        faTrashAlt,
-        faCheck,
-        faAngleDown,
-        faAngleUp,
-        faTh,
-        faCalendarAlt,
-    );
-    library.add(
-        faStar,
-        faPlus,
-    );
+    library.add(faTrashAlt, faCheck, faAngleDown, faAngleUp, faTh, faCalendarAlt,);
+    library.add(faStar, faPlus,);
 
 
     export default {
         components: {
             AnnonceTuile,
             PageTitle,
-
         },
         data: () => ({
-            heading: 'Gestion des annonceurs',
+            heading: 'Gestion des enseignes',
             subheading: 'Gerez les différernts annonceurs de l\'organisation',
             icon: 'pe-7s-portfolio icon-gradient bg-tempting-azure',
         }),
@@ -54,6 +87,4 @@
         methods: {},
 
     }
-
-
 </script>

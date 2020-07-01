@@ -61,7 +61,7 @@
 
                     {
                         icon: 'pe-7s-portfolio',
-                        title: 'Gestion des annonceurs',
+                        title: 'Gestion des enseignes',
                         href: '/annonceurs/',
                     },
 

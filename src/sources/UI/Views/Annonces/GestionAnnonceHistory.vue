@@ -3,8 +3,6 @@
         <page-title :heading=heading :subheading=subheading :icon=icon></page-title>
         <div class="main-card mb-3 center-elem ">
 
-
-
                 <b-dropdown no-flip text="Filtrer par" class="mb-2 mr-2" variant="outline-dark">
                     <h6 tabindex="-1" class="dropdown-header">Dates</h6>
                     <button type="button" tabindex="0" class="dropdown-item">Croissantes</button>
