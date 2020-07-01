@@ -148,7 +148,7 @@
                         <div class="ml-5">
                             <button type="button"
                                     class=" align-self-end btn btn-group-lg btn-lg btn-transition btn-outline-danger">
-                               <i> Supprimer mon compte </i>
+                                <i> Supprimer mon compte </i>
                             </button>
                         </div>
                     </div>
@@ -174,6 +174,7 @@
                                                         <div class="widget-chart-flex">
                                                             <div class="fsize-3 ">
                                                                 <a href="#" style="color: #5A5A5A">Court-terme</a>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -181,6 +182,32 @@
                                                 <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">
                                                     5€ de crédit Wi</h6>
                                                 <br>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div
+                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-secondary">
+                                        <div class="widget-chat-wrapper-outer">
+                                            <div class='credit-card-inputs' :class='{ complete }'>
+                                                <card-number class='stripe-element card-number'
+                                                             ref='cardNumber'
+                                                             :stripe='stripe'
+                                                             :options='options'
+                                                             @change='number = $event.complete'
+                                                />
+                                                <card-expiry class='stripe-element card-expiry'
+                                                             ref='cardExpiry'
+                                                             :stripe='stripe'
+                                                             :options='options'
+                                                             @change='expiry = $event.complete'
+                                                />
+                                                <card-cvc class='stripe-element card-cvc'
+                                                          ref='cardCvc'
+                                                          :stripe='stripe'
+                                                          :options='options'
+                                                          @change='cvc = $event.complete'
+                                                />
                                             </div>
                                         </div>
 
@@ -294,16 +321,21 @@
         faPlus,
     );
 
+    import {stripeKey, stripeOptions} from '../../../../../stripeconfig'
+    import {CardNumber, CardExpiry, CardCvc} from 'vue-stripe-elements-plus'
 
     export default {
         components: {
             vueDropzone: vue2Dropzone,
             PageTitle,
+            CardNumber, CardExpiry, CardCvc
 
         },
+        props: ['stripe', 'options'],
+
         data: () => ({
             heading: 'Mes informations',
-            user : JSON.parse(localStorage.getItem('user')),
+            user: JSON.parse(localStorage.getItem('user')),
             subheading: 'Visionnez et modifiez les informations relatives à votre compte ici',
             icon: 'pe-7s-users icon-gradient bg-tempting-azure',
             dropzoneOptions: {
@@ -311,12 +343,70 @@
                 thumbnailWidth: 200,
                 addRemoveLinks: true,
                 maxFilesize: 3
+            },
+
+
+            complete: false,
+            number: false,
+            expiry: false,
+            cvc: false,
+            options: {
+                stripeKey: stripeKey,
+                stripeOptions: stripeOptions
+
             }
         }),
 
-        methods: {},
+        methods: {
+            pay: function () {
+                // createToken returns a Promise which resolves in a result object
+                createToken().then(data => console.log(data.token))
+            }
+            ,
+            update() {
+                this.complete = this.number && this.expiry && this.cvc
+
+                // field completed, find field to focus next
+                if (this.number) {
+                    if (!this.expiry) {
+                        this.$refs.cardExpiry.focus()
+                    } else if (!this.cvc) {
+                        this.$refs.cardCvc.focus()
+                    }
+                } else if (this.expiry) {
+                    if (!this.cvc) {
+                        this.$refs.cardCvc.focus()
+                    } else if (!this.number) {
+                        this.$refs.cardNumber.focus()
+                    }
+                }
+                // no focus magic for the CVC field as it gets complete with three
+                // numbers, but can also have four
+            }
+        },
+        watch: {
+            number() {
+                this.update()
+            },
+            expiry() {
+                this.update()
+            },
+            cvc() {
+                this.update()
+            }
+        }
 
     }
 
 
 </script>
+<style>
+    .stripe-card {
+        width: 300px;
+        border: 1px solid grey;
+    }
+
+    .stripe-card.complete {
+        border-color: green;
+    }
+</style>

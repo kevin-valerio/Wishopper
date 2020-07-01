@@ -15,14 +15,15 @@
             </b-dropdown>
 
             <button class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-primary btn-sm">
-               <b>Inviter une enseigne</b>
+                <b>Inviter une enseigne</b>
             </button>
         </div>
 
         <div class="card main-card mb-4">
             <div class="card-body"><h4 class="card-title">Liste des enseignes</h4>
-                <table aria-busy="false" aria-colcount="3"
-                       class="table b-table table-striped table-hover table-bordered"
+                <span>Nombre d'enseignes : <b style="color: rgb(85, 90, 191);">32</b></span>
+                <table  aria-busy="false" aria-colcount="3"
+                       class="table b-table mt-3 table-striped table-hover table-bordered"
                        id="__BVID__200">
                     <thead role="rowgroup" class="">
                     <tr role="row">
