@@ -114,8 +114,8 @@
                         role: "Maison mère - Carrefour"
                     }));
 
-                    localStorage.setItem('jwt', "WTF_TOKEN");
-                    if (localStorage.getItem('jwt') != null) {
+                    localStorage.setItem('access_token', "WTF_TOKEN");
+                    if (localStorage.getItem('access_token') != null) {
                         this.$emit('loggedIn')
                         if (this.$route.params.nextUrl != null) {
                             this.$router.push({path: this.$route.params.nextUrl});
@@ -131,8 +131,8 @@
 
             handleSubmit: function () {
                 if (this.password.length > 0) {
-                    this.$http.post('http://google.fr/', {
-                            email: this.email,
+                    this.$http.post('https://api.wishopper.com/token_advertiser', {
+                            username: this.email,
                             password: this.password,
                         }
                     ).then(response => {
@@ -140,9 +140,9 @@
 
                         //TODO : Faire varier les variables (lol)
                         localStorage.setItem('user', JSON.stringify(response.data.user))
-                        localStorage.setItem('jwt', response.data.token)
+                        localStorage.setItem('access_token', response.data.access_token)
 
-                        if (localStorage.getItem('jwt') != null) {
+                        if (localStorage.getItem('access_token') != null) {
                             this.$emit('loggedIn')
                             if (this.$route.params.nextUrl != null) {
                                 this.$router.push({path: this.$route.params.nextUrl});

@@ -89,7 +89,7 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (localStorage.getItem('jwt') == null) {
+        if (localStorage.getItem('access_token') == null) {
             next({
                 path: '/',
                 params: {nextUrl: to.fullPath}

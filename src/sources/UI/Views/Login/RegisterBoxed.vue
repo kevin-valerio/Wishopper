@@ -13,6 +13,11 @@
                                         <div>Bienvenue,</div>
                                         <span>Cela ne vous prendra seulement<span class="text-success"> quelques secondes</span> pour créer votre compte</span>
                                     </h4>
+
+                                    <div class="alert alert-warning" v-if="registerError" role="alert">
+                                        Des informations manquent, ou sont éronnées
+                                    </div>
+
                                 </h5>
                                 <div class="divider"/>
                                 <b-form-group id="exampleInputGroup1"
@@ -21,6 +26,7 @@
                                     <b-form-input id="exampleInput1"
                                                   type="email"
                                                   required
+                                                  v-model="mail"
                                                   placeholder="Adresse mail">
                                     </b-form-input>
                                 </b-form-group>
@@ -28,8 +34,8 @@
                                               description="Numéro de SIRET de l'entreprise (ex: 362 521 879 00034)"
                                               label-for="exampleInput12">
                                     <b-form-input id="exampleInput12"
-                                                  type="number"
                                                   required
+                                                  v-model="siret"
                                                   placeholder="SIRET">
                                     </b-form-input>
                                 </b-form-group>
@@ -38,6 +44,8 @@
                                     <b-form-input id="exampleInput13"
                                                   type="text"
                                                   required
+                                                  v-model="name"
+
                                                   placeholder="Nom et prénom">
                                     </b-form-input>
                                 </b-form-group>
@@ -47,30 +55,25 @@
                                     <b-form-input id="exampleInput14"
                                                   type="text"
                                                   required
+                                                  v-model="city"
+
                                                   placeholder="Ville">
                                     </b-form-input>
                                 </b-form-group>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <b-form-group id="exampleInputGroup2"
                                                       label-for="exampleInput2">
                                             <b-form-input id="exampleInput2"
                                                           type="password"
+                                                          v-model="password"
+
                                                           required
                                                           placeholder="Mot de passe">
                                             </b-form-input>
                                         </b-form-group>
                                     </div>
-                                    <div class="col-md-6">
-                                        <b-form-group id="exampleInputGroup2"
-                                                      label-for="exampleInput2">
-                                            <b-form-input id="exampleInput2"
-                                                          type="password"
-                                                          required
-                                                          placeholder="Confirmer">
-                                            </b-form-input>
-                                        </b-form-group>
-                                    </div>
+
                                 </div>
                                 <modal name="cgu">
                                     <div class="ml-3 mt-3">
@@ -81,7 +84,7 @@
 
                                     </div>
                                 </modal>
-                                <b-form-checkbox name="check" id="exampleCheck">
+                                <b-form-checkbox v-model="cgu" name="check" id="exampleCheck">
                                     J'accepte les <a @click="show()" href="#"> conditions d'utilisation</a>.
                                 </b-form-checkbox>
                                 <div class="divider"/>
@@ -93,7 +96,8 @@
                                 </h6>
                             </div>
                             <div class="modal-footer d-block text-center">
-                                <b-button variant="primary" class="btn-wide btn-pill btn-hover-shine"
+                                <b-button variant="primary" @click="createAccount"
+                                          class="btn-wide btn-pill btn-hover-shine"
                                           size="lg">Créer le compte
                                 </b-button>
                             </div>
@@ -118,14 +122,45 @@
 
         data() {
             return {
-                showModal: false
+                showModal: false,
+                registerError: false,
+                mail: "",
+                siret: "",
+                password: "",
+                name: "",
+                cgu: false,
+                city: ""
             }
         },
 
         methods: {
+            createAccount: function () {
+
+                if (!this.cgu) {
+                    this.$data.registerError = true;
+                    return;
+                }
+                this.$http.post('https://api.wishopper.com/v1/public/visitor/', {
+                        email: this.mail,
+                        siret: this.siret,
+                        password: this.password,
+                        name: this.name,
+                        city: this.city,
+                    }
+                    // eslint-disable-next-line no-unused-vars
+                ).then(response => {
+                    this.$router.push({path: '/'})
+                })
+                    .catch(error => {
+                        this.$data.registerError = true;
+                        console.log(error.response);
+                    });
+            },
+
             show() {
                 this.$modal.show('cgu');
-            }
+            },
+
         }
 
     }

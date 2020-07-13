@@ -322,13 +322,11 @@
     );
 
     import {stripeKey, stripeOptions} from '../../../../../stripeconfig'
-    import {CardNumber, CardExpiry, CardCvc} from 'vue-stripe-elements-plus'
 
     export default {
         components: {
             vueDropzone: vue2Dropzone,
-            PageTitle,
-            CardNumber, CardExpiry, CardCvc
+            PageTitle
 
         },
         props: ['stripe', 'options'],
@@ -336,7 +334,7 @@
         data: () => ({
             heading: 'Mes informations',
             user: JSON.parse(localStorage.getItem('user')),
-            subheading: 'Visionnez et modifiez les informations relatives à votre compte ici',
+            subheading: 'Visionnez et modifiez les informations relatives Sà votre compte ici',
             icon: 'pe-7s-users icon-gradient bg-tempting-azure',
             dropzoneOptions: {
                 url: 'https://httpbin.org/post',
@@ -360,7 +358,7 @@
         methods: {
             pay: function () {
                 // createToken returns a Promise which resolves in a result object
-                createToken().then(data => console.log(data.token))
+                // createToken().then(data => console.log(data.token))
             }
             ,
             update() {
