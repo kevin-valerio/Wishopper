@@ -72,6 +72,8 @@
 </template>
 
 <script>
+
+
     import {library} from '@fortawesome/fontawesome-svg-core'
 
     import {
@@ -87,8 +89,28 @@
 
     library.add(faTrashAlt, faCheck, faAngleDown, faAngleUp, faTh, faStar, faPlus, faCalendarAlt,);
 
+
+    function feedLocalStorageUser($http) {
+        const config = {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        };
+
+        return $http.get('https://api.wishopper.com/v1/private/advertiser/', {"": ""})
+            .then((response) => {
+                localStorage.setItem('user', JSON.stringify(response.data))
+            });
+    }
+
     export default {
         components: {},
+        mounted: function() {
+
+            if (localStorage.getItem("access_token") !== null || localStorage.getItem("access_token") !== "") {
+                this.$router.push({path: '/annonces/online'})
+            }
+        },
         data() {
             return {
                 loginError: false,
@@ -130,32 +152,38 @@
             },
 
             handleSubmit: function () {
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+
                 if (this.password.length > 0) {
-                    this.$http.post('https://api.wishopper.com/token_advertiser', {
+                    let $http = this.$http;
+                    $http.post('https://api.wishopper.com/token_advertiser', this.$qs.stringify({
                             username: this.email,
                             password: this.password,
-                        }
+                        }), config
                     ).then(response => {
+                        feedLocalStorageUser($http).then(res => {
+                            localStorage.setItem('access_token', response.data.access_token);
 
-
-                        //TODO : Faire varier les variables (lol)
-                        localStorage.setItem('user', JSON.stringify(response.data.user))
-                        localStorage.setItem('access_token', response.data.access_token)
-
-                        if (localStorage.getItem('access_token') != null) {
-                            this.$emit('loggedIn')
-                            if (this.$route.params.nextUrl != null) {
-                                this.$router.push({path: this.$route.params.nextUrl});
-                            } else {
-                                this.$router.push({path: '/annonces/online'})
+                            if (localStorage.getItem('access_token') != null) {
+                                this.$emit('loggedIn')
+                                if (this.$route.params.nextUrl != null) {
+                                    this.$router.push({path: this.$route.params.nextUrl});
+                                } else {
+                                    this.$router.push({path: '/annonces/online'})
+                                }
                             }
-                        }
-
-
+                        }).catch(error => {
+                            this.$data.loginError = true;
+                            console.log(error);
+                        });
                     })
                         .catch(error => {
                             this.$data.loginError = true;
-                            console.log(error.response);
+                            console.log(error);
                             this.localLogin();
                         });
                 }

@@ -22,16 +22,25 @@
                                 <div class="divider"/>
                                 <b-form-group id="exampleInputGroup1"
                                               label-for="exampleInput1"
-                                              description="">
+                                              description="contact@societe.com">
                                     <b-form-input id="exampleInput1"
                                                   type="email"
                                                   required
-                                                  v-model="mail"
+                                                  v-model="email"
                                                   placeholder="Adresse mail">
                                     </b-form-input>
                                 </b-form-group>
                                 <b-form-group id="exampleInputGroup12"
-                                              description="Numéro de SIRET de l'entreprise (ex: 362 521 879 00034)"
+                                              description="Company & Co."
+                                              label-for="exampleInput12">
+                                    <b-form-input id="exampleInput12"
+                                                  required
+                                                  v-model="commercial_name"
+                                                  placeholder="Nom commercial de l'entreprise">
+                                    </b-form-input>
+                                </b-form-group>
+                                <b-form-group id="exampleInputGroup12"
+                                              description="362 521 879 00034"
                                               label-for="exampleInput12">
                                     <b-form-input id="exampleInput12"
                                                   required
@@ -39,25 +48,64 @@
                                                   placeholder="SIRET">
                                     </b-form-input>
                                 </b-form-group>
+                                <b-form-group id="exampleInputGroup12"
+                                              description="123 Avenue Jean Costaud, Paris"
+                                              label-for="exampleInput12">
+                                    <b-form-input id="exampleInput12"
+                                                  required
+                                                  v-model="address"
+                                                  placeholder="Adresse postale complète">
+                                    </b-form-input>
+                                </b-form-group>
+                                <b-form-group id="exampleInputGroup12"
+                                              description="06 12 34 56 78"
+                                              label-for="exampleInput12">
+                                    <b-form-input id="exampleInput12"
+                                                  required
+                                                  v-model="phone"
+                                                  placeholder="Numéro de téléphone">
+                                    </b-form-input>
+                                </b-form-group>
                                 <b-form-group id="exampleInputGroup13"
+                                              description="Jean Dupond"
                                               label-for="exampleInput13">
                                     <b-form-input id="exampleInput13"
                                                   type="text"
                                                   required
-                                                  v-model="name"
-
+                                                  v-model="legal_name"
                                                   placeholder="Nom et prénom">
                                     </b-form-input>
                                 </b-form-group>
-                                <b-form-group id="exampleInputGroup14"
-                                              description=""
-                                              label-for="exampleInput14">
-                                    <b-form-input id="exampleInput14"
+                                <b-form-group id="exampleInputGroup1222"
+                                              description="Paris"
+                                              label-for="exampleInput1222">
+                                    <b-form-input id="exampleInput12222"
                                                   type="text"
                                                   required
-                                                  v-model="city"
-
+                                                  v-model="town"
                                                   placeholder="Ville">
+                                    </b-form-input>
+                                </b-form-group>
+
+                                <b-form-group id="exampleInputGroup1222"
+                                              description="nourriture,bio,sucreries"
+                                              label-for="exampleInput1222">
+                                    <b-form-input id="exampleInput12222"
+                                                  type="text"
+                                                  required
+                                                  v-model="tags"
+                                                  placeholder="Tags de la boutique">
+                                    </b-form-input>
+                                </b-form-group>
+
+                                <b-form-group id="exampleInputGroup1222"
+                                              description="75000"
+                                              label-for="exampleInput1222">
+                                    <b-form-input id="exampleInput12222"
+                                                  type="text"
+                                                  required
+                                                  v-model="postal_code"
+                                                  placeholder="Code postal">
                                     </b-form-input>
                                 </b-form-group>
                                 <div class="row">
@@ -67,9 +115,30 @@
                                             <b-form-input id="exampleInput2"
                                                           type="password"
                                                           v-model="password"
-
                                                           required
                                                           placeholder="Mot de passe">
+                                            </b-form-input>
+                                        </b-form-group>
+                                        <hr>
+                                        <p>Organisation</p>
+                                        <b-form-group id="exampleInputGroup1222"
+                                                      description="XXX XXX XX"
+                                                      label-for="exampleInput1222">
+                                            <b-form-input id="exampleInput12222"
+                                                          type="text"
+                                                          required
+                                                          v-model="organization_invite_code"
+                                                          placeholder="Code d'invitation">
+                                            </b-form-input>
+                                        </b-form-group>
+                                        <b-form-group id="exampleInputGroup1222"
+                                                      description="Holding Group & Co"
+                                                      label-for="exampleInput1222">
+                                            <b-form-input id="exampleInput12222"
+                                                          type="text"
+                                                          required
+                                                          v-model="organization_legal_name"
+                                                          placeholder="Maison mère">
                                             </b-form-input>
                                         </b-form-group>
                                     </div>
@@ -124,12 +193,23 @@
             return {
                 showModal: false,
                 registerError: false,
-                mail: "",
-                siret: "",
-                password: "",
-                name: "",
                 cgu: false,
-                city: ""
+
+                commercial_name: "",
+                address: "",
+                postal_code: "",
+                town: "",
+                phone: "",
+                tags: "",
+                username: "",
+                email: "",
+                password: "",
+                latitude: 0,
+                longitude: 0,
+                legal_name: "",
+                siret: "",
+                organization_invite_code: "",
+                organization_legal_name: ""
             }
         },
 
@@ -140,14 +220,26 @@
                     this.$data.registerError = true;
                     return;
                 }
-                this.$http.post('https://api.wishopper.com/v1/public/visitor/', {
-                        email: this.mail,
-                        siret: this.siret,
+                this.$http.post('https://api.wishopper.com/v1/public/advertiser/', {
+                        email: this.email,
+                        commercial_name: this.commercial_name,
+                        address: this.address,
+                        postal_code: this.postal_code,
+                        town: this.town,
+                        phone: this.phone,
+                        tags: this.tags.split(","),
+                        username: this.email,
                         password: this.password,
-                        name: this.name,
-                        city: this.city,
+                        first_name: this.legal_name.split(" ")[0],
+                        last_name: this.legal_name.split(" ")[1],
+                        latitude: 0,
+                        longitude: 0,
+                        legal_name: this.legal_name,
+                        siret: this.siret,
+                        organization_invite_code: this.organization_invite_code,
+                        organization_legal_name: this.organization_legal_name,
+                        organization_commercial_name: this.organization_legal_name
                     }
-                    // eslint-disable-next-line no-unused-vars
                 ).then(response => {
                     this.$router.push({path: '/'})
                 })

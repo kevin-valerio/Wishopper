@@ -10,6 +10,11 @@ import Pages from './sources/UI/Views/Structure/Layout/pagesLayout.vue';
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
+let accessToken = localStorage.getItem('access_token');
+if (accessToken !== null || accessToken !== "") {
+    Vue.prototype.$http.defaults.headers.common = {'Authorization': `Bearer ` + accessToken}
+}
+Vue.prototype.$qs = require('querystring')
 
 Vue.use(BootstrapVue);
 Vue.use(VModal)
