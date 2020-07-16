@@ -21,8 +21,8 @@
 
                     </div>
                     <div class="widget-content-left  ml-3 header-user-info">
-                        <div class="widget-heading"> {{ user.name }}</div>
-                        <div class="widget-subheading">{{ user.role }}</div>
+                        <div class="widget-heading"> {{ user.legal_name }}</div>
+                        <div class="widget-subheading">{{ user.commercial_name }}</div>
                     </div>
                     <div class="widget-content-right header-user-info ml-3">
                         <button title="" type="button" @click="disconnect()"

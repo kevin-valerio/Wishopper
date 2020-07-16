@@ -16,15 +16,6 @@
                 </button>
             </div>
         </div>
-        <div class="app-header__menu">
-            <span>
-                <b-button class="btn-icon btn-icon-only" variant="primary" size="sm" v-bind:class="{ 'active' : isOpenMobileMenu }" @click="toggleMobile2('header-menu-open')">
-                    <div class="btn-icon-wrapper">
-                        <font-awesome-icon icon="ellipsis-v"/>
-                    </div>
-                </b-button>
-            </span>
-        </div>
     </div>
 </template>
 

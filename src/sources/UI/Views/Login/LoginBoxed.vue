@@ -38,7 +38,7 @@
                                                   placeholder="Mot de passe">
                                     </b-form-input>
                                 </b-form-group>
-                                <b-form-checkbox name="check" id="exampleCheck">
+                                <b-form-checkbox name="check" checked="true" id="exampleCheck">
                                     Garder ma session ouverte
                                 </b-form-checkbox>
                                 <div class="divider"/>
@@ -91,21 +91,19 @@
 
 
     function feedLocalStorageUser($http) {
-        const config = {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-            }
-        };
 
-        return $http.get('https://api.wishopper.com/v1/private/advertiser/', {"": ""})
-            .then((response) => {
-                localStorage.setItem('user', JSON.stringify(response.data))
-            });
+        const token = localStorage.getItem("access_token");
+
+        return $http.get('https://api.wishopper.com/v1/private/advertiser/', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
     }
 
     export default {
         components: {},
-        mounted: function() {
+        mounted: function () {
 
             if (localStorage.getItem("access_token") !== null || localStorage.getItem("access_token") !== "") {
                 this.$router.push({path: '/annonces/online'})
@@ -121,36 +119,6 @@
 
         methods: {
 
-            //TODO : Remove in production
-            localLogin: function () {
-
-                if (this.email === "admin@admin.fr" && this.password === "admin") {
-                    console.log("Still creating a fake account");
-
-                    console.log("Setting default account [TESTING MODE]");
-
-                    localStorage.setItem('user', JSON.stringify({
-                        is_admin: true,
-                        name: "Kevin Valerio",
-                        credit: 108,
-                        role: "Maison mère - Carrefour"
-                    }));
-
-                    localStorage.setItem('access_token', "WTF_TOKEN");
-                    if (localStorage.getItem('access_token') != null) {
-                        this.$emit('loggedIn')
-                        if (this.$route.params.nextUrl != null) {
-                            this.$router.push({path: this.$route.params.nextUrl});
-                        } else {
-                            this.$router.push({path: '/annonces/online'})
-                        }
-                    }
-                } else {
-                    this.$data.loginError = true;
-
-                }
-            },
-
             handleSubmit: function () {
                 const config = {
                     headers: {
@@ -165,9 +133,10 @@
                             password: this.password,
                         }), config
                     ).then(response => {
-                        feedLocalStorageUser($http).then(res => {
-                            localStorage.setItem('access_token', response.data.access_token);
+                        localStorage.setItem('access_token', response.data.access_token);
 
+                        feedLocalStorageUser($http).then(res => {
+                            localStorage.setItem('user', JSON.stringify(res.data))
                             if (localStorage.getItem('access_token') != null) {
                                 this.$emit('loggedIn')
                                 if (this.$route.params.nextUrl != null) {
@@ -184,7 +153,6 @@
                         .catch(error => {
                             this.$data.loginError = true;
                             console.log(error);
-                            this.localLogin();
                         });
                 }
             }
