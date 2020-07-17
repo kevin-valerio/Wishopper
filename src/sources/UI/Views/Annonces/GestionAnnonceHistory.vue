@@ -12,13 +12,13 @@
                     <button type="button" tabindex="0" class="dropdown-item">Décroissantes</button>
                 </b-dropdown>
 
-                <button class="btn-pill btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-alternate btn-sm">
-                    Supprimer la selection
-                </button>
+<!--                <button class="btn-pill btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-alternate btn-sm">-->
+<!--                    Supprimer la selection-->
+<!--                </button>-->
 
         </div>
 
-        <annonce-tuile :heading=heading :subheading=subheading :icon=icon></annonce-tuile>
+        <annonce-tuile @selected="selected" :heading=heading :subheading=subheading :icon=icon></annonce-tuile>
         <annonce-tuile :heading=heading :subheading=subheading :icon=icon></annonce-tuile>
         <annonce-tuile :heading=heading :subheading=subheading :icon=icon></annonce-tuile>
     </div>

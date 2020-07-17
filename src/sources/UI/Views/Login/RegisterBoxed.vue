@@ -40,7 +40,7 @@
                                     </b-form-input>
                                 </b-form-group>
                                 <b-form-group id="exampleInputGroup12"
-                                              description="362 521 879 00034"
+                                              description="36252187900034"
                                               label-for="exampleInput12">
                                     <b-form-input id="exampleInput12"
                                                   required
@@ -58,7 +58,7 @@
                                     </b-form-input>
                                 </b-form-group>
                                 <b-form-group id="exampleInputGroup12"
-                                              description="06 12 34 56 78"
+                                              description="0612345678"
                                               label-for="exampleInput12">
                                     <b-form-input id="exampleInput12"
                                                   required
@@ -220,33 +220,39 @@
                     this.$data.registerError = true;
                     return;
                 }
-                this.$http.post('https://api.wishopper.com/v1/public/advertiser/', {
-                        email: this.email,
-                        commercial_name: this.commercial_name,
-                        address: this.address,
-                        postal_code: this.postal_code,
-                        town: this.town,
-                        phone: this.phone,
-                        tags: this.tags.split(","),
-                        username: this.email,
-                        password: this.password,
-                        first_name: this.legal_name.split(" ")[0],
-                        last_name: this.legal_name.split(" ")[1],
-                        latitude: 0,
-                        longitude: 0,
-                        legal_name: this.legal_name,
-                        siret: this.siret,
-                        organization_invite_code: this.organization_invite_code,
-                        organization_legal_name: this.organization_legal_name,
-                        organization_commercial_name: this.organization_legal_name
-                    }
-                ).then(response => {
-                    this.$router.push({path: '/'})
-                })
-                    .catch(error => {
+                this.$http.get('https://api-adresse.data.gouv.fr/search/?q=' + this.address + " " + this.town + " " + this.postal_code, {}
+                ).then(res => {
+                    this.latitude = res.data.features[0].geometry.coordinates[0];
+                    this.longitude = res.data.features[0].geometry.coordinates[1];
+
+                    alert(this.latitude + " " + this.longitude);
+                    this.$http.post('https://api.wishopper.com/v1/public/advertiser/', {
+                            email: this.email,
+                            commercial_name: this.commercial_name,
+                            address: this.address,
+                            postal_code: this.postal_code,
+                            town: this.town,
+                            phone: this.phone,
+                            tags: JSON.stringify(this.tags.split(",")),
+                            username: this.email,
+                            password: this.password,
+                            first_name: this.legal_name.split(" ")[0],
+                            last_name: this.legal_name.split(" ")[1],
+                            latitude: this.latitude,
+                            longitude: this.longitude,
+                            legal_name: this.legal_name,
+                            siret: this.siret,
+                            organization_invite_code: this.organization_invite_code,
+                            organization_legal_name: this.organization_legal_name,
+                            organization_commercial_name: this.organization_legal_name
+                        }
+                    ).then(response => {
+                        this.$router.push({path: '/'})
+                    }).catch(error => {
                         this.$data.registerError = true;
                         console.log(error.response);
                     });
+                })
             },
 
             show() {

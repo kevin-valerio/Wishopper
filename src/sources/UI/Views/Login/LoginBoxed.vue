@@ -92,11 +92,10 @@
 
     function feedLocalStorageUser($http) {
 
-        const token = localStorage.getItem("access_token");
 
         return $http.get('https://api.wishopper.com/v1/private/advertiser/', {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         });
     }
@@ -122,7 +121,10 @@
             handleSubmit: function () {
                 const config = {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+
                     }
                 }
 

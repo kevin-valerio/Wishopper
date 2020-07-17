@@ -57,6 +57,7 @@
       "eslint:recommended"
     ],
     "rules": {
+      "no-unused-vars": "off",
       "no-console": "off",
       "vue/no-unused-components": [
         "error",

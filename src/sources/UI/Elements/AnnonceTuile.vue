@@ -34,14 +34,15 @@
                                     <div class="widget-subheading">Une description de l'offre numéro une</div>
                                 </div>
                                 <div class="widget-content-right">
-                                    <button class="btn-pill btn-hover-shine btn btn-focus btn-lg">Editer l'annonce
+                                    <button @click="edit(3)" class="btn-pill btn-hover-shine btn btn-focus btn-lg">
+                                        Editer l'annonce
                                     </button>
                                 </div>
                                 <div class="widget-content-right mr-2">
-                                    <div class="custom-checkbox custom-control">
-                                        <input type="checkbox" id="checkbox2"
-                                               class="custom-control-input">
-                                        <label for="checkbox2" class="custom-control-label">&nbsp;</label>
+                                    <div class="form-check mr-5">
+                                        <!--                                        <input type="checkbox" class="form-check-input" id="exampleCheck1"-->
+                                        <!--                                        @click="tuileSelected()"-->
+                                        <!--                                        >-->
                                     </div>
                                 </div>
 
@@ -70,9 +71,15 @@
     export default {
         components: {},
         methods: {
+            tuileSelected: function () {
+                this.$root('selected')
+                this.$emit('selected')
 
+            },
 
-
+            edit: function (id) {
+                this.$router.push({path: `/annonces/edit/${id}` });
+            }
         },
         data: () => ({}),
 

@@ -21,8 +21,7 @@ let router = new Router({
             name: 'Gestion des enseignes',
             meta: {
                 requiresAuth: true,
-                is_admin: true
-
+                // is_admin: true
             },
             component: () => import('./sources/UI/Views/Annonceurs/GestionAnnonceurs'),
         },
@@ -34,6 +33,15 @@ let router = new Router({
                 requiresAuth: true
             },
             component: () => import('./sources/UI/Views/Annonces/CreateAnnonce'),
+        },
+
+        {
+            path: '/annonces/edit/:id',
+            name: 'Editer une annonce',
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('./sources/UI/Views/Annonces/EditAnnonce'),
         },
 
         {

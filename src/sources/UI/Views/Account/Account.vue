@@ -11,7 +11,7 @@
                                     <div class="position-relative form-group"><label for="exampleEmail11" class="">Numero
                                         de
                                         SIRET</label><input
-                                        name="email" id="exampleEmail11" placeholder="362 521 879 00034" type="text"
+                                        name="email" id="exampleEmail11" placeholder="36252187900034" type="text"
                                         class="form-control"></div>
                                 </div>
                                 <div class="col-md-6">
@@ -124,15 +124,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group"><label for="examplePassword11"
-                                                                                     class="">Confirmation du
-                                        mot de
-                                        passe</label>
-                                        <input name="password" id="prenom" placeholder="********"
-                                               type="password" class="form-control">
-                                    </div>
-                                </div>
+
 
                             </div>
                         </form>
@@ -161,7 +153,7 @@
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Crédits Wee</h5>
-                        <span> Au <b> {{ new Date().getDate() + "/" + (parseInt(new Date().getMonth().toString()) + 1) + "/" + new Date().getFullYear() }}</b>, vous disposez d'un crédit de <b>{{ user.credit }} Wee</b></span><br><br>
+                        <span> Au <b> {{ new Date().getDate() + "/" + (parseInt(new Date().getMonth().toString()) + 1) + "/" + new Date().getFullYear() }}{{ user.credit }} Wee</b>, vous disposez d'un crédit de </span><br><br>
                         <form class="">
                             <div class="row">
                                 <div class="ml-3">
@@ -186,32 +178,7 @@
                                         </div>
 
                                     </div>
-                                    <div
-                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-secondary">
-                                        <div class="widget-chat-wrapper-outer">
-                                            <div class='credit-card-inputs' :class='{ complete }'>
-                                                <card-number class='stripe-element card-number'
-                                                             ref='cardNumber'
-                                                             :stripe='stripe'
-                                                             :options='options'
-                                                             @change='number = $event.complete'
-                                                />
-                                                <card-expiry class='stripe-element card-expiry'
-                                                             ref='cardExpiry'
-                                                             :stripe='stripe'
-                                                             :options='options'
-                                                             @change='expiry = $event.complete'
-                                                />
-                                                <card-cvc class='stripe-element card-cvc'
-                                                          ref='cardCvc'
-                                                          :stripe='stripe'
-                                                          :options='options'
-                                                          @change='cvc = $event.complete'
-                                                />
-                                            </div>
-                                        </div>
 
-                                    </div>
                                 </div>
 
                                 <div class="ml-3">
@@ -334,7 +301,7 @@
         data: () => ({
             heading: 'Mes informations',
             user: JSON.parse(localStorage.getItem('user')),
-            subheading: 'Visionnez et modifiez les informations relatives Sà votre compte ici',
+            subheading: 'Visionnez et modifiez les informations relatives à votre compte ici',
             icon: 'pe-7s-users icon-gradient bg-tempting-azure',
             dropzoneOptions: {
                 url: 'https://httpbin.org/post',
