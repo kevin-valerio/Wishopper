@@ -260,7 +260,7 @@
         },
 
         mounted : function(){
-            alert(this.$route.params.id);
+
         },
 
         data: () => ({

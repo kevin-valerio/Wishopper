@@ -2,11 +2,20 @@
     <div class="d-flex">
         <div class="header-btn-lg pr-0">
             <div class="widget-content p-0">
+
                 <div class="widget-content-wrapper">
+
+                    <div class="widget-content-right right">
+                        <b-img src="https://picsum.photos/50/50/"/>
+                    </div>
+
                     <div class="widget-content-left button-content mr-3">
+
                         <div class="dot-success vertical-timeline-element">
+
                             <div><span class="vertical-timeline-element-icon bounce-in"></span>
                                 <div class="vertical-timeline-element-content bounce-in">
+
                                     <h1 class="timeline-title">
                                         <span class="widget-subheading">Crédits : </span>
                                         <router-link to="/account">

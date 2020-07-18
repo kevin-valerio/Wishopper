@@ -3,7 +3,9 @@
         <page-title :heading=heading :subheading=subheading :icon=icon></page-title>
         <div class="row">
             <div class="col-lg-6">
+
                 <div class="main-card mb-3 card">
+
                     <div class="card-body"><h5 class="card-title">Informations sur la société</h5>
                         <form class="">
                             <div class="form-row">
@@ -11,36 +13,36 @@
                                     <div class="position-relative form-group"><label for="exampleEmail11" class="">Numero
                                         de
                                         SIRET</label><input
-                                        name="email" id="exampleEmail11" placeholder="36252187900034" type="text"
+                                        name="email" id="exampleEmail11" v-model="siret" placeholder="36252187900034"
+                                        type="text"
                                         class="form-control"></div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Nom
                                         commercial</label><input
-                                        name="password" id="examplePassword11" placeholder="Wishopper"
+                                        name="password" id="examplePassword11" v-model="nom_commercial"
+                                        placeholder="Wishopper"
                                         type="text" class="form-control"></div>
                                 </div>
                             </div>
                             <div class="position-relative form-group"><label for="exampleAddress" class="">Dénomination
                                 légale</label><input
-                                name="address" id="exampleAddress" placeholder="SARL" type="text" class="form-control">
+                                name="address" id="exampleAddress" placeholder="SARL" v-model="denomination" type="text"
+                                class="form-control">
                             </div>
                             <div class="position-relative form-group"><label for="exampleAddress2" class="">Email du
                                 compte
-                            </label><input name="address2" id="exampleAddress2" placeholder="contact@societe.com"
+                            </label><input name="address2" id="exampleAddress2" v-model="mail"
+                                           placeholder="contact@societe.com"
                                            type="email" class="form-control"></div>
 
-                            <div class="position-relative form-group"><label for="exampleAddress2" class="">Adresse du
-                                siege social
-                            </label><input name="address2" id="exampleAddress2"
-                                           placeholder="123 Avenue Jean-Moulin, Paris"
-                                           type="email" class="form-control"></div>
 
                             <div class="position-relative form-group"><label for="exampleAddress2" class="">Adresse de
                                 <i>localisation
                                     du commerce</i>
-                            </label><input name="address2" id="exampleAddress2" placeholder="42 Avenue De Gaulle, Paris"
+                            </label><input name="address2" v-model="adresse_localisation" id="exampleAddress2"
+                                           placeholder="42 Avenue De Gaulle, Paris"
                                            type="email" class="form-control"></div>
                             <!--                            <fieldset class="position-relative row form-group">-->
                             <!--                                <legend class="col-form-label ml-3">Se connecter à un groupe</legend>-->
@@ -80,7 +82,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Nom</label>
-                                        <input name="password" id="nom" placeholder="Dupont"
+                                        <input name="password" v-model="nom" id="nom" placeholder="Dupont"
                                                type="text" class="form-control">
                                     </div>
                                 </div>
@@ -88,7 +90,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Prénom</label>
-                                        <input name="password" id="prenom" placeholder="Jean"
+                                        <input name="password" v-model="prenom" id="prenom" placeholder="Jean"
                                                type="text" class="form-control">
                                     </div>
                                 </div>
@@ -99,7 +101,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">E-mail</label>
-                                        <input name="password" id="nom"
+                                        <input name="password" v-model="mail_edition" id="nom"
                                                placeholder="responsable-edition@company.fr"
                                                type="email" class="form-control">
                                     </div>
@@ -108,7 +110,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Téléphone</label>
-                                        <input name="password" id="prenom" placeholder="0601020304"
+                                        <input name="password" id="prenom" v-model="phone" placeholder="0601020304"
                                                type="text" class="form-control">
                                     </div>
                                 </div>
@@ -119,11 +121,10 @@
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Mot de
                                         passe</label>
-                                        <input name="password" id="nom" placeholder="********"
+                                        <input name="password" v-model="password" id="nom" placeholder="********"
                                                type="password" class="form-control">
                                     </div>
                                 </div>
-
 
 
                             </div>
@@ -132,10 +133,16 @@
 
                     <div class="center-elem custom-control mb-3">
                         <div>
-                            <button type="button" class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
+                            <button type="button" @click="changeParams()"
+                                    class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
                                 <b>Enregistrer toutes les modifications</b>
                             </button>
                         </div>
+
+
+                        <b-img v-if="successApply" class="ml-2" width="30" height="30"
+                               src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
+                        <span v-if="successApply" class="ml-2 "><i>Modifications appliquées</i></span>
 
                         <div class="ml-5">
                             <button type="button"
@@ -288,15 +295,12 @@
         faPlus,
     );
 
-    import {stripeKey, stripeOptions} from '../../../../../stripeconfig'
-
     export default {
         components: {
             vueDropzone: vue2Dropzone,
             PageTitle
 
         },
-        props: ['stripe', 'options'],
 
         data: () => ({
             heading: 'Mes informations',
@@ -309,69 +313,48 @@
                 addRemoveLinks: true,
                 maxFilesize: 3
             },
+            successApply: false,
+            phone: "",
+            nom: "",
+            prenom: "",
+            adresse_localisation: "",
+            nom_commercial: "",
+            mail_edition: "",
+            password : "",
+            mail : "",
+            denomination : "",
+            siret : "",
 
 
-            complete: false,
-            number: false,
-            expiry: false,
-            cvc: false,
-            options: {
-                stripeKey: stripeKey,
-                stripeOptions: stripeOptions
-
-            }
         }),
 
         methods: {
-            pay: function () {
-                // createToken returns a Promise which resolves in a result object
-                // createToken().then(data => console.log(data.token))
-            }
-            ,
-            update() {
-                this.complete = this.number && this.expiry && this.cvc
-
-                // field completed, find field to focus next
-                if (this.number) {
-                    if (!this.expiry) {
-                        this.$refs.cardExpiry.focus()
-                    } else if (!this.cvc) {
-                        this.$refs.cardCvc.focus()
-                    }
-                } else if (this.expiry) {
-                    if (!this.cvc) {
-                        this.$refs.cardCvc.focus()
-                    } else if (!this.number) {
-                        this.$refs.cardNumber.focus()
+            changeParams: function () {
+                const config = {
+                    headers: {
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
                 }
-                // no focus magic for the CVC field as it gets complete with three
-                // numbers, but can also have four
+                this.$http.patch('https://api.wishopper.com/v1/private/advertiser/',
+                    {
+                        commercial_name: this.nom_commercial,
+                        address: this.adresse_localisation,
+                        phone: this.phone,
+                        first_name: this.prenom,
+                        last_name: this.nom,
+                        advert_order: "name_asc",
+                        password: this.password
+                    }
+                    , config
+                ).then(response => {
+                    this.successApply = true;
+
+                }).catch(error => {
+                    alert("Impossible d'enregistrer les informations. Veuillez vérifier vos informations");
+                    console.log(error);
+                });
             }
         },
-        watch: {
-            number() {
-                this.update()
-            },
-            expiry() {
-                this.update()
-            },
-            cvc() {
-                this.update()
-            }
-        }
-
     }
-
-
 </script>
-<style>
-    .stripe-card {
-        width: 300px;
-        border: 1px solid grey;
-    }
-
-    .stripe-card.complete {
-        border-color: green;
-    }
-</style>

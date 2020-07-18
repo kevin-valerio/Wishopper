@@ -66,6 +66,7 @@
                                                   placeholder="Numéro de téléphone">
                                     </b-form-input>
                                 </b-form-group>
+
                                 <b-form-group id="exampleInputGroup13"
                                               description="Jean Dupond"
                                               label-for="exampleInput13">
@@ -225,7 +226,6 @@
                     this.latitude = res.data.features[0].geometry.coordinates[0];
                     this.longitude = res.data.features[0].geometry.coordinates[1];
 
-                    alert(this.latitude + " " + this.longitude);
                     this.$http.post('https://api.wishopper.com/v1/public/advertiser/', {
                             email: this.email,
                             commercial_name: this.commercial_name,
@@ -233,7 +233,7 @@
                             postal_code: this.postal_code,
                             town: this.town,
                             phone: this.phone,
-                            tags: JSON.stringify(this.tags.split(",")),
+                            tags: (this.tags.split(",")),
                             username: this.email,
                             password: this.password,
                             first_name: this.legal_name.split(" ")[0],
