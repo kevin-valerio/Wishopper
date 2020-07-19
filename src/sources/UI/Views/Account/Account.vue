@@ -61,6 +61,22 @@
 
                             <!--                                </div>-->
                             <!--                            </fieldset>-->
+
+                            <div>
+                                <label for="exampleAddress2" class="">Tags du commerce
+                                </label>
+                                <vue-tags-input
+
+                                    placeholder="alimentation, bio..."
+                                    v-model="tag"
+                                    :tags="tags"
+                                    :autocomplete-items="autocompleteItems"
+                                    :add-only-from-autocomplete="true"
+                                    @tags-changed="update"
+
+                                />
+                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -281,6 +297,8 @@
 
     import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
     import vue2Dropzone from "vue2-dropzone";
+    import VueTagsInput from '@johmun/vue-tags-input';
+
 
     library.add(
         faTrashAlt,
@@ -298,7 +316,8 @@
     export default {
         components: {
             vueDropzone: vue2Dropzone,
-            PageTitle
+            PageTitle,
+            VueTagsInput,
 
         },
 
@@ -320,15 +339,38 @@
             adresse_localisation: "",
             nom_commercial: "",
             mail_edition: "",
-            password : "",
-            mail : "",
-            denomination : "",
-            siret : "",
+            password: "",
+            mail: "",
+            denomination: "",
+            siret: "",
 
 
+            tag: '',
+            tags: [],
+            debounce: null,
+            autocompleteItems: [],
         }),
+        watch: {
+            'tag': 'initItems',
+        },
 
         methods: {
+            update: function (newTags) {
+                this.autocompleteItems = [];
+                this.tags = newTags;
+            },
+            initItems: function () {
+
+                clearTimeout(this.debounce);
+                this.debounce = setTimeout(() => {
+                    this.$http.get(`https://api.wishopper.com/v1/public/category/`).then(response => {
+                        this.autocompleteItems = response.data.results.map(a => {
+                            return {text: a.categories};
+                        });
+                    }).catch(error => console.error(error));
+                }, 600);
+            },
+
             changeParams: function () {
                 const config = {
                     headers: {
