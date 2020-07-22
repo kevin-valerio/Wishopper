@@ -37,6 +37,42 @@
                                            placeholder="contact@societe.com"
                                            type="email" class="form-control"></div>
 
+                            <div style="width: 100%;">
+
+
+                                <label for="exampleInput11" class="">Horaires du commerce
+                                </label>
+                                <br>
+                                <div class="btn-group v-size--large" style="width: 100%;" role="group">
+                                    <input id="exampleInput11"
+                                           placeholder='[[1, "08:00", "12:00"], [1, "15:00", "17:00"], [3, "00:00", "00:00"]]'
+                                           required="required"
+                                           v-model="horaires"
+                                           aria-required="true" class="form-control"
+                                           aria-describedby="exampleInputGroup1__BV_description_">
+
+                                    <button type="button"
+                                            @click="applyHoraires()"
+                                            class="ml-2 custom-control-inline  btn btn-transition btn-outline-primary">
+                                        <small>Appliquer</small>
+                                    </button>
+
+
+
+                                    <b-img v-if="successApplyHoraires" class="ml-2" width="30" height="30"
+                                           src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
+                                    <span v-if="successApplyHoraires" class="ml-2 "><i>Horaires changés</i></span>
+                                </div>
+                                <small tabindex="-1" id="exampleInputGroup1__BV_description_"
+                                       class="form-text text-muted">
+                                    Ici, le magasin est ouvert le lundi de 8h à 12h, puis de 15h à 17.
+                                    Ensuite, il est ouvert le mercredi toute la journée.
+
+                                </small>
+                                <br>
+
+                            </div>
+
 
                             <div class="position-relative form-group"><label for="exampleAddress2" class="">Adresse de
                                 <i>localisation
@@ -333,6 +369,7 @@
                 maxFilesize: 3
             },
             successApply: false,
+            successApplyHoraires: false,
             phone: "",
             nom: "",
             prenom: "",
@@ -344,6 +381,7 @@
             denomination: "",
             siret: "",
 
+            horaires: "",
 
             tag: '',
             tags: [],
@@ -359,6 +397,28 @@
                 this.autocompleteItems = [];
                 this.tags = newTags;
             },
+
+            applyHoraires: function () {
+                const config = {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                }
+                this.$http.post('https://api.wishopper.com/v1/private/advertiser/opening-hours/',
+                    {
+                        opening_hours: JSON.parse(this.horaires)
+                    }
+                    , config
+                ).then(response => {
+                    this.successApplyHoraires = true;
+
+                }).catch(error => {
+                    alert("Impossible d'enregistrer les horraires. Veuillez vérifier le format du champ");
+                    console.log(error);
+                });
+
+            },
+
             initItems: function () {
 
                 clearTimeout(this.debounce);
