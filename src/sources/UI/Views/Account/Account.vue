@@ -31,11 +31,7 @@
                                 name="address" id="exampleAddress" placeholder="SARL" v-model="denomination" type="text"
                                 class="form-control">
                             </div>
-                            <div class="position-relative form-group"><label for="exampleAddress2" class="">Email du
-                                compte
-                            </label><input name="address2" id="exampleAddress2" v-model="mail"
-                                           placeholder="contact@societe.com"
-                                           type="email" class="form-control"></div>
+
 
                             <div style="width: 100%;">
 
@@ -58,14 +54,13 @@
                                     </button>
 
 
-
                                     <b-img v-if="successApplyHoraires" class="ml-2" width="30" height="30"
                                            src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
                                     <span v-if="successApplyHoraires" class="ml-2 "><i>Horaires changés</i></span>
                                 </div>
                                 <small tabindex="-1" id="exampleInputGroup1__BV_description_"
                                        class="form-text text-muted">
-                                    Ici, le magasin est ouvert le lundi de 8h à 12h, puis de 15h à 17.
+                                    Dans l'exemple (supprimez le texte ci-dessus pour le faire apparaitre si besoin), le magasin est ouvert le lundi de 8h à 12h, puis de 15h à 17.
                                     Ensuite, il est ouvert le mercredi toute la journée.
 
                                 </small>
@@ -101,16 +96,8 @@
                             <div>
                                 <label for="exampleAddress2" class="">Tags du commerce
                                 </label>
-                                <vue-tags-input
-
-                                    placeholder="alimentation, bio..."
-                                    v-model="tag"
-                                    :tags="tags"
-                                    :autocomplete-items="autocompleteItems"
-                                    :add-only-from-autocomplete="true"
-                                    @tags-changed="update"
-
-                                />
+                                <input name="password" v-model="tags" id="tags" placeholder="nourriture, bio"
+                                       type="text" class="form-control">
                             </div>
 
                         </form>
@@ -122,10 +109,10 @@
                     <div class="card-body"><h5 class="card-title">Responsable de l'édition</h5>
                         <form class="">
                             <div class="form-row">
-                                <b-dropdown no-flip text="Civilité" class="mb-0 mr-0" variant="outline-dark">
-                                    <button type="button" tabindex="0" class="dropdown-item">Monsieur</button>
-                                    <button type="button" tabindex="0" class="dropdown-item">Madame</button>
-                                </b-dropdown>
+                                <!--                                <b-dropdown no-flip text="Civilité" class="mb-0 mr-0" variant="outline-dark">-->
+                                <!--                                    <button type="button" tabindex="0" class="dropdown-item">Monsieur</button>-->
+                                <!--                                    <button type="button" tabindex="0" class="dropdown-item">Madame</button>-->
+                                <!--                                </b-dropdown>-->
 
 
                             </div>
@@ -333,7 +320,6 @@
 
     import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
     import vue2Dropzone from "vue2-dropzone";
-    import VueTagsInput from '@johmun/vue-tags-input';
 
 
     library.add(
@@ -353,7 +339,7 @@
         components: {
             vueDropzone: vue2Dropzone,
             PageTitle,
-            VueTagsInput,
+
 
         },
 
@@ -384,7 +370,7 @@
             horaires: "",
 
             tag: '',
-            tags: [],
+            tags: '',
             debounce: null,
             autocompleteItems: [],
         }),
@@ -393,9 +379,41 @@
         },
 
         methods: {
-            update: function (newTags) {
-                this.autocompleteItems = [];
-                this.tags = newTags;
+
+            feedInformations: function () {
+                const config = {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                }
+                this.$http.get('https://api.wishopper.com/v1/private/advertiser/',
+                     config).then(res => {
+                    this.nom_commercial = res.data.commercial_name;
+                    this.adresse_localisation = res.data.address;
+                    this.postal_code = res.data.postal_code;
+                    this.town = res.data.town;
+                    this.phone = res.data.phone;
+                    this.prenom = res.data.first_name;
+                    this.nom = res.data.last_name;
+                    this.tags = res.data.tags;
+                    this.latitude = res.data.latitude;
+                    this.siret = res.data.siret;
+                    this.username = res.data.username;
+                    this.mail_edition = res.data.email;
+                    this.longitude = res.data.longitude;
+
+
+                }).catch(error => {
+                    console.log(error);
+                });
+
+                this.$http.get('https://api.wishopper.com/v1/private/advertiser/opening-hours/',
+                     config).then(res => {
+                    this.horaires = JSON.stringify(res.data.opening_hours);
+
+                }).catch(error => {
+                    console.log(error);
+                });
             },
 
             applyHoraires: function () {
@@ -457,6 +475,10 @@
                     console.log(error);
                 });
             }
+        },
+
+        mounted() {
+            this.feedInformations();
         },
     }
 </script>
