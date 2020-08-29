@@ -431,7 +431,7 @@
                     this.successApplyHoraires = true;
 
                 }).catch(error => {
-                    alert("Impossible d'enregistrer les horraires. Veuillez vérifier le format du champ");
+                    alert("Impossible d'enregistrer les horaires. Veuillez vérifier le format du champ");
                     console.log(error);
                 });
 

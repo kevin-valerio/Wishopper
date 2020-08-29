@@ -204,7 +204,7 @@
                     </div>
                     <div class="center-elem custom-control mb-3">
                         <div>
-                            <button type="button" class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
+                            <button type="button"  class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
                                 <b>Créer et publier l'annonce</b>
                             </button>
                         </div>
@@ -261,8 +261,8 @@
 
         mounted : function(){
 
-        },
-
+        }
+        ,
         data: () => ({
             heading: 'Edition d\'une annonce',
             subheading: 'Vous vous appretez à éditer une annonce ' ,

@@ -9,23 +9,38 @@
                         <form class="">
                             <div class="position-relative form-group"><label for="exampleAddress" class="">Titre de
                                 l'offre</label><input
-                                name="address" id="exampleAddress" placeholder="Promotion, 40% sur le rayon bio !"
+                                name="address" v-model="title"
+                                placeholder="Promotion, 40% sur le rayon bio !"
                                 type="text" class="form-control">
                             </div>
                             <div class="position-relative form-group"><label for="exampleAddress2" class="">Référence
                                 produit
-                            </label><input name="address2" id="exampleAddress2" placeholder="1232991F"
-                                           type="email" class="form-control"></div>
+                            </label><input v-model="reference"
+                                           placeholder="1232991F"
+                                           class="form-control"></div>
 
-                            <div class="position-relative form-group"><label for="exampleAddress2" class="">Catégories
-                            </label><input name="address2" id="exampleAddress2"
+                            <div class="position-relative form-group"><label class="">Catégories
+                            </label><input v-model="tags"
                                            placeholder="high-tech, technologie, electronic"
-                                           type="email" class="form-control"></div>
+                                           class="form-control"></div>
 
-                            <label for="start">Période de validité</label>
+                            <label>Période de validité (début)</label>
+                            <input type="datetime-local" class="input-group"
+                                   value="2018-07-22" v-model="validity_start">
 
-                            <input type="date" id="start" name="trip-start" class="input-group"
-                                   value="2018-07-22">
+                            <label>Période de validité (fin)</label>
+
+                            <input type="datetime-local" name="trip-start" class="input-group"
+                                   value="2020-09-01" v-model="validity_end">
+
+                            <label>Date d'affichage (début)</label>
+                            <input type="datetime-local" name="trip-start" class="input-group"
+                                   value="2018-07-22" v-model="appearance_start">
+
+                            <label>Date d'affichage (fin)</label>
+
+                            <input type="datetime-local" class="input-group"
+                                   value="2020-09-01" v-model="appearance_end">
                         </form>
                     </div>
 
@@ -110,12 +125,12 @@
                                                         <div class="fsize-1 ml-5">
                                                             <input name="radio1" type="radio"
                                                                    class="form-check-input">
-                                                            <a href="#" style="color: #5A5A5A">Plusieurs images</a>
+                                                            <a href="#" style="color: #5A5A5A">Fichier PDF</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">
-                                                    Mettez plusieurs images en ligne</h6>
+                                                    Mettez un PDF en ligne</h6>
                                                 <br>
                                             </div>
                                         </div>
@@ -129,10 +144,23 @@
                         <!--Déposer un média-->
                         <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
 
-                                <h3>Drag and drop to xx content!</h3>
-                                <div class="subtitle">...ou selectionnez directement un fichier depuis votre</div>
+                            <h3>Drag and drop to xx content!</h3>
+                            <div class="subtitle">...ou selectionnez directement un fichier depuis votre</div>
 
                         </vue-dropzone>
+
+                    </div>
+                    <div class="center-elem custom-control mb-3">
+                        <div>
+                            <button type="button" @click="publish()"
+                                    class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
+                                <b>Créer et publier l'annonce</b>
+                            </button>
+
+                            <b-img v-if="successApply" class="ml-2" width="30" height="30"
+                                   src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
+                            <span v-if="successApply" class="ml-2 "><i>Annonce créee ! Vous pouvez retourner à l'accueil</i></span>
+                        </div>
 
                     </div>
                 </div>
@@ -150,7 +178,7 @@
                             <div class="position-relative form-group">
 
                                 <label for="exampleAddress" class="">Description</label>
-                                <b-textarea name="address" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
+                                <b-textarea name="address" v-model="description" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
 à compter du 18 janvier, pour les 30 ans du magasin !" type="text" class="form-control"/>
 
                             </div>
@@ -172,47 +200,40 @@
 
             </div>
 
-            <div class="col-lg-6 ">
-                <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Ciblage</h5>
-                        <form class="">
-                            <label>Sexe : </label>
-                            <div class="ml-2 position-sticky form-check custom-control-inline"><label
-                                class="form-check-label">
-                                <input name="radio1" type="radio" class="form-check-input">Homme</label>
-                            </div>
-                            <div class="position-sticky form-check custom-control-inline"><label
-                                class="form-check-label">
-                                <input name="radio1" type="radio" class="form-check-input">Femme</label>
-                            </div>
+<!--            <div class="col-lg-6 ">-->
+<!--                <div class="main-card mb-3 card">-->
+<!--                    <div class="card-body"><h5 class="card-title">Ciblage</h5>-->
+<!--                        <form class="">-->
+<!--                            <label>Sexe : </label>-->
+<!--                            <div class="ml-2 position-sticky form-check custom-control-inline"><label-->
+<!--                                class="form-check-label">-->
+<!--                                <input name="radio1" type="radio" class="form-check-input">Homme</label>-->
+<!--                            </div>-->
+<!--                            <div class="position-sticky form-check custom-control-inline"><label-->
+<!--                                class="form-check-label">-->
+<!--                                <input name="radio1" type="radio" class="form-check-input">Femme</label>-->
+<!--                            </div>-->
 
-                            <div class="position-relative form-group">
-                                <label for="exampleSelect">Age de départ</label>
-                                <select
-                                    name="select" id="exampleSelect" class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
-                                <label class="custom-control-inline" for="exampleSelect">Age d'arrivé</label>
-                                <select
-                                    name="select" id="exampleSelect" class="custom-control-inline form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="center-elem custom-control mb-3">
-                        <div>
-                            <button type="button" class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
-                                <b>Créer et publier l'annonce</b>
-                            </button>
-                        </div>
+<!--                            <div class="position-relative form-group">-->
+<!--                                <label for="exampleSelect">Age de départ</label>-->
+<!--                                <select-->
+<!--                                    name="select" id="exampleSelect" class="form-control">-->
+<!--                                    <option>1</option>-->
+<!--                                    <option>2</option>-->
+<!--                                </select>-->
+<!--                                <label class="custom-control-inline" for="exampleSelect">Age d'arrivé</label>-->
+<!--                                <select-->
+<!--                                    name="select" id="exampleSelect" class="custom-control-inline form-control">-->
+<!--                                    <option>1</option>-->
+<!--                                    <option>2</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                   -->
+<!--                </div>-->
 
-                    </div>
-                </div>
-
-            </div>
+<!--            </div>-->
 
 
         </div>
@@ -222,58 +243,98 @@
 </template>
 
 <script>
-    import {library} from '@fortawesome/fontawesome-svg-core'
+import {library} from '@fortawesome/fontawesome-svg-core'
 
-    import {
-        faAngleDown,
-        faAngleUp,
-        faCalendarAlt,
-        faCheck,
-        faPlus,
-        faStar,
-        faTh,
-        faTrashAlt,
-    } from '@fortawesome/free-solid-svg-icons'
-    import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
-    import vue2Dropzone from 'vue2-dropzone'
-    import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import {
+    faAngleDown,
+    faAngleUp,
+    faCalendarAlt,
+    faCheck,
+    faPlus,
+    faStar,
+    faTh,
+    faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
+import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
+import vue2Dropzone from 'vue2-dropzone'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
-    library.add(
-        faTrashAlt,
-        faCheck,
-        faAngleDown,
-        faAngleUp,
-        faTh,
-        faCalendarAlt,
-    );
-    library.add(
-        faStar,
-        faPlus,
-    );
-
-
-    export default {
-        components: {
-            PageTitle,
-            vueDropzone: vue2Dropzone
+library.add(
+    faTrashAlt,
+    faCheck,
+    faAngleDown,
+    faAngleUp,
+    faTh,
+    faCalendarAlt,
+);
+library.add(
+    faStar,
+    faPlus,
+);
 
 
-        },
-        data: () => ({
-            heading: 'Création d\'une annonce',
-            subheading: 'Mettez en ligne votre nouvelle annonce afin de la rendre visible sur l\'application mobile',
-            icon: 'pe-7s-upload icon-gradient bg-tempting-azure',
-            dropzoneOptions: {
-                url: 'https://httpbin.org/post',
-                thumbnailWidth: 200,
-                addRemoveLinks: true,
-                maxFilesize: 3
+export default {
+    components: {
+        PageTitle,
+        vueDropzone: vue2Dropzone
+
+    },
+    data: () => ({
+        heading: 'Création d\'une annonce',
+        subheading: 'Mettez en ligne votre nouvelle annonce afin de la rendre visible sur l\'application mobile',
+        icon: 'pe-7s-upload icon-gradient bg-tempting-azure',
+        validity_end: '',
+        validity_start: '',
+        successApply: false,
+        appearance_start: '',
+        appearance_end: '',
+        title: '',
+        description: '',
+        promotion_type: 'percentage_immediate_discount',
+        tags: [],
+        reference: '',
+        dropzoneOptions: {
+            url: 'https://httpbin.org/post',
+            thumbnailWidth: 200,
+            addRemoveLinks: true,
+            maxFilesize: 3
+        }
+    }),
+
+    methods: {
+
+        publish: function () {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
             }
-        }),
+            this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/',
+                {
+                    name: this.title,
+                    description: this.description,
+                    appearance_start: this.appearance_start,
+                    appearance_end: this.appearance_end,
+                    validity_start: this.validity_start,
+                    validity_end: this.validity_end,
+                    // images: this.,
+                    // youtube: this.,
+                    // pdf_url: this.,
+                    // grouped_advert_list_advertiser_reference: this.,
+                    promotion_details: this.description,
+                    subcategories_references: JSON.stringify(this.tags.split(',')),
+                    promotion_type: this.promotion_type,
+                }, config
+            ).then(response => {
+                this.successApply = true;
 
-        methods: {},
+            }).catch(error => {
+                alert("Impossible de créer l'annonce... [ " + error + " ]");
+            });
+        }
+    },
 
-    }
+}
 
 
 </script>
