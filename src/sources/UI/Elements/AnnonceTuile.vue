@@ -16,9 +16,9 @@
                                 </div>
                                 <div class="widget-content-left mr-3">
                                     <div class="widget-content-left">
-                                        <b-img thumbnail left   width="200"
+                                        <b-img thumbnail left width="200"
                                                v-bind:src="getUrlImage(ad)"/>
-                                     </div>
+                                    </div>
                                 </div>
                                 <div class="widget-content-left">
                                     <div class="widget-subheading opacity-10">
@@ -36,8 +36,15 @@
                                     <div class="widget-subheading">{{ ad.description }}</div>
                                 </div>
                                 <div class="widget-content-right">
-                                    <button @click="edit(ad.reference)" class="btn-pill btn-hover-shine btn btn-focus btn-lg">
-                                        Editer l'annonce
+                                    <button @click="edit(ad.reference)"
+                                            class="btn-pill btn-hover-shine btn btn-focus btn-lg">
+                                        <b> Editer l'annonce</b>
+                                    </button>
+                                    <br>
+                                    <br>
+                                    <button @click="archive(ad.reference)"
+                                            class="btn-pill btn-hover-shine btn-secondary btn ">
+                                        Archiver
                                     </button>
                                 </div>
                                 <div class="widget-content-right mr-2">
@@ -88,13 +95,12 @@ export default {
             this.$emit('selected')
         },
 
-        getUrlImage: function(ad){
+        getUrlImage: function (ad) {
             let finalLink = '';
 
-            if(ad.youtube !== null){
+            if (ad.youtube !== null) {
                 finalLink = 'http://i3.ytimg.com/vi/' + ad.youtube.substr(ad.youtube.length - 11) + '/hqdefault.jpg';
-            }
-            else {
+            } else {
                 finalLink = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
             }
 
@@ -103,6 +109,11 @@ export default {
 
         edit: function (id) {
             this.$router.push({path: `/annonces/edit/${id}`});
+        },
+
+        archive: function (id) {
+            //TODO : L'archive
+            alert("TODO: Archive function");
         }
     },
 
