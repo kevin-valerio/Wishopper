@@ -7,13 +7,23 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Informations sur l'offre</h5>
                         <form class="">
-                            <div class="position-relative form-group"><label for="exampleAddress" class="">Titre de
+                            <div class="position-relative form-group"><label class="">Titre de
                                 l'offre</label><input
                                 name="address" v-model="title"
                                 placeholder="Promotion, 40% sur le rayon bio !"
                                 type="text" class="form-control">
                             </div>
-                            <div class="position-relative form-group"><label for="exampleAddress2" class="">Référence
+
+                            <div class="position-relative form-group">
+
+                                <label class="">Description</label>
+                                <b-textarea name="address" v-model="description" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
+à compter du 18 janvier, pour les 30 ans du magasin !" type="text" class="form-control"/>
+
+                            </div>
+
+
+                            <div class="position-relative form-group"><label class="">Référence
                                 produit
                             </label><input v-model="reference"
                                            placeholder="1232991F"
@@ -66,13 +76,14 @@
                                                         </div>
                                                         <div class="ml-5 fsize-1 ">
                                                             <input name="radio1" type="radio"
+                                                                   @change="selectVideo($event)"
                                                                    class="form-check-input">
-                                                            <a href="#" style="color: #5A5A5A">Vidéo unique</a>
+                                                            <a href="#" style="color: #5A5A5A">Vidéo YouTube</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <h6 class="widget-subheading opacity-5 center-elem margin-h-center">
-                                                    Mettez une vidéo en ligne</h6>
+                                                    {{ messageError }}</h6>
                                                 <br>
                                             </div>
                                         </div>
@@ -159,7 +170,8 @@
 
                             <b-img v-if="successApply" class="ml-2" width="30" height="30"
                                    src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
-                            <span v-if="successApply" class="ml-2 "><i>Annonce créee ! Vous pouvez retourner à l'accueil</i></span>
+                            <span v-if="successApply"
+                                  class="ml-2 "><i>Annonce créee ! Vous pouvez retourner à l'accueil</i></span>
                         </div>
 
                     </div>
@@ -169,75 +181,55 @@
 
         </div>
 
-        <div class="row">
-
-            <div class="col-lg-6">
-                <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Informations complémentaires</h5>
-                        <form class="">
-                            <div class="position-relative form-group">
-
-                                <label for="exampleAddress" class="">Description</label>
-                                <b-textarea name="address" v-model="description" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
-à compter du 18 janvier, pour les 30 ans du magasin !" type="text" class="form-control"/>
-
-                            </div>
-
-                            <div class="position-relative form-group">
-
-                                <label for="exampleAddress" class="">Note personelle</label>
-                                <input name="address" id="exampleAddress"
-                                       placeholder="Premiere annonce de test" type="text" class="form-control"/>
-
-                            </div>
-
-
-                        </form>
-                    </div>
-
-                </div>
-
-
-            </div>
-
-<!--            <div class="col-lg-6 ">-->
-<!--                <div class="main-card mb-3 card">-->
-<!--                    <div class="card-body"><h5 class="card-title">Ciblage</h5>-->
-<!--                        <form class="">-->
-<!--                            <label>Sexe : </label>-->
-<!--                            <div class="ml-2 position-sticky form-check custom-control-inline"><label-->
-<!--                                class="form-check-label">-->
-<!--                                <input name="radio1" type="radio" class="form-check-input">Homme</label>-->
-<!--                            </div>-->
-<!--                            <div class="position-sticky form-check custom-control-inline"><label-->
-<!--                                class="form-check-label">-->
-<!--                                <input name="radio1" type="radio" class="form-check-input">Femme</label>-->
-<!--                            </div>-->
-
-<!--                            <div class="position-relative form-group">-->
-<!--                                <label for="exampleSelect">Age de départ</label>-->
-<!--                                <select-->
-<!--                                    name="select" id="exampleSelect" class="form-control">-->
-<!--                                    <option>1</option>-->
-<!--                                    <option>2</option>-->
-<!--                                </select>-->
-<!--                                <label class="custom-control-inline" for="exampleSelect">Age d'arrivé</label>-->
-<!--                                <select-->
-<!--                                    name="select" id="exampleSelect" class="custom-control-inline form-control">-->
-<!--                                    <option>1</option>-->
-<!--                                    <option>2</option>-->
-<!--                                </select>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                   -->
-<!--                </div>-->
-
-<!--            </div>-->
-
-
-        </div>
+        <!--        <div class="row">-->
+        <!--            <div class="col-lg-6">-->
+        <!--                <div class="main-card mb-3 card">-->
+        <!--                    <div class="card-body"><h5 class="card-title">Informations complémentaires</h5>-->
+        <!--                        <form class="">-->
+        <!--                       -->
+        <!--                            <div class="position-relative form-group">-->
+        <!--                                <label for="exampleAddress" class="">Note personelle</label>-->
+        <!--                                <input name="address" id="exampleAddress"-->
+        <!--                                       placeholder="Premiere annonce de test" type="text" class="form-control"/>-->
+        <!--                            </div>-->
+        <!--                        </form>-->
+        <!--                    </div>-->
+        <!--                </div>-->
     </div>
+    <!--            <div class="col-lg-6 ">-->
+    <!--                <div class="main-card mb-3 card">-->
+    <!--                    <div class="card-body"><h5 class="card-title">Ciblage</h5>-->
+    <!--                        <form class="">-->
+    <!--                            <label>Sexe : </label>-->
+    <!--                            <div class="ml-2 position-sticky form-check custom-control-inline"><label-->
+    <!--                                class="form-check-label">-->
+    <!--                                <input name="radio1" type="radio" class="form-check-input">Homme</label>-->
+    <!--                            </div>-->
+    <!--                            <div class="position-sticky form-check custom-control-inline"><label-->
+    <!--                                class="form-check-label">-->
+    <!--                                <input name="radio1" type="radio" class="form-check-input">Femme</label>-->
+    <!--                            </div>-->
+
+    <!--                            <div class="position-relative form-group">-->
+    <!--                                <label for="exampleSelect">Age de départ</label>-->
+    <!--                                <select-->
+    <!--                                    name="select" id="exampleSelect" class="form-control">-->
+    <!--                                    <option>1</option>-->
+    <!--                                    <option>2</option>-->
+    <!--                                </select>-->
+    <!--                                <label class="custom-control-inline" for="exampleSelect">Age d'arrivé</label>-->
+    <!--                                <select-->
+    <!--                                    name="select" id="exampleSelect" class="custom-control-inline form-control">-->
+    <!--                                    <option>1</option>-->
+    <!--                                    <option>2</option>-->
+    <!--                                </select>-->
+    <!--                            </div>-->
+    <!--                        </form>-->
+    <!--                    </div>-->
+    <!--                   -->
+    <!--                </div>-->
+
+    <!--            </div>-->
 
 
 </template>
@@ -287,8 +279,10 @@ export default {
         validity_start: '',
         successApply: false,
         appearance_start: '',
+        messageError: 'Mettez une vidéo YouTube ',
         appearance_end: '',
         title: '',
+        youtubeUrl: '',
         description: '',
         promotion_type: 'percentage_immediate_discount',
         tags: [],
@@ -302,6 +296,17 @@ export default {
     }),
 
     methods: {
+        selectVideo: function (event) {
+            let urlVideo = prompt("Entrez le lien de la vidéo");
+            var pattern = new RegExp('^(https?:\\/\\/)?' + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + '((\\d{1,3}\\.){3}\\d{1,3}))' +
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + '(\\?[;&a-z\\d%_.~+=-]*)?' + '(\\#[-a-z\\d_]*)?$', 'i');
+            if (pattern.test(urlVideo)) {
+                this.youtubeUrl = urlVideo;
+                this.messageError = "✅" + urlVideo.substr(urlVideo.length - 11);
+            } else {
+                this.messageError = "❌ Le lien entré n'est pas valide"
+            }
+        },
 
         publish: function () {
             const config = {
@@ -318,23 +323,20 @@ export default {
                     validity_start: this.validity_start,
                     validity_end: this.validity_end,
                     // images: this.,
-                    // youtube: this.,
+                    youtube: this.youtubeUrl,
                     // pdf_url: this.,
                     // grouped_advert_list_advertiser_reference: this.,
                     promotion_details: this.description,
-                    subcategories_references: JSON.stringify(this.tags.split(',')),
+                    subcategories_references: this.tags.split(','),
                     promotion_type: this.promotion_type,
                 }, config
             ).then(response => {
                 this.successApply = true;
 
             }).catch(error => {
-                alert("Impossible de créer l'annonce... [ " + error + " ]");
+                alert("❌ Impossible de créer l'annonce... [ " + error + " ]");
             });
         }
     },
-
 }
-
-
 </script>

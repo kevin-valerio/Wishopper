@@ -12,37 +12,39 @@
                                 <div class="widget-content-left mr-3">
 
                                     <img src="https://image.flaticon.com/icons/svg/709/709612.svg" alt="vu">
-                                    <div class="widget-subheading" style="display: inline;">18</div>
+                                    <div class="widget-subheading" style="display: inline;">{{ ad.visits }}</div>
                                 </div>
                                 <div class="widget-content-left mr-3">
                                     <div class="widget-content-left">
-                                        <b-img thumbnail left src="https://picsum.photos/300/200/"/>
-                                    </div>
+                                        <b-img thumbnail left   width="200"
+                                               v-bind:src="getUrlImage(ad)"/>
+                                     </div>
                                 </div>
                                 <div class="widget-content-left">
                                     <div class="widget-subheading opacity-10">
                                         <span class="pr-2">
-                                            Posté le <i>23/03/2020,</i>
-                                         </span>
+                                            Postée le <i> {{ ad.date_creation }}</i>
+                                          </span>
 
                                         <span>
-                                        valide jusqu'au <b class="text-success">12/04/2021</b>
+                                        valide du <b class="text-success">{{ ad.appearance_start }}</b> jusqu'au <b
+                                            class="text-success"> {{ ad.appearance_end }}</b>
                                         </span>
                                     </div>
                                     <br>
-                                    <div class="widget-heading">Offre numéro une</div>
-                                    <div class="widget-subheading">Une description de l'offre numéro une</div>
+                                    <div class="widget-heading">{{ ad.name }}</div>
+                                    <div class="widget-subheading">{{ ad.description }}</div>
                                 </div>
                                 <div class="widget-content-right">
-                                    <button @click="edit(3)" class="btn-pill btn-hover-shine btn btn-focus btn-lg">
+                                    <button @click="edit(ad.reference)" class="btn-pill btn-hover-shine btn btn-focus btn-lg">
                                         Editer l'annonce
                                     </button>
                                 </div>
                                 <div class="widget-content-right mr-2">
                                     <div class="form-check mr-5">
-                                        <!--                                        <input type="checkbox" class="form-check-input" id="exampleCheck1"-->
-                                        <!--                                        @click="tuileSelected()"-->
-                                        <!--                                        >-->
+                                        <!-- <input type="checkbox" class="form-check-input" id="exampleCheck1"-->
+                                        <!-- @click="tuileSelected()"-->
+                                        <!-- >-->
                                     </div>
                                 </div>
 
@@ -60,28 +62,54 @@
 <script>
 
 
-    import {library} from '@fortawesome/fontawesome-svg-core'
-    import {faCheck, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faCheck, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 
-    library.add(
-        faTrashAlt,
-        faCheck
-    );
+library.add(
+    faTrashAlt,
+    faCheck
+);
 
-    export default {
-        components: {},
-        methods: {
-            tuileSelected: function () {
-                this.$root('selected')
-                this.$emit('selected')
+export default {
+    components: {},
 
-            },
+    mounted() {
+        var dateFormat = require('dateformat');
+        this.ad.date_creation = dateFormat(new Date(this.ad.date_creation), "dd/mm/yyyy à HHxxxxMM").replace('xxxx', 'h');
+        this.ad.validity_start = dateFormat(new Date(this.ad.validity_start), "dd/mm/yyyy à HHxxxxMM").replace('xxxx', 'h');
+        this.ad.date_creation = dateFormat(new Date(this.ad.validity_end), "dd/mm/yyyy à HHxxxxMM").replace('xxxx', 'h');
+        this.ad.appearance_start = dateFormat(new Date(this.ad.appearance_start), "dd/mm/yyyy à HHxxxxMM").replace('xxxx', 'h');
+        this.ad.appearance_end = dateFormat(new Date(this.ad.appearance_end), "dd/mm/yyyy à HHxxxxMM").replace('xxxx', 'h');
+    },
 
-            edit: function (id) {
-                this.$router.push({path: `/annonces/edit/${id}` });
-            }
+    methods: {
+        tuileSelected: function () {
+            this.$root('selected')
+            this.$emit('selected')
         },
-        data: () => ({}),
 
+        getUrlImage: function(ad){
+            let finalLink = '';
+
+            if(ad.youtube !== null){
+                finalLink = 'http://i3.ytimg.com/vi/' + ad.youtube.substr(ad.youtube.length - 11) + '/hqdefault.jpg';
+            }
+            else {
+                finalLink = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
+            }
+
+            return finalLink;
+        },
+
+        edit: function (id) {
+            this.$router.push({path: `/annonces/edit/${id}`});
+        }
+    },
+
+    data: () => ({}),
+
+    props: {
+        ad: Object
     }
+}
 </script>
