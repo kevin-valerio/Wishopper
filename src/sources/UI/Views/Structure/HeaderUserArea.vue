@@ -6,7 +6,7 @@
                 <div class="widget-content-wrapper">
 
                     <div class="widget-content-right right">
-                        <b-img src="https://picsum.photos/50/50/"/>
+                        <b-img  width="60" rounded-circle    :src="user.logo_url"/>
                     </div>
 
                     <div class="widget-content-left button-content mr-3">

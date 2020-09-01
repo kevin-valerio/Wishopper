@@ -60,7 +60,8 @@
                                 </div>
                                 <small tabindex="-1" id="exampleInputGroup1__BV_description_"
                                        class="form-text text-muted">
-                                    Dans l'exemple (supprimez le texte ci-dessus pour le faire apparaitre si besoin), le magasin est ouvert le lundi de 8h à 12h, puis de 15h à 17.
+                                    Dans l'exemple (supprimez le texte ci-dessus pour le faire apparaitre si besoin), le
+                                    magasin est ouvert le lundi de 8h à 12h, puis de 15h à 17.
                                     Ensuite, il est ouvert le mercredi toute la journée.
 
                                 </small>
@@ -121,7 +122,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Nom</label>
-                                        <input name="password" v-model="nom" id="nom" placeholder="Dupont"
+                                        <input name="password" v-model="nom"  placeholder="Dupont"
                                                type="text" class="form-control">
                                     </div>
                                 </div>
@@ -129,7 +130,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Prénom</label>
-                                        <input name="password" v-model="prenom" id="prenom" placeholder="Jean"
+                                        <input  v-model="prenom"   placeholder="Jean"
                                                type="text" class="form-control">
                                     </div>
                                 </div>
@@ -140,7 +141,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">E-mail</label>
-                                        <input name="password" v-model="mail_edition" id="nom"
+                                        <input   v-model="mail_edition"
                                                placeholder="responsable-edition@company.fr"
                                                type="email" class="form-control">
                                     </div>
@@ -149,7 +150,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Téléphone</label>
-                                        <input name="password" id="prenom" v-model="phone" placeholder="0601020304"
+                                        <input    v-model="phone" placeholder="0601020304"
                                                type="text" class="form-control">
                                     </div>
                                 </div>
@@ -160,9 +161,10 @@
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Mot de
                                         passe</label>
-                                        <input name="password" v-model="password" id="nom" placeholder="********"
+                                        <input name="password" v-model="password"   placeholder="********"
                                                type="password" class="form-control">
                                     </div>
+                                    <span style="color: #ff4925"><i>Veuillez toujours saisir votre mot de passe !</i></span>
                                 </div>
 
 
@@ -199,7 +201,9 @@
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Crédits Wee</h5>
-                        <span> Au <b> {{ new Date().getDate() + "/" + (parseInt(new Date().getMonth().toString()) + 1) + "/" + new Date().getFullYear() }}{{ user.credit }} Wee</b>, vous disposez d'un crédit de </span><br><br>
+                        <span> Au <b> {{
+                                new Date().getDate() + "/" + (parseInt(new Date().getMonth().toString()) + 1) + "/" + new Date().getFullYear()
+                            }}{{ user.credit }} Wee</b>, vous disposez d'un crédit de </span><br><br>
                         <form class="">
                             <div class="row">
                                 <div class="ml-3">
@@ -288,8 +292,26 @@
                                 <div class="ml-3" style="width: 100%;">
                                     <div
                                         class="card  widget-chart text-center card-btm-border border-light">
-                                        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
-                                        </vue-dropzone>
+                                        <file-pond
+                                            name="advertiser_file"
+                                            ref="pond"
+                                            label-idle="Ajoutez votre logo ... "
+                                            v-bind:allow-multiple="false"
+                                            v-bind:server="{
+                                                url: 'https://api.wishopper.com/',
+                                                timeout: 7000,
+                                                process: {
+                                                    url: 'v1/private/advertiser/upload/',
+                                                    method: 'POST',
+                                                    headers: {
+                                                         'Authorization': `Bearer ` + this.credentials
+                                                    },
+                                                    withCredentials: false
+                                                }
+                                            }"
+                                            accepted-file-types="image/jpeg, image/png"
+                                            v-bind:files="logo"
+                                            v-on:processfile="handleProcessFile"/>
 
                                     </div>
                                 </div>
@@ -305,180 +327,192 @@
 </template>
 
 <script>
-    import {library} from '@fortawesome/fontawesome-svg-core'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import vueFilePond from 'vue-filepond';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 
-    import {
-        faAngleDown,
-        faAngleUp,
-        faCalendarAlt,
-        faCheck,
-        faPlus,
-        faStar,
-        faTh,
-        faTrashAlt,
-    } from '@fortawesome/free-solid-svg-icons'
+const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
-    import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
-    import vue2Dropzone from "vue2-dropzone";
+import {
+    faAngleDown,
+    faAngleUp,
+    faCalendarAlt,
+    faCheck,
+    faPlus,
+    faStar,
+    faTh,
+    faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
 
-
-    library.add(
-        faTrashAlt,
-        faCheck,
-        faAngleDown,
-        faAngleUp,
-        faTh,
-        faCalendarAlt,
-    );
-    library.add(
-        faStar,
-        faPlus,
-    );
-
-    export default {
-        components: {
-            vueDropzone: vue2Dropzone,
-            PageTitle,
+import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
+import vue2Dropzone from "vue2-dropzone";
 
 
+library.add(
+    faTrashAlt,
+    faCheck,
+    faAngleDown,
+    faAngleUp,
+    faTh,
+    faCalendarAlt,
+);
+library.add(
+    faStar,
+    faPlus,
+);
+
+export default {
+    components: {
+        PageTitle,
+    },
+
+    data: () => ({
+        heading: 'Mes informations',
+        user: JSON.parse(localStorage.getItem('user')),
+        subheading: 'Visionnez et modifiez les informations relatives à votre compte ici',
+        icon: 'pe-7s-users icon-gradient bg-tempting-azure',
+        dropzoneOptions: {
+            url: 'https://httpbin.org/post',
+            thumbnailWidth: 200,
+            addRemoveLinks: true,
+            maxFilesize: 3
+        },
+        successApply: false,
+        successApplyHoraires: false,
+        phone: "",
+        nom: "",
+        prenom: "",
+        adresse_localisation: "",
+        nom_commercial: "",
+        mail_edition: "",
+        password: "",
+        mail: "",
+        denomination: "",
+        siret: "",
+        logo_url: "",
+        logo: "",
+        horaires: "",
+        tag: '',
+        tags: '',
+        debounce: null,
+        autocompleteItems: [],
+        credentials: localStorage.getItem(`access_token`),
+
+    }),
+    watch: {
+        'tag': 'initItems',
+    },
+
+    methods: {
+        handleProcessFile: function (error, file) {
+            this.logo_url = "https://api.wishopper.com/" + JSON.parse(file.serverId).path;
         },
 
-        data: () => ({
-            heading: 'Mes informations',
-            user: JSON.parse(localStorage.getItem('user')),
-            subheading: 'Visionnez et modifiez les informations relatives à votre compte ici',
-            icon: 'pe-7s-users icon-gradient bg-tempting-azure',
-            dropzoneOptions: {
-                url: 'https://httpbin.org/post',
-                thumbnailWidth: 200,
-                addRemoveLinks: true,
-                maxFilesize: 3
-            },
-            successApply: false,
-            successApplyHoraires: false,
-            phone: "",
-            nom: "",
-            prenom: "",
-            adresse_localisation: "",
-            nom_commercial: "",
-            mail_edition: "",
-            password: "",
-            mail: "",
-            denomination: "",
-            siret: "",
-
-            horaires: "",
-
-            tag: '',
-            tags: '',
-            debounce: null,
-            autocompleteItems: [],
-        }),
-        watch: {
-            'tag': 'initItems',
-        },
-
-        methods: {
-
-            feedInformations: function () {
-                const config = {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                    }
+        feedInformations: function () {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                 }
-                this.$http.get('https://api.wishopper.com/v1/private/advertiser/',
-                     config).then(res => {
-                    this.nom_commercial = res.data.commercial_name;
-                    this.adresse_localisation = res.data.address;
-                    this.postal_code = res.data.postal_code;
-                    this.town = res.data.town;
-                    this.phone = res.data.phone;
-                    this.prenom = res.data.first_name;
-                    this.nom = res.data.last_name;
-                    this.tags = res.data.tags;
-                    this.latitude = res.data.latitude;
-                    this.siret = res.data.siret;
-                    this.username = res.data.username;
-                    this.mail_edition = res.data.email;
-                    this.longitude = res.data.longitude;
-
-
-                }).catch(error => {
-                    console.log(error);
-                });
-
-                this.$http.get('https://api.wishopper.com/v1/private/advertiser/opening-hours/',
-                     config).then(res => {
-                    this.horaires = JSON.stringify(res.data.opening_hours);
-
-                }).catch(error => {
-                    console.log(error);
-                });
-            },
-
-            applyHoraires: function () {
-                const config = {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                    }
-                }
-                this.$http.post('https://api.wishopper.com/v1/private/advertiser/opening-hours/',
-                    {
-                        opening_hours: JSON.parse(this.horaires)
-                    }
-                    , config
-                ).then(response => {
-                    this.successApplyHoraires = true;
-
-                }).catch(error => {
-                    alert("Impossible d'enregistrer les horaires. Veuillez vérifier le format du champ");
-                    console.log(error);
-                });
-
-            },
-
-            initItems: function () {
-
-                clearTimeout(this.debounce);
-                this.debounce = setTimeout(() => {
-                    this.$http.get(`https://api.wishopper.com/v1/public/category/`).then(response => {
-                        this.autocompleteItems = response.data.results.map(a => {
-                            return {text: a.categories};
-                        });
-                    }).catch(error => console.error(error));
-                }, 600);
-            },
-
-            changeParams: function () {
-                const config = {
-                    headers: {
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                    }
-                }
-                this.$http.patch('https://api.wishopper.com/v1/private/advertiser/',
-                    {
-                        commercial_name: this.nom_commercial,
-                        address: this.adresse_localisation,
-                        phone: this.phone,
-                        first_name: this.prenom,
-                        last_name: this.nom,
-                        advert_order: "name_asc",
-                        password: this.password
-                    }
-                    , config
-                ).then(response => {
-                    this.successApply = true;
-
-                }).catch(error => {
-                    alert("Impossible d'enregistrer les informations. Veuillez vérifier vos informations");
-                    console.log(error);
-                });
             }
+            this.$http.get('https://api.wishopper.com/v1/private/advertiser/',
+                config).then(res => {
+                this.nom_commercial = res.data.commercial_name;
+                this.adresse_localisation = res.data.address;
+                this.postal_code = res.data.postal_code;
+                this.town = res.data.town;
+                this.phone = res.data.phone;
+                this.prenom = res.data.first_name;
+                this.nom = res.data.last_name;
+                this.tags = res.data.tags;
+                this.latitude = res.data.latitude;
+                this.siret = res.data.siret;
+                this.username = res.data.username;
+                this.mail_edition = res.data.email;
+                this.longitude = res.data.longitude;
+
+
+            }).catch(error => {
+                console.log(error);
+            });
+
+            this.$http.get('https://api.wishopper.com/v1/private/advertiser/opening-hours/',
+                config).then(res => {
+                this.horaires = JSON.stringify(res.data.opening_hours);
+
+            }).catch(error => {
+                console.log(error);
+            });
         },
 
-        mounted() {
-            this.feedInformations();
+        applyHoraires: function () {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            }
+            this.$http.post('https://api.wishopper.com/v1/private/advertiser/opening-hours/',
+                {
+                    opening_hours: JSON.parse(this.horaires)
+                }
+                , config
+            ).then(response => {
+                this.successApplyHoraires = true;
+
+            }).catch(error => {
+                alert("Impossible d'enregistrer les horaires. Veuillez vérifier le format du champ");
+                console.log(error);
+            });
+
         },
-    }
+
+        initItems: function () {
+
+            clearTimeout(this.debounce);
+            this.debounce = setTimeout(() => {
+                this.$http.get(`https://api.wishopper.com/v1/public/category/`).then(response => {
+                    this.autocompleteItems = response.data.results.map(a => {
+                        return {text: a.categories};
+                    });
+                }).catch(error => console.error(error));
+            }, 600);
+        },
+
+        changeParams: function () {
+            const config = {
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            }
+            this.$http.patch('https://api.wishopper.com/v1/private/advertiser/',
+                {
+                    commercial_name: this.nom_commercial,
+                    address: this.adresse_localisation,
+                    phone: this.phone,
+                    first_name: this.prenom,
+                    last_name: this.nom,
+                    advert_order: "name_asc",
+                    password: this.password,
+                    logo_url: this.logo_url
+                }
+                , config
+            ).then(response => {
+                this.successApply = true;
+                localStorage.clear();
+                this.$router.push({path: '/'});
+
+            }).catch(error => {
+                alert("Impossible d'enregistrer les informations. Veuillez vérifier vos informations");
+                console.log(error);
+            });
+        }
+    },
+
+    mounted() {
+        this.feedInformations();
+    },
+}
 </script>

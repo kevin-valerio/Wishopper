@@ -23,15 +23,9 @@
                             </div>
 
 
-                            <div class="position-relative form-group"><label class="">Référence
-                                produit
-                            </label><input v-model="reference"
-                                           placeholder="1232991F"
-                                           class="form-control"></div>
-
                             <div class="position-relative form-group"><label class="">Catégories
                             </label><input v-model="tags"
-                                           placeholder="high-tech, technologie, electronic"
+                                           placeholder="high-tech, technologie, electronique"
                                            class="form-control"></div>
 
                             <label>Période de validité (début)</label>
@@ -65,7 +59,7 @@
                                 <div class="ml-3">
                                     <div
                                         style="padding: 1px;"
-                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
+                                        class="col-sm-12 col-md-12 col-xl-12 card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
                                         <div class="widget-chat-wrapper-outer">
                                             <div class="widget-chart-content ">
                                                 <div class="widget-chart-flex">
@@ -90,112 +84,98 @@
 
                                     </div>
                                 </div>
-
                                 <div class="ml-3">
                                     <div
                                         style="padding: 1px;"
-
-                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
-                                        <div class="widget-chat-wrapper-outer">
-                                            <div class="widget-chart-content ">
-                                                <div class="widget-chart-flex">
-                                                    <div class="widget-numbers">
-                                                        <div style="margin-left:55%; "
-                                                             class="  widget-chart-flex">
-                                                            <i class="pe-7s-photo"></i>
-                                                        </div>
-                                                        <div class="fsize-1 ml-5">
-                                                            <input name="radio1" type="radio"
-                                                                   class="form-check-input">
-                                                            <a href="" style="color: #5A5A5A">Image unique</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">
-                                                    Mettez une image en ligne</h6>
-                                                <br>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="ml-3">
-                                    <div
-                                        style="padding: 1px;"
-
-                                        class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
+                                        class="col-sm-12 col-md-12 col-xl-12 card ml-6 mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-primary">
                                         <div class="widget-chat-wrapper-outer">
                                             <div class="widget-chart-content ">
                                                 <div class="widget-chart-flex">
                                                     <div class="widget-numbers">
                                                         <div style="margin-left:60%; "
                                                              class="  widget-chart-flex">
-                                                            <i class="pe-7s-photo-gallery"></i>
+                                                            <i class="pe-7s-file"></i>
                                                         </div>
                                                         <div class="fsize-1 ml-5">
                                                             <input name="radio1" type="radio"
-                                                                   class="form-check-input">
-                                                            <a href="#" style="color: #5A5A5A">Fichier PDF</a>
+                                                                   class="form-check-input"
+                                                                   @change="resetMessage()">
+                                                            <a href="#" style="color: #5A5A5A">Autres fichiers (images/PDF)</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <h6 class="widget-subheading mb-0 opacity-5 center-elem margin-h-center">
-                                                    Mettez un PDF en ligne</h6>
+                                                <h6 class="widget-subheading opacity-5 center-elem margin-h-center">
+                                                    Mettez un <i>PDF</i> ou une <i>image</i> en ligne
+                                                </h6>
                                                 <br>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
-
                             </div>
 
                         </form>
-                        <!--Déposer un média-->
-                        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
+                        <file-pond
+                            name="advertiser_file"
+                            ref="pond"
+                            label-idle="Ajoutez un média ... "
+                            v-bind:allow-multiple="true"
+                            v-bind:server="{
+                                url: 'https://api.wishopper.com/',
+                                timeout: 7000,
+                                process: {
+                                    url: 'v1/private/advertiser/upload/',
+                                    method: 'POST',
+                                    headers: {
+                                         'Authorization': `Bearer ` + this.credentials
+                                    },
+                                    withCredentials: false
+                                }
+                            }"
+                            accepted-file-types="image/jpeg, image/png, application/pdf"
+                            v-bind:files="uploadedFile"
+                            v-on:processfile="handleProcessFile"/>
 
-                            <h3>Drag and drop to xx content!</h3>
-                            <div class="subtitle">...ou selectionnez directement un fichier depuis votre</div>
-
-                        </vue-dropzone>
 
                     </div>
-                    <div class="center-elem custom-control mb-3">
-                        <div>
-                            <button type="button" @click="publish()"
-                                    class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
-                                <b>Créer et publier l'annonce</b>
-                            </button>
 
-                            <b-img v-if="successApply" class="ml-2" width="30" height="30"
-                                   src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
-                            <span v-if="successApply"
-                                  class="ml-2 "><i>Annonce créee ! Vous pouvez retourner à l'accueil</i></span>
-                        </div>
+                </div>
+                <div class="center-elem custom-control mb-3">
+                    <div>
+                        <button type="button" @click="publish()"
+                                class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
+                            <b>Créer et publier l'annonce</b>
+                        </button>
 
+                        <b-img v-if="successApply" class="ml-2" width="30" height="30"
+                               src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
+                        <span v-if="successApply"
+                              class="ml-2 "><i>Annonce créee ! Vous pouvez retourner à l'accueil</i></span>
                     </div>
+
                 </div>
             </div>
-
-
         </div>
 
-        <!--        <div class="row">-->
-        <!--            <div class="col-lg-6">-->
-        <!--                <div class="main-card mb-3 card">-->
-        <!--                    <div class="card-body"><h5 class="card-title">Informations complémentaires</h5>-->
-        <!--                        <form class="">-->
-        <!--                       -->
-        <!--                            <div class="position-relative form-group">-->
-        <!--                                <label for="exampleAddress" class="">Note personelle</label>-->
-        <!--                                <input name="address" id="exampleAddress"-->
-        <!--                                       placeholder="Premiere annonce de test" type="text" class="form-control"/>-->
-        <!--                            </div>-->
-        <!--                        </form>-->
-        <!--                    </div>-->
-        <!--                </div>-->
+
     </div>
+
+    <!--        <div class="row">-->
+    <!--            <div class="col-lg-6">-->
+    <!--                <div class="main-card mb-3 card">-->
+    <!--                    <div class="card-body"><h5 class="card-title">Informations complémentaires</h5>-->
+    <!--                        <form class="">-->
+    <!--                       -->
+    <!--                            <div class="position-relative form-group">-->
+    <!--                                <label for="exampleAddress" class="">Note personelle</label>-->
+    <!--                                <input name="address" id="exampleAddress"-->
+    <!--                                       placeholder="Premiere annonce de test" type="text" class="form-control"/>-->
+    <!--                            </div>-->
+    <!--                        </form>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+
     <!--            <div class="col-lg-6 ">-->
     <!--                <div class="main-card mb-3 card">-->
     <!--                    <div class="card-body"><h5 class="card-title">Ciblage</h5>-->
@@ -248,8 +228,13 @@ import {
     faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
-import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import vueFilePond from 'vue-filepond';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+
+const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 library.add(
     faTrashAlt,
@@ -268,7 +253,7 @@ library.add(
 export default {
     components: {
         PageTitle,
-        vueDropzone: vue2Dropzone
+        FilePond
 
     },
     data: () => ({
@@ -282,20 +267,32 @@ export default {
         messageError: 'Mettez une vidéo YouTube ',
         appearance_end: '',
         title: '',
+        uploadedFile: [],
+        imageUrls: [],
+        pdfUrl: '',
+        credentials: localStorage.getItem(`access_token`),
         youtubeUrl: '',
         description: '',
         promotion_type: 'percentage_immediate_discount',
-        tags: [],
-        reference: '',
-        dropzoneOptions: {
-            url: 'https://httpbin.org/post',
-            thumbnailWidth: 200,
-            addRemoveLinks: true,
-            maxFilesize: 3
-        }
+        tags: []
+
     }),
 
     methods: {
+
+        resetMessage: function () {
+            this.messageError = 'Mettez une vidéo YouTube';
+        },
+
+        handleProcessFile: function (error, file) {
+            let fileName = JSON.parse(file.serverId).path;
+            if (fileName.endsWith('pdf')) {
+                this.pdfUrl =   fileName ;
+            } else {
+                this.imageUrls.push("https://api.wishopper.com/" + fileName);
+            }
+        },
+
         selectVideo: function (event) {
             let urlVideo = prompt("Entrez le lien de la vidéo");
             var pattern = new RegExp('^(https?:\\/\\/)?' + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + '((\\d{1,3}\\.){3}\\d{1,3}))' +
@@ -309,11 +306,13 @@ export default {
         },
 
         publish: function () {
+
             const config = {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                 }
             }
+
             this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/',
                 {
                     name: this.title,
@@ -321,10 +320,10 @@ export default {
                     appearance_start: this.appearance_start,
                     appearance_end: this.appearance_end,
                     validity_start: this.validity_start,
-                    validity_end: this.validity_end,
-                    // images: this.,
+                    images: this.imageUrls,
                     youtube: this.youtubeUrl,
-                    // pdf_url: this.,
+                    pdf_url: this.pdfUrl,
+                    validity_end: this.validity_end,
                     // grouped_advert_list_advertiser_reference: this.,
                     promotion_details: this.description,
                     subcategories_references: this.tags.split(','),
