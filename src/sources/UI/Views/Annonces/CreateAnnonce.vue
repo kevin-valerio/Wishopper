@@ -28,6 +28,16 @@
                                            placeholder="high-tech, technologie, electronique"
                                            class="form-control"></div>
 
+                            <div class="position-relative form-group"><label class="">Type de promotion
+                            </label>
+                                <br>
+                                <select class="form-control" v-model="promotion_type_selected">
+                                    <option v-for="type in promotion_types" v-bind:value="type">
+                                        {{ type }}
+                                    </option>
+                                </select>
+                            </div>
+
                             <label>Période de validité (début)</label>
                             <input type="datetime-local" class="input-group"
                                    value="2018-07-22" v-model="validity_start">
@@ -100,7 +110,8 @@
                                                             <input name="radio1" type="radio"
                                                                    class="form-check-input"
                                                                    @change="resetMessage()">
-                                                            <a href="#" style="color: #5A5A5A">Autres fichiers (images/PDF)</a>
+                                                            <a href="#" style="color: #5A5A5A">Autres fichiers
+                                                                (images/PDF)</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -157,60 +168,7 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
-    <!--        <div class="row">-->
-    <!--            <div class="col-lg-6">-->
-    <!--                <div class="main-card mb-3 card">-->
-    <!--                    <div class="card-body"><h5 class="card-title">Informations complémentaires</h5>-->
-    <!--                        <form class="">-->
-    <!--                       -->
-    <!--                            <div class="position-relative form-group">-->
-    <!--                                <label for="exampleAddress" class="">Note personelle</label>-->
-    <!--                                <input name="address" id="exampleAddress"-->
-    <!--                                       placeholder="Premiere annonce de test" type="text" class="form-control"/>-->
-    <!--                            </div>-->
-    <!--                        </form>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-
-    <!--            <div class="col-lg-6 ">-->
-    <!--                <div class="main-card mb-3 card">-->
-    <!--                    <div class="card-body"><h5 class="card-title">Ciblage</h5>-->
-    <!--                        <form class="">-->
-    <!--                            <label>Sexe : </label>-->
-    <!--                            <div class="ml-2 position-sticky form-check custom-control-inline"><label-->
-    <!--                                class="form-check-label">-->
-    <!--                                <input name="radio1" type="radio" class="form-check-input">Homme</label>-->
-    <!--                            </div>-->
-    <!--                            <div class="position-sticky form-check custom-control-inline"><label-->
-    <!--                                class="form-check-label">-->
-    <!--                                <input name="radio1" type="radio" class="form-check-input">Femme</label>-->
-    <!--                            </div>-->
-
-    <!--                            <div class="position-relative form-group">-->
-    <!--                                <label for="exampleSelect">Age de départ</label>-->
-    <!--                                <select-->
-    <!--                                    name="select" id="exampleSelect" class="form-control">-->
-    <!--                                    <option>1</option>-->
-    <!--                                    <option>2</option>-->
-    <!--                                </select>-->
-    <!--                                <label class="custom-control-inline" for="exampleSelect">Age d'arrivé</label>-->
-    <!--                                <select-->
-    <!--                                    name="select" id="exampleSelect" class="custom-control-inline form-control">-->
-    <!--                                    <option>1</option>-->
-    <!--                                    <option>2</option>-->
-    <!--                                </select>-->
-    <!--                            </div>-->
-    <!--                        </form>-->
-    <!--                    </div>-->
-    <!--                   -->
-    <!--                </div>-->
-
-    <!--            </div>-->
-
 
 </template>
 
@@ -273,10 +231,19 @@ export default {
         credentials: localStorage.getItem(`access_token`),
         youtubeUrl: '',
         description: '',
-        promotion_type: 'percentage_immediate_discount',
+        promotion_type_selected: 'percentage_immediate_discount',
+        promotion_types: [],
         tags: []
 
     }),
+
+    mounted() {
+        this.$http.get('https://api.wishopper.com/v1/public/promotiontype/').then(res => {
+            this.promotion_types = res.data;
+        }).catch(error => {
+            console.log(error);
+        });
+    },
 
     methods: {
 
@@ -287,7 +254,7 @@ export default {
         handleProcessFile: function (error, file) {
             let fileName = JSON.parse(file.serverId).path;
             if (fileName.endsWith('pdf')) {
-                this.pdfUrl =   fileName ;
+                this.pdfUrl = fileName;
             } else {
                 this.imageUrls.push("https://api.wishopper.com/" + fileName);
             }
@@ -322,12 +289,12 @@ export default {
                     validity_start: this.validity_start,
                     images: this.imageUrls,
                     youtube: this.youtubeUrl,
-                    pdf_url: this.pdfUrl,
+                    pdf_url: "https://api.wishopper.com/" + this.pdfUrl,
                     validity_end: this.validity_end,
                     // grouped_advert_list_advertiser_reference: this.,
                     promotion_details: this.description,
                     subcategories_references: this.tags.split(','),
-                    promotion_type: this.promotion_type,
+                    promotion_type: this.promotion_type_selected,
                 }, config
             ).then(response => {
                 this.successApply = true;

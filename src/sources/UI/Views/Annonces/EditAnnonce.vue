@@ -34,6 +34,16 @@
                                            placeholder="high-tech, technologie, electronique"
                                            class="form-control"></div>
 
+                            <div class="position-relative form-group"><label class="">Type de promotion
+                            </label>
+                                <br>
+                                <select  class="form-control" v-model="promotion_type_selected">
+                                    <option v-for="type in promotion_types" v-bind:value="type">
+                                        {{ type }}
+                                    </option>
+                                </select>
+                            </div>
+
                             <label>Période de validité (début)</label>
                             <input type="datetime-local" class="input-group"
                                    value="2018-07-22" v-model="ad.validity_start">
@@ -227,6 +237,8 @@ export default {
         imageUrls: [],
         pdfMessage: 'Mettez un PDF ou une image en ligne',
         credentials: localStorage.getItem(`access_token`),
+        promotion_type_selected: 'percentage_immediate_discount',
+        promotion_types: [],
     }),
 
     mounted() {
@@ -235,6 +247,12 @@ export default {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }
+
+        this.$http.get('https://api.wishopper.com/v1/public/promotiontype/').then(res => {
+            this.promotion_types = res.data;
+        }).catch(error => {
+            console.log(error);
+        });
 
         this.$http.get('https://api.wishopper.com/v1/private/advertiser/advert/?advert_reference=' + this.$route.params.id, config).then(res => {
             this.ad = res.data;
@@ -300,7 +318,7 @@ export default {
                     validity_start: this.ad.validity_start,
                     images: this.ad.imageUrls,
                     youtube: this.youtubeUrl,
-                    pdf_url: this.pdfUrl,
+                    pdf_url: "https://api.wishopper.com/" + this.pdfUrl,
                     validity_end: this.ad.validity_end,
                     // grouped_advert_list_advertiser_reference: this.ad.,
                     promotion_details: this.ad.description,

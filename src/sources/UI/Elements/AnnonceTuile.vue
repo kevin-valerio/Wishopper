@@ -33,7 +33,9 @@
                                     </div>
                                     <br>
                                     <div class="widget-heading">{{ ad.name }}</div>
-                                    <div class="widget-subheading">{{ ad.description }}</div>
+                                    <div class="widget">➡ {{ ad.description }}</div>
+<!--                                    <div class="widget-subheading">➡ {{ ad.subcategories_references }}</div>-->
+                                    <div class="widget-subheading">Promotion de type <i>{{ ad.promotion_type }}</i></div>
                                 </div>
                                 <div class="widget-content-right">
                                     <button @click="edit(ad.reference)"
