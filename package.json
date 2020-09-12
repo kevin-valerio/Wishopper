@@ -14,7 +14,7 @@
     "@johmun/vue-tags-input": "^2.1.0",
     "animate-sass": "^0.8.2",
     "axios": "^0.19.2",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.15.0",
     "chart.js": "^2.8.0",
     "dateformat": "^3.0.3",

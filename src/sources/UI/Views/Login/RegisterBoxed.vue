@@ -30,40 +30,40 @@
                                                   placeholder="Adresse mail">
                                     </b-form-input>
                                 </b-form-group>
-                                <b-form-group id="exampleInputGroup12"
-                                              description="Company & Co."
-                                              label-for="exampleInput12">
-                                    <b-form-input id="exampleInput12"
-                                                  required
-                                                  v-model="commercial_name"
-                                                  placeholder="Nom commercial de l'entreprise">
+                                <b-form-group
+                                    description="Company & Co."
+                                >
+                                    <b-form-input
+                                        required
+                                        v-model="commercial_name"
+                                        placeholder="Nom commercial de l'entreprise">
                                     </b-form-input>
                                 </b-form-group>
-                                <b-form-group id="exampleInputGroup12"
-                                              description="36252187900034"
-                                              label-for="exampleInput12">
-                                    <b-form-input id="exampleInput12"
-                                                  required
-                                                  v-model="siret"
-                                                  placeholder="SIRET">
+                                <b-form-group
+                                    description="36252187900034"
+                                >
+                                    <b-form-input
+                                        required
+                                        v-model="siret"
+                                        placeholder="SIRET">
                                     </b-form-input>
                                 </b-form-group>
-                                <b-form-group id="exampleInputGroup12"
-                                              description="123 Avenue Jean Costaud, Paris"
-                                              label-for="exampleInput12">
-                                    <b-form-input id="exampleInput12"
-                                                  required
-                                                  v-model="address"
-                                                  placeholder="Adresse postale complète">
+                                <b-form-group
+                                    description="123 Avenue Jean Costaud, Paris"
+                                >
+                                    <b-form-input
+                                        required
+                                        v-model="address"
+                                        placeholder="Adresse postale complète">
                                     </b-form-input>
                                 </b-form-group>
-                                <b-form-group id="exampleInputGroup12"
-                                              description="0612345678"
-                                              label-for="exampleInput12">
-                                    <b-form-input id="exampleInput12"
-                                                  required
-                                                  v-model="phone"
-                                                  placeholder="Numéro de téléphone">
+                                <b-form-group
+                                    description="0612345678"
+                                >
+                                    <b-form-input
+                                        required
+                                        v-model="phone"
+                                        placeholder="Numéro de téléphone">
                                     </b-form-input>
                                 </b-form-group>
 
@@ -77,36 +77,36 @@
                                                   placeholder="Nom et prénom">
                                     </b-form-input>
                                 </b-form-group>
-                                <b-form-group id="exampleInputGroup1222"
-                                              description="Paris"
-                                              label-for="exampleInput1222">
-                                    <b-form-input id="exampleInput12222"
-                                                  type="text"
-                                                  required
-                                                  v-model="town"
-                                                  placeholder="Ville">
+                                <b-form-group
+                                    description="Paris"
+                                >
+                                    <b-form-input
+                                        type="text"
+                                        required
+                                        v-model="town"
+                                        placeholder="Ville">
                                     </b-form-input>
                                 </b-form-group>
 
-                                <b-form-group id="exampleInputGroup1222"
-                                              description="nourriture,bio,sucreries"
-                                              label-for="exampleInput1222">
-                                    <b-form-input id="exampleInput12222"
-                                                  type="text"
-                                                  required
-                                                  v-model="tags"
-                                                  placeholder="Tags de la boutique">
+                                <b-form-group
+                                    description="nourriture,bio,sucreries"
+                                >
+                                    <b-form-input
+                                        type="text"
+                                        required
+                                        v-model="tags"
+                                        placeholder="Tags de la boutique">
                                     </b-form-input>
                                 </b-form-group>
 
-                                <b-form-group id="exampleInputGroup1222"
-                                              description="75000"
-                                              label-for="exampleInput1222">
-                                    <b-form-input id="exampleInput12222"
-                                                  type="text"
-                                                  required
-                                                  v-model="postal_code"
-                                                  placeholder="Code postal">
+                                <b-form-group
+                                    description="75000"
+                                >
+                                    <b-form-input
+                                        type="text"
+                                        required
+                                        v-model="postal_code"
+                                        placeholder="Code postal">
                                     </b-form-input>
                                 </b-form-group>
                                 <div class="row">
@@ -122,38 +122,57 @@
                                         </b-form-group>
                                         <hr>
                                         <p>Organisation</p>
-                                        <b-form-group id="exampleInputGroup1222"
-                                                      description="XXX XXX XX"
-                                                      label-for="exampleInput1222">
-                                            <b-form-input id="exampleInput12222"
-                                                          type="text"
-                                                          required
-                                                          v-model="organization_invite_code"
-                                                          placeholder="Code d'invitation">
+                                        <b-form-group
+                                            description="XXX XXX XX"
+                                        >
+                                            <b-form-input
+                                                type="text"
+                                                required
+                                                v-model="organization_invite_code"
+                                                placeholder="Code d'invitation">
                                             </b-form-input>
                                         </b-form-group>
-                                        <b-form-group id="exampleInputGroup1222"
-                                                      description="Holding Group & Co"
-                                                      label-for="exampleInput1222">
-                                            <b-form-input id="exampleInput12222"
-                                                          type="text"
-                                                          required
-                                                          v-model="organization_legal_name"
-                                                          placeholder="Maison mère">
+                                        <b-form-group
+                                            description="Holding Group & Co"
+                                        >
+                                            <b-form-input
+                                                type="text"
+                                                required
+                                                v-model="organization_legal_name"
+                                                placeholder="Maison mère (nom de la société par défaut)">
                                             </b-form-input>
                                         </b-form-group>
                                     </div>
 
                                 </div>
-                                <modal name="cgu">
-                                    <div class="ml-3 mt-3">
-                                        <h5 class="card-title">Conditions d'utilisation</h5>
-                                        <hr>
-                                        <h6 class="card-subtitle">Lorem ipsum dolor sit amet, consectetuer adipiscing
-                                            elit</h6>
-
+                                <div name="cgu" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                                                    dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
+                                                    ac consectetur ac, vestibulum at eros.</p>
+                                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+                                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
+                                                    auctor.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </modal>
+                                </div>
                                 <b-form-checkbox v-model="cgu" name="check" id="exampleCheck">
                                     J'accepte les <a @click="show()" href="#"> conditions d'utilisation</a>.
                                 </b-form-checkbox>
@@ -187,79 +206,79 @@
 <script>
 
 
-    export default {
-        components: {},
+export default {
+    components: {},
 
-        data() {
-            return {
-                showModal: false,
-                registerError: false,
-                cgu: false,
+    data() {
+        return {
+            showModal: false,
+            registerError: false,
+            cgu: false,
 
-                commercial_name: "",
-                address: "",
-                postal_code: "",
-                town: "",
-                phone: "",
-                tags: "",
-                username: "",
-                email: "",
-                password: "",
-                latitude: 0,
-                longitude: 0,
-                legal_name: "",
-                siret: "",
-                organization_invite_code: "",
-                organization_legal_name: ""
+            commercial_name: "",
+            address: "",
+            postal_code: "",
+            town: "",
+            phone: "",
+            tags: "",
+            username: "",
+            email: "",
+            password: "",
+            latitude: 0,
+            longitude: 0,
+            legal_name: "",
+            siret: "",
+            organization_invite_code: "",
+            organization_legal_name: ""
+        }
+    },
+
+    methods: {
+        createAccount: function () {
+
+            if (!this.cgu) {
+                this.$data.registerError = true;
+                return;
             }
+            this.$http.get('https://api-adresse.data.gouv.fr/search/?q=' + this.address + " " + this.town + " " + this.postal_code, {}
+            ).then(res => {
+                this.latitude = res.data.features[0].geometry.coordinates[0];
+                this.longitude = res.data.features[0].geometry.coordinates[1];
+
+                this.$http.post('https://api.wishopper.com/v1/public/advertiser/', {
+                        email: this.email,
+                        commercial_name: this.commercial_name,
+                        address: this.address,
+                        postal_code: this.postal_code,
+                        town: this.town,
+                        phone: this.phone,
+                        tags: (this.tags.split(",")),
+                        username: this.email,
+                        password: this.password,
+                        first_name: this.legal_name.split(" ")[0],
+                        last_name: this.legal_name.split(" ")[1],
+                        latitude: this.latitude,
+                        longitude: this.longitude,
+                        legal_name: this.legal_name,
+                        siret: this.siret,
+                        organization_invite_code: this.organization_invite_code,
+                        organization_legal_name: this.organization_legal_name,
+                        organization_commercial_name: this.organization_legal_name
+                    }
+                ).then(() => {
+                    this.$router.push({path: '/'})
+                }).catch(error => {
+                    this.$data.registerError = true;
+                    console.log(error.response);
+                });
+            })
         },
 
-        methods: {
-            createAccount: function () {
-
-                if (!this.cgu) {
-                    this.$data.registerError = true;
-                    return;
-                }
-                this.$http.get('https://api-adresse.data.gouv.fr/search/?q=' + this.address + " " + this.town + " " + this.postal_code, {}
-                ).then(res => {
-                    this.latitude = res.data.features[0].geometry.coordinates[0];
-                    this.longitude = res.data.features[0].geometry.coordinates[1];
-
-                    this.$http.post('https://api.wishopper.com/v1/public/advertiser/', {
-                            email: this.email,
-                            commercial_name: this.commercial_name,
-                            address: this.address,
-                            postal_code: this.postal_code,
-                            town: this.town,
-                            phone: this.phone,
-                            tags: (this.tags.split(",")),
-                            username: this.email,
-                            password: this.password,
-                            first_name: this.legal_name.split(" ")[0],
-                            last_name: this.legal_name.split(" ")[1],
-                            latitude: this.latitude,
-                            longitude: this.longitude,
-                            legal_name: this.legal_name,
-                            siret: this.siret,
-                            organization_invite_code: this.organization_invite_code,
-                            organization_legal_name: this.organization_legal_name,
-                            organization_commercial_name: this.organization_legal_name
-                        }
-                    ).then(response => {
-                        this.$router.push({path: '/'})
-                    }).catch(error => {
-                        this.$data.registerError = true;
-                        console.log(error.response);
-                    });
-                })
-            },
-
-            show() {
-                this.$modal.show('cgu');
-            },
-
-        }
+        show() {
+            this.$router.push({path: '/cgu/'})
+        },
 
     }
+
+}
 </script>

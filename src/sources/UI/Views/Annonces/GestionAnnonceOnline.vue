@@ -63,9 +63,12 @@ export default {
             }
             this.$http.get('https://api.wishopper.com/v1/private/advertiser/advert/all', config).then(res => {
                 this.ads = res.data;
-                console.log(this.ads);
+                 if(res.data === undefined || res.data.length === undefined){
+                    this.$router.push({path: '/create/'});
+                }
             }).catch(error => {
-                alert("❌ Impossible de charger les posts");
+                localStorage.clear();
+                this.$router.push({path: '/'});
                 console.log(error);
             });
         },

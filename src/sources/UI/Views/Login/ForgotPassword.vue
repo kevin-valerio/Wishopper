@@ -21,7 +21,7 @@
                                         <b-row form>
                                             <b-col md="12">
                                                 <b-form-group>
-                                                    <Label for="exampleEmail">Adresse mail</Label>
+                                                    <Label>Adresse mail</Label>
                                                     <b-form-input type="email" name="email" id="exampleEmail"
                                                                   placeholder="nom@societe.com"/>
                                                 </b-form-group>
@@ -67,8 +67,6 @@
         faTh,
         faTrashAlt,
     } from '@fortawesome/free-solid-svg-icons'
-    import AnnonceTuile from "@/sources/UI/Elements/AnnonceTuile";
-    import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
 
     library.add(
         faTrashAlt,

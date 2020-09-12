@@ -10,10 +10,10 @@
                         <form class="">
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <div class="position-relative form-group"><label for="exampleEmail11" class="">Numero
+                                    <div class="position-relative form-group"><label class="">Numero
                                         de
                                         SIRET</label><input
-                                        name="email" id="exampleEmail11" v-model="siret" placeholder="36252187900034"
+                                        v-model="siret" placeholder="36252187900034"
                                         type="text"
                                         class="form-control"></div>
                                 </div>
@@ -26,12 +26,6 @@
                                         type="text" class="form-control"></div>
                                 </div>
                             </div>
-                            <div class="position-relative form-group"><label for="exampleAddress" class="">Dénomination
-                                légale</label><input
-                                name="address" id="exampleAddress" placeholder="SARL" v-model="denomination" type="text"
-                                class="form-control">
-                            </div>
-
 
                             <div style="width: 100%;">
 
@@ -75,7 +69,7 @@
                                     du commerce</i>
                             </label><input name="address2" v-model="adresse_localisation" id="exampleAddress2"
                                            placeholder="42 Avenue De Gaulle, Paris"
-                                           type="email" class="form-control"></div>
+                                           class="form-control"></div>
                             <!--                            <fieldset class="position-relative row form-group">-->
                             <!--                                <legend class="col-form-label ml-3">Se connecter à un groupe</legend>-->
                             <!--                                <div class="col-sm-10">-->
@@ -94,12 +88,21 @@
                             <!--                                </div>-->
                             <!--                            </fieldset>-->
 
-                            <div>
-                                <label for="exampleAddress2" class="">Tags du commerce
-                                </label>
-                                <input name="password" v-model="tags" id="tags" placeholder="nourriture, bio"
-                                       type="text" class="form-control">
+
+                            <!--                                <label for="exampleAddress2" class="">Tags du commerce-->
+                            <!--                                </label>-->
+                            <!--                                <input name="password" v-model="tags" id="tags" placeholder="nourriture, bio"-->
+                            <!--                                       type="text" class="form-control">-->
+                            <div class="position-relative form-group"><label class="">Type de magasin
+                            </label>
+                                <br>
+                                <select class="form-control" v-model="shop_type_selected">
+                                    <option v-for="type in shop_type" v-bind:value="type">
+                                        {{ type }}
+                                    </option>
+                                </select>
                             </div>
+
 
                         </form>
                     </div>
@@ -122,16 +125,20 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Nom</label>
-                                        <input name="password" v-model="nom"  placeholder="Dupont"
-                                               type="text" class="form-control">
+                                        <label>
+                                            <input name="password" v-model="nom" placeholder="Dupont"
+                                                   type="text" class="form-control">
+                                        </label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Prénom</label>
-                                        <input  v-model="prenom"   placeholder="Jean"
-                                               type="text" class="form-control">
+                                        <label>
+                                            <input v-model="prenom" placeholder="Jean"
+                                                   type="text" class="form-control">
+                                        </label>
                                     </div>
                                 </div>
 
@@ -140,8 +147,8 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
-                                                                                     class="">E-mail</label>
-                                        <input   v-model="mail_edition"
+                                                                                     class="">Email</label>
+                                        <input v-model="mail_edition"
                                                placeholder="responsable-edition@company.fr"
                                                type="email" class="form-control">
                                     </div>
@@ -150,8 +157,10 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Téléphone</label>
-                                        <input    v-model="phone" placeholder="0601020304"
-                                               type="text" class="form-control">
+                                        <label>
+                                            <input v-model="phone" placeholder="0601020304"
+                                                   type="text" class="form-control">
+                                        </label>
                                     </div>
                                 </div>
 
@@ -161,10 +170,11 @@
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Mot de
                                         passe</label>
-                                        <input name="password" v-model="password"   placeholder="********"
+                                        <input name="password" v-model="password" placeholder="********"
                                                type="password" class="form-control">
                                     </div>
-                                    <span style="color: #ff4925"><i>Veuillez toujours saisir votre mot de passe !</i></span>
+                                    <span
+                                        style="color: #ff4925"><i>Veuillez toujours saisir votre mot de passe !</i></span>
                                 </div>
 
 
@@ -328,13 +338,9 @@
 
 <script>
 import {library} from '@fortawesome/fontawesome-svg-core'
-import vueFilePond from 'vue-filepond';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 
-const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 import {
     faAngleDown,
@@ -348,7 +354,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
-import vue2Dropzone from "vue2-dropzone";
 
 
 library.add(
@@ -390,7 +395,6 @@ export default {
         mail_edition: "",
         password: "",
         mail: "",
-        denomination: "",
         siret: "",
         logo_url: "",
         logo: "",
@@ -400,11 +404,14 @@ export default {
         debounce: null,
         autocompleteItems: [],
         credentials: localStorage.getItem(`access_token`),
+        shop_type_selected: '',
+        shop_type: [],
 
     }),
     watch: {
         'tag': 'initItems',
     },
+
 
     methods: {
         handleProcessFile: function (error, file) {
@@ -458,7 +465,7 @@ export default {
                     opening_hours: JSON.parse(this.horaires)
                 }
                 , config
-            ).then(response => {
+            ).then(() => {
                 this.successApplyHoraires = true;
 
             }).catch(error => {
@@ -499,7 +506,7 @@ export default {
                     logo_url: this.logo_url
                 }
                 , config
-            ).then(response => {
+            ).then(() => {
                 this.successApply = true;
                 localStorage.clear();
                 this.$router.push({path: '/'});
@@ -513,6 +520,12 @@ export default {
 
     mounted() {
         this.feedInformations();
+        this.$http.get('https://api.wishopper.com/v1/public/category/').then(res => {
+            console.log((res.data.categories));
+            this.shop_type = JSON.parse(res.data).categories;
+        }).catch(error => {
+            console.log(error);
+        });
     },
 }
 </script>

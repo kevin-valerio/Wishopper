@@ -1,7 +1,7 @@
 <template>
     <div class="app-footer">
         <div class="app-footer__inner text-center">
-            Copyright &copy; Wishopper
+            Copyright &copy; Wishopper.<i style="margin-left: 3px"> Ce site est optimisé pour une utilisation sur ordinateur !</i>
         </div>
     </div>
 </template>

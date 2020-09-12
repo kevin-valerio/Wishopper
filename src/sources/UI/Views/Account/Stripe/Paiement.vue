@@ -192,7 +192,6 @@
                 <p class="error-message"></p>
             </div>
         </div>
-        </main>
         <aside id="summary">
             <div class="header">
                 <h1>Order Summary</h1>

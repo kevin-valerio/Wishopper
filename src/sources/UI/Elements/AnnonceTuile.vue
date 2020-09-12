@@ -98,7 +98,7 @@ export default {
         },
 
         getUrlImage: function (ad) {
-            let finalLink = '';
+            let finalLink;
 
             if (ad.youtube !== null) {
                 finalLink = 'http://i3.ytimg.com/vi/' + ad.youtube.substr(ad.youtube.length - 11) + '/hqdefault.jpg';

@@ -15,6 +15,13 @@ let router = new Router({
             },
             component: () => import('./sources/UI/Views/Annonces/GestionAnnonceOnline'),
         },
+        {
+            path: '/cgu/',
+            name: 'Conditions d\'utilisation',
+            meta: {layout: 'userpages', guest: true},
+
+            component: () => import('./sources/UI/Views/Misc/CGU'),
+        },
 
         {
             path: '/annonceurs/',
@@ -105,7 +112,7 @@ router.beforeEach((to, from, next) => {
         } else {
             let user = JSON.parse(localStorage.getItem('user'))
             if (to.matched.some(record => record.meta.is_admin)) {
-                if (user.is_admin == 1) {
+                if (user.is_admin === 1) {
                     next()
                 } else {
                     next({name: 'Offres en ligne'})

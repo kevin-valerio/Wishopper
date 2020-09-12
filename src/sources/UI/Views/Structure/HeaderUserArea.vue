@@ -6,7 +6,7 @@
                 <div class="widget-content-wrapper">
 
                     <div class="widget-content-right right">
-                        <b-img  width="60" rounded-circle    :src="user.logo_url"/>
+                        <b-img width="60" rounded-circle v-if="user !== null" :src="user.logo_url"/>
                     </div>
 
                     <div class="widget-content-left button-content mr-3">
@@ -19,7 +19,8 @@
                                     <h1 class="timeline-title">
                                         <span class="widget-subheading">Crédits : </span>
                                         <router-link to="/account">
-                                            <a class="widget-heading" style="color: #555abf">{{ user.credit }}</a>
+                                            <a class="widget-heading" v-if="user !== null"
+                                               style="color: #555abf">{{ user.credit }}</a>
                                         </router-link>
                                         <span class="widget-subheading"> Wi</span>
                                     </h1>
@@ -29,7 +30,7 @@
 
 
                     </div>
-                    <div class="widget-content-left  ml-3 header-user-info">
+                    <div class="widget-content-left  ml-3 header-user-info" v-if="user !== null">
                         <div class="widget-heading"> {{ user.legal_name }}</div>
                         <div class="widget-subheading">{{ user.commercial_name }}</div>
                     </div>
@@ -46,46 +47,46 @@
 
 <script>
 
-    import {library} from '@fortawesome/fontawesome-svg-core'
-    import {
-        faAngleDown,
-        faCalendarAlt,
-        faCheck,
-        faCloudDownloadAlt,
-        faEllipsisH,
-        faFileAlt,
-        faFileArchive,
-        faFileExcel,
-        faFilePdf,
-        faTrashAlt,
-    } from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {
+    faAngleDown,
+    faCalendarAlt,
+    faCheck,
+    faCloudDownloadAlt,
+    faEllipsisH,
+    faFileAlt,
+    faFileArchive,
+    faFileExcel,
+    faFilePdf,
+    faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
 
-    library.add(
-        faAngleDown,
-        faCalendarAlt,
-        faTrashAlt,
-        faCheck,
-        faFileAlt,
-        faCloudDownloadAlt,
-        faFileExcel,
-        faFilePdf,
-        faFileArchive,
-        faEllipsisH,
-    );
+library.add(
+    faAngleDown,
+    faCalendarAlt,
+    faTrashAlt,
+    faCheck,
+    faFileAlt,
+    faCloudDownloadAlt,
+    faFileExcel,
+    faFilePdf,
+    faFileArchive,
+    faEllipsisH,
+);
 
-    export default {
-        components: {},
-        data: () => ({
-            user: JSON.parse(localStorage.getItem('user'))
-        }),
+export default {
+    components: {},
+    data: () => ({
+        user: JSON.parse(localStorage.getItem('user'))
+    }),
 
-        methods: {
-            disconnect: function () {
-                localStorage.clear();
-                this.$router.push({path: '/'});
-            }
+    methods: {
+        disconnect: function () {
+            localStorage.clear();
+            this.$router.push({path: '/'});
         }
     }
+}
 
 
 </script>
