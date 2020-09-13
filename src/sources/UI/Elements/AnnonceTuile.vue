@@ -9,11 +9,12 @@
                         <div class="todo-indicator bg-info"></div>
                         <div class="widget-content p-0">
                             <div class="widget-content-wrapper">
-                                <div class="widget-content-left mr-3">
-
-                                    <img src="https://image.flaticon.com/icons/svg/709/709612.svg" alt="vu">
-                                    <div class="widget-subheading" style="display: inline;">{{ ad.visits }}</div>
-                                </div>
+                                <!-- TODO : Décomenter ceci, lorsque l'application sera viable-->
+                                <!-- TODO (suite) : Il s'agit du compteur de vu-->
+<!--                                <div class="widget-content-left mr-3">-->
+<!--                                    <img src="https://image.flaticon.com/icons/svg/709/709612.svg" alt="vu">-->
+<!--                                    <div class="widget-subheading" style="display: inline;">{{ ad.visits }}</div>-->
+<!--                                </div>-->
                                 <div class="widget-content-left mr-3">
                                     <div class="widget-content-left">
                                         <b-img thumbnail left width="200"
@@ -102,6 +103,8 @@ export default {
 
             if (ad.youtube !== null) {
                 finalLink = 'http://i3.ytimg.com/vi/' + ad.youtube.substr(ad.youtube.length - 11) + '/hqdefault.jpg';
+            } else if(ad.images !== null) {
+                finalLink = ad.images[0];
             } else {
                 finalLink = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
             }

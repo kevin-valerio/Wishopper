@@ -88,20 +88,21 @@
                                     </b-form-input>
                                 </b-form-group>
 
-                                <b-form-group
-                                    description="nourriture,bio,sucreries"
-                                >
-                                    <b-form-input
-                                        type="text"
-                                        required
-                                        v-model="tags"
-                                        placeholder="Tags de la boutique">
-                                    </b-form-input>
+                                <b-form-group description="Catégorie du commerce">
+
+                                    <div>
+                                        <select class="form-control" v-model="shop_type_selected">
+                                            <option v-for="(type, key1) in shop_type_flattened" :value="key1">
+                                                {{ type }}
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+
                                 </b-form-group>
 
-                                <b-form-group
-                                    description="75000"
-                                >
+                                <b-form-group description="75000">
                                     <b-form-input
                                         type="text"
                                         required
@@ -111,13 +112,13 @@
                                 </b-form-group>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <b-form-group id="exampleInputGroup2"
-                                                      label-for="exampleInput2">
-                                            <b-form-input id="exampleInput2"
-                                                          type="password"
-                                                          v-model="password"
-                                                          required
-                                                          placeholder="Mot de passe">
+                                        <b-form-group
+                                        >
+                                            <b-form-input
+                                                type="password"
+                                                v-model="password"
+                                                required
+                                                placeholder="Mot de passe">
                                             </b-form-input>
                                         </b-form-group>
                                         <hr>
@@ -139,7 +140,7 @@
                                                 type="text"
                                                 required
                                                 v-model="organization_legal_name"
-                                                placeholder="Maison mère (nom de la société par défaut)">
+                                                placeholder="Nom d'organisation (si pas de code d'invitation)">
                                             </b-form-input>
                                         </b-form-group>
                                     </div>
@@ -220,7 +221,6 @@ export default {
             postal_code: "",
             town: "",
             phone: "",
-            tags: "",
             username: "",
             email: "",
             password: "",
@@ -229,13 +229,39 @@ export default {
             legal_name: "",
             siret: "",
             organization_invite_code: "",
-            organization_legal_name: ""
+            organization_legal_name: "",
+
+            shop_type: [],
+            shop_type_selected: [],
+            shop_type_flattened: []
         }
+    },
+
+    mounted() {
+        this.$http.get('https://api.wishopper.com/v1/public/category/').then(res => {
+            this.shop_type = res.data;
+
+            let ingredients = {};
+            for (let category in this.shop_type.categories) {
+                for (let type in this.shop_type.categories[category]) {
+                    ingredients[type] = (this.shop_type.categories[category][type][0]);
+                }
+            }
+            this.shop_type_flattened = ingredients;
+            console.log(ingredients);
+
+        }).catch(error => {
+            console.log(error);
+        });
     },
 
     methods: {
         createAccount: function () {
-
+            const config = {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                }
+            }
             if (!this.cgu) {
                 this.$data.registerError = true;
                 return;
@@ -252,7 +278,7 @@ export default {
                         postal_code: this.postal_code,
                         town: this.town,
                         phone: this.phone,
-                        tags: (this.tags.split(",")),
+                        tags: this.shop_type_selected,
                         username: this.email,
                         password: this.password,
                         first_name: this.legal_name.split(" ")[0],
@@ -264,7 +290,7 @@ export default {
                         organization_invite_code: this.organization_invite_code,
                         organization_legal_name: this.organization_legal_name,
                         organization_commercial_name: this.organization_legal_name
-                    }
+                    }, config
                 ).then(() => {
                     this.$router.push({path: '/'})
                 }).catch(error => {

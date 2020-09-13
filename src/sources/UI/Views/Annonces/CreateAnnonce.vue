@@ -23,20 +23,41 @@
                             </div>
 
 
-                            <div class="position-relative form-group"><label class="">Catégories
-                            </label><input v-model="tags"
-                                           placeholder="high-tech, technologie, electronique"
-                                           class="form-control"></div>
+                            <div class="position-relative form-group">
+                                <label class="">Catégorie </label>
+                                <div>
 
-                            <div class="position-relative form-group"><label class="">Type de promotion
+                                    <select class="form-control" v-model="shop_type_selected">
+                                        <option v-for="(type, key1) in shop_type_flattened" :value="key1">
+                                            {{ type }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="position-relative form-group"><label class="">Type d'offre
                             </label>
                                 <br>
                                 <select class="form-control" v-model="promotion_type_selected">
-                                    <option v-for="type in promotion_types" v-bind:value="type">
+                                    <option v-for="(type, key1) in promotion_types" :value="key1">
                                         {{ type }}
                                     </option>
                                 </select>
                             </div>
+
+
+                            <b-form-checkbox v-model="isForbidden16" value="true"
+                                             unchecked-value="false">
+                                Cette annonce est interdite aux <b>-16 ans</b>
+                            </b-form-checkbox>
+                            <br>
+                            <b-form-checkbox v-model="isForbidden18" value="true"
+                                             unchecked-value="false">
+                                Cette annonce est interdite aux <b>-18 ans</b>
+                            </b-form-checkbox>
+
+
+                            <br>
 
                             <label>Période de validité (début)</label>
                             <input type="datetime-local" class="input-group"
@@ -55,6 +76,9 @@
 
                             <input type="datetime-local" class="input-group"
                                    value="2020-09-01" v-model="appearance_end">
+                            <br>
+
+
                         </form>
                     </div>
 
@@ -148,6 +172,7 @@
                             v-bind:files="uploadedFile"
                             v-on:processfile="handleProcessFile"/>
 
+                        <p><i>La taille des images ne peut excéder 5Mo</i></p>
 
                     </div>
 
@@ -207,7 +232,6 @@ library.add(
     faPlus,
 );
 
-
 export default {
     components: {
         PageTitle,
@@ -233,13 +257,35 @@ export default {
         description: '',
         promotion_type_selected: 'percentage_immediate_discount',
         promotion_types: [],
-        tags: []
+        tags: [],
+        isForbidden16: false,
+        isForbidden18: false,
+        shop_type: [],
+        shop_type_selected: null,
+        shop_type_flattened: {}
+
 
     }),
 
     mounted() {
         this.$http.get('https://api.wishopper.com/v1/public/promotiontype/').then(res => {
             this.promotion_types = res.data;
+        }).catch(error => {
+            console.log(error);
+        });
+
+        this.$http.get('https://api.wishopper.com/v1/public/category/').then(res => {
+            this.shop_type = res.data;
+
+            let ingredients = {};
+            for (let category in this.shop_type.categories) {
+                for (let type in this.shop_type.categories[category]) {
+                    ingredients[type] = (this.shop_type.categories[category][type][0]);
+                }
+            }
+            this.shop_type_flattened = ingredients;
+            console.log(ingredients);
+
         }).catch(error => {
             console.log(error);
         });
@@ -280,6 +326,14 @@ export default {
                 }
             }
 
+            let real_age = null;
+            if (this.isForbidden16 === true) {
+                real_age = "min_16";
+            }
+            if (this.isForbidden18 === true) {
+                real_age = "min_18";
+            }
+
             this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/',
                 {
                     name: this.title,
@@ -288,15 +342,16 @@ export default {
                     appearance_end: this.appearance_end,
                     validity_start: this.validity_start,
                     images: this.imageUrls,
-                    youtube: this.youtubeUrl,
-                    pdf_url: "https://api.wishopper.com/" + this.pdfUrl,
+                    youtube: (this.youtubeUrl === "" || this.youtubeUrl === null || this.youtubeUrl === undefined) ? null : this.youtubeUrl,
+                    pdf_url: (this.pdfUrl === "" || this.pdfUrl === null || this.pdfUrl === undefined) ? null : "https://api.wishopper.com/" + this.pdfUrl,
                     validity_end: this.validity_end,
+                    min_age: real_age,
                     // grouped_advert_list_advertiser_reference: this.,
                     promotion_details: this.description,
-                    subcategories_references: this.tags.split(','),
+                    subcategories_references: this.shop_type_selected,
                     promotion_type: this.promotion_type_selected,
                 }, config
-            ).then(response => {
+            ).then(() => {
                 this.successApply = true;
 
             }).catch(error => {

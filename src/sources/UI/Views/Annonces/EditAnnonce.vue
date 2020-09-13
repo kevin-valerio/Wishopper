@@ -27,18 +27,22 @@
                                 produit
                             </label><input v-model="ad.reference"
                                            placeholder="1232991F"
+                                           disabled
                                            class="form-control"></div>
 
-                            <div class="position-relative form-group"><label class="">Catégories
-                            </label><input v-model="ad.tags"
-                                           placeholder="high-tech, technologie, electronique"
-                                           class="form-control"></div>
+                            <div class="position-relative form-group">
+                                <label class="">Catégories </label>
+                                <div>
+                                    <v-select multiple push-tags  v-model="ad.tags" :options="shop_type_flattened"></v-select>
+                                </div>
+                            </div>
 
-                            <div class="position-relative form-group"><label class="">Type de promotion
+
+                            <div class="position-relative form-group"><label class="">Type d'offre
                             </label>
                                 <br>
-                                <select  class="form-control" v-model="promotion_type_selected">
-                                    <option v-for="type in promotion_types" v-bind:value="type">
+                                <select class="form-control" v-model="promotion_type_selected">
+                                    <option v-for="(type, key1) in promotion_types" :value="key1">
                                         {{ type }}
                                     </option>
                                 </select>
@@ -239,6 +243,12 @@ export default {
         credentials: localStorage.getItem(`access_token`),
         promotion_type_selected: 'percentage_immediate_discount',
         promotion_types: [],
+
+        isForbidden16: false,
+        isForbidden18: false,
+
+        shop_type: [],
+        shop_type_flattened: []
     }),
 
     mounted() {
@@ -265,13 +275,30 @@ export default {
                 let pdf = this.ad.pdf;
                 this.pdfMessage = "✅ " + pdf.substring(pdf.lastIndexOf('/') + 1);
             }
-            if(this.ad.tags === null || this.ad.tags === undefined){
+            if (this.ad.tags === null || this.ad.tags === undefined) {
                 this.ad.tags = 'no-tag';
             }
         }).catch(error => {
             console.log(error);
             alert("❌ Impossible de charger les informations de l'offre");
-         });
+        });
+
+        this.$http.get('https://api.wishopper.com/v1/public/category/').then(res => {
+            this.shop_type = res.data;
+
+            let ingredients = {};
+            for (let category in this.shop_type.categories) {
+                for (let type in this.shop_type.categories[category]) {
+                    ingredients[type] = (this.shop_type.categories[category][type][0]);
+                }
+            }
+            this.shop_type_flattened = ingredients;
+            console.log(ingredients);
+
+        }).catch(error => {
+            console.log(error);
+        });
+
     },
 
     methods: {
@@ -309,6 +336,13 @@ export default {
                 }
             }
 
+            let real_age = null;
+            if (this.isForbidden16 === true) {
+                real_age = "min_16";
+            } else if (this.isForbidden18 === true) {
+                real_age = "min_18";
+            }
+
             this.$http.patch('https://api.wishopper.com/v1/private/advertiser/advert/?advert_reference=' + this.$route.params.id,
                 {
                     name: this.ad.title,
@@ -318,6 +352,7 @@ export default {
                     validity_start: this.ad.validity_start,
                     images: this.ad.imageUrls,
                     youtube: this.youtubeUrl,
+                    min_age: real_age,
                     pdf_url: "https://api.wishopper.com/" + this.pdfUrl,
                     validity_end: this.ad.validity_end,
                     // grouped_advert_list_advertiser_reference: this.ad.,

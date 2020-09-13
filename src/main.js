@@ -6,7 +6,10 @@ import App from './App'
 import VModal from 'vue-js-modal'
 import Default from './sources/UI/Views/Structure/Layout/baseLayout.vue';
 import Pages from './sources/UI/Views/Structure/Layout/pagesLayout.vue';
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
 
+Vue.component('v-select', vSelect)
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;

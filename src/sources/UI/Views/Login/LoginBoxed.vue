@@ -29,18 +29,19 @@
                                                   placeholder="Adresse mail">
                                     </b-form-input>
                                 </b-form-group>
-                                <b-form-group id="exampleInputGroup2"
-                                              label-for="exampleInput2">
-                                    <b-form-input id="password"
-                                                  type="password"
-                                                  v-model="password"
-                                                  required
-                                                  placeholder="Mot de passe">
-                                    </b-form-input>
+
+                                <b-form-group>
+                                    <div class="input-group">
+                                        <input id="password" :type="passwordFieldType"
+                                               v-model="password"
+                                               required placeholder="Mot de passe"
+                                               class="form-control">
+                                        <div class="input-group-append">
+                                            <button @click="switchVisibility" class="btn btn-info"><i
+                                                class="pe-7s-look"></i></button>
+                                        </div>
+                                    </div>
                                 </b-form-group>
-                                <b-form-checkbox name="check" checked="true" id="exampleCheck">
-                                    Garder ma session ouverte
-                                </b-form-checkbox>
                                 <div class="divider"/>
                                 <h6 class="mb-0">
                                     Pas encore de compte ?
@@ -74,91 +75,92 @@
 <script>
 
 
-    import {library} from '@fortawesome/fontawesome-svg-core'
+import {library} from '@fortawesome/fontawesome-svg-core'
 
-    import {
-        faAngleDown,
-        faAngleUp,
-        faCalendarAlt,
-        faCheck,
-        faPlus,
-        faStar,
-        faTh,
-        faTrashAlt,
-    } from '@fortawesome/free-solid-svg-icons'
+import {
+    faAngleDown,
+    faAngleUp,
+    faCalendarAlt,
+    faCheck,
+    faPlus,
+    faStar,
+    faTh,
+    faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
 
-    library.add(faTrashAlt, faCheck, faAngleDown, faAngleUp, faTh, faStar, faPlus, faCalendarAlt,);
-
-
-    function feedLocalStorageUser($http) {
+library.add(faTrashAlt, faCheck, faAngleDown, faAngleUp, faTh, faStar, faPlus, faCalendarAlt,);
 
 
-        return $http.get('https://api.wishopper.com/v1/private/advertiser/', {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        });
-    }
+function feedLocalStorageUser($http) {
 
-    export default {
-        components: {},
-        mounted: function () {
 
-            if (localStorage.getItem("access_token") !== null || localStorage.getItem("access_token") !== "") {
-                this.$router.push({path: '/annonces/online'})
-            }
+    return $http.get('https://api.wishopper.com/v1/private/advertiser/', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+        }
+    });
+}
+
+export default {
+    components: {},
+    mounted: function () {
+        if (localStorage.getItem("access_token") !== null || localStorage.getItem("access_token") !== "") {
+            this.$router.push({path: '/annonces/online'})
+        }
+    },
+    data() {
+        return {
+            passwordFieldType: 'password',
+            loginError: false,
+            email: "",
+            password: ""
+        }
+    },
+
+    methods: {
+        switchVisibility: function () {
+            this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
+
         },
-        data() {
-            return {
-                loginError: false,
-                email: "",
-                password: ""
-            }
-        },
-
-        methods: {
-
-            handleSubmit: function () {
-                const config = {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-
-                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-
-                    }
+        handleSubmit: function () {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                 }
+            }
 
-                if (this.password.length > 0) {
-                    let $http = this.$http;
-                    $http.post('https://api.wishopper.com/token_advertiser', this.$qs.stringify({
-                            username: this.email,
-                            password: this.password,
-                        }), config
-                    ).then(response => {
-                        localStorage.setItem('access_token', response.data.access_token);
+            if (this.password.length > 0) {
+                let $http = this.$http;
+                $http.post('https://api.wishopper.com/token_advertiser', this.$qs.stringify({
+                        username: this.email,
+                        password: this.password,
+                    }), config
+                ).then(response => {
+                    localStorage.setItem('access_token', response.data.access_token);
 
-                        feedLocalStorageUser($http).then(res => {
-                            localStorage.setItem('user', JSON.stringify(res.data))
-                            if (localStorage.getItem('access_token') != null) {
-                                this.$emit('loggedIn')
-                                if (this.$route.params.nextUrl != null) {
-                                    this.$router.push({path: this.$route.params.nextUrl});
-                                } else {
-                                    this.$router.push({path: '/annonces/online'})
-                                }
+                    feedLocalStorageUser($http).then(res => {
+                        localStorage.setItem('user', JSON.stringify(res.data))
+                        if (localStorage.getItem('access_token') != null) {
+                            this.$emit('loggedIn')
+                            if (this.$route.params.nextUrl != null) {
+                                this.$router.push({path: this.$route.params.nextUrl});
+                            } else {
+                                this.$router.push({path: '/annonces/online'})
                             }
-                        }).catch(error => {
-                            this.$data.loginError = true;
-                            console.log(error);
-                        });
-                    })
-                        .catch(error => {
-                            this.$data.loginError = true;
-                            console.log(error);
-                        });
-                }
+                        }
+                    }).catch(error => {
+                        this.$data.loginError = true;
+                        console.log(error);
+                    });
+                })
+                    .catch(error => {
+                        this.$data.loginError = true;
+                        console.log(error);
+                    });
             }
-        },
+        }
+    },
 
-    }
+}
 </script>

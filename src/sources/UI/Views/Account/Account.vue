@@ -18,9 +18,7 @@
                                         class="form-control"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="position-relative form-group"><label for="examplePassword11"
-                                                                                     class="">Nom
-                                        commercial</label><input
+                                    <div class="position-relative form-group"><label>Nom                                        commercial</label><input
                                         name="password" id="examplePassword11" v-model="nom_commercial"
                                         placeholder="Wishopper"
                                         type="text" class="form-control"></div>
@@ -97,7 +95,7 @@
                             </label>
                                 <br>
                                 <select class="form-control" v-model="shop_type_selected">
-                                    <option v-for="type in shop_type" v-bind:value="type">
+                                    <option v-for="(type, key1) in shop_type_flattened" :value="key1">
                                         {{ type }}
                                     </option>
                                 </select>
@@ -125,20 +123,20 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Nom</label>
-                                        <label>
+
                                             <input name="password" v-model="nom" placeholder="Dupont"
                                                    type="text" class="form-control">
-                                        </label>
+
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="position-relative form-group"><label for="examplePassword11"
+                                    <div class="position-relative form-group"><label
                                                                                      class="">Prénom</label>
-                                        <label>
+
                                             <input v-model="prenom" placeholder="Jean"
                                                    type="text" class="form-control">
-                                        </label>
+
                                     </div>
                                 </div>
 
@@ -155,19 +153,19 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="position-relative form-group"><label for="examplePassword11"
+                                    <div class="position-relative form-group"><label
                                                                                      class="">Téléphone</label>
-                                        <label>
+
                                             <input v-model="phone" placeholder="0601020304"
                                                    type="text" class="form-control">
-                                        </label>
+
                                     </div>
                                 </div>
 
                             </div>
                             <div class="form-row position-relative form-group">
                                 <div class="col-md-6">
-                                    <div class="position-relative form-group"><label for="examplePassword11"
+                                    <div class="position-relative form-group"><label
                                                                                      class="">Mot de
                                         passe</label>
                                         <input name="password" v-model="password" placeholder="********"
@@ -213,7 +211,7 @@
                     <div class="card-body"><h5 class="card-title">Crédits Wee</h5>
                         <span> Au <b> {{
                                 new Date().getDate() + "/" + (parseInt(new Date().getMonth().toString()) + 1) + "/" + new Date().getFullYear()
-                            }}{{ user.credit }} Wee</b>, vous disposez d'un crédit de </span><br><br>
+                            }}</b>, vous disposez d'un crédit de {{ user.credit }} Wee</span><br><br>
                         <form class="">
                             <div class="row">
                                 <div class="ml-3">
@@ -338,7 +336,7 @@
 
 <script>
 import {library} from '@fortawesome/fontawesome-svg-core'
-import 'filepond/dist/filepond.min.css';
+import  'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
 
@@ -352,9 +350,11 @@ import {
     faTh,
     faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-
+import vueFilePond from 'vue-filepond';
 import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
-
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 library.add(
     faTrashAlt,
@@ -372,6 +372,7 @@ library.add(
 export default {
     components: {
         PageTitle,
+        FilePond
     },
 
     data: () => ({
@@ -396,7 +397,7 @@ export default {
         password: "",
         mail: "",
         siret: "",
-        logo_url: "",
+        logo_url: null,
         logo: "",
         horaires: "",
         tag: '',
@@ -405,6 +406,7 @@ export default {
         autocompleteItems: [],
         credentials: localStorage.getItem(`access_token`),
         shop_type_selected: '',
+        shop_type_flattened: [],
         shop_type: [],
 
     }),
@@ -502,8 +504,10 @@ export default {
                     first_name: this.prenom,
                     last_name: this.nom,
                     advert_order: "name_asc",
+                    email: this.mail_edition,
                     password: this.password,
-                    logo_url: this.logo_url
+                    logo_url: this.logo_url,
+                    tags: this.shop_type_selected
                 }
                 , config
             ).then(() => {
@@ -521,8 +525,17 @@ export default {
     mounted() {
         this.feedInformations();
         this.$http.get('https://api.wishopper.com/v1/public/category/').then(res => {
-            console.log((res.data.categories));
-            this.shop_type = JSON.parse(res.data).categories;
+            this.shop_type = res.data;
+
+            let ingredients = {};
+            for (let category in this.shop_type.categories) {
+                for (let type in this.shop_type.categories[category]) {
+                    ingredients[type] = (this.shop_type.categories[category][type][0]);
+                }
+            }
+            this.shop_type_flattened = ingredients;
+            console.log(ingredients);
+
         }).catch(error => {
             console.log(error);
         });
