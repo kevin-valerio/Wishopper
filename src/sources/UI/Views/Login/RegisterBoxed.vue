@@ -49,7 +49,7 @@
                                     </b-form-input>
                                 </b-form-group>
                                 <b-form-group
-                                    description="123 Avenue Jean Costaud, Paris"
+                                    description="1 Avenue de Toulon"
                                 >
                                     <b-form-input
                                         required
@@ -78,7 +78,7 @@
                                     </b-form-input>
                                 </b-form-group>
                                 <b-form-group
-                                    description="Paris"
+                                    description="Hyeres"
                                 >
                                     <b-form-input
                                         type="text"
@@ -102,7 +102,7 @@
 
                                 </b-form-group>
 
-                                <b-form-group description="75000">
+                                <b-form-group description="83400">
                                     <b-form-input
                                         type="text"
                                         required
@@ -260,13 +260,16 @@ export default {
             const config = {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                    'Origin': 'wishopper.com'
+
                 }
             }
             if (!this.cgu) {
                 this.$data.registerError = true;
                 return;
             }
-            this.$http.get('https://api-adresse.data.gouv.fr/search/?q=' + this.address + " " + this.town + " " + this.postal_code, {}
+            this.$http.get('https://api-adresse.data.gouv.fr/search/?q=' + this.address + "&postcode=" +  this.postal_code, {}
             ).then(res => {
                 this.latitude = res.data.features[0].geometry.coordinates[0];
                 this.longitude = res.data.features[0].geometry.coordinates[1];
@@ -278,7 +281,7 @@ export default {
                         postal_code: this.postal_code,
                         town: this.town,
                         phone: this.phone,
-                        tags: this.shop_type_selected,
+                        tags: [this.shop_type_selected],
                         username: this.email,
                         password: this.password,
                         first_name: this.legal_name.split(" ")[0],
