@@ -10,7 +10,7 @@
                             <div class="modal-body">
                                 <div class="h5 modal-title text-center">
                                     <div class="alert alert-warning" v-if="loginError" role="alert">
-                                        Les informations rentrées sont invalides
+                                        Les informations rentrées sont invalides.<br> Si vous avez un bloqueur de pub, désactivez le
                                     </div>
                                     <h4 class="mt-2">
                                         <div>Bienvenue sur Wishopper</div>

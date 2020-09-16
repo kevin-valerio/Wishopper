@@ -11,10 +11,10 @@
                             <div class="widget-content-wrapper">
                                 <!-- TODO : Décomenter ceci, lorsque l'application sera viable-->
                                 <!-- TODO (suite) : Il s'agit du compteur de vu-->
-<!--                                <div class="widget-content-left mr-3">-->
-<!--                                    <img src="https://image.flaticon.com/icons/svg/709/709612.svg" alt="vu">-->
-<!--                                    <div class="widget-subheading" style="display: inline;">{{ ad.visits }}</div>-->
-<!--                                </div>-->
+                                <!--                                <div class="widget-content-left mr-3">-->
+                                <!--                                    <img src="https://image.flaticon.com/icons/svg/709/709612.svg" alt="vu">-->
+                                <!--                                    <div class="widget-subheading" style="display: inline;">{{ ad.visits }}</div>-->
+                                <!--                                </div>-->
                                 <div class="widget-content-left mr-3">
                                     <div class="widget-content-left">
                                         <b-img thumbnail left width="200"
@@ -35,8 +35,11 @@
                                     <br>
                                     <div class="widget-heading">{{ ad.name }}</div>
                                     <div class="widget">➡ {{ ad.description }}</div>
-<!--                                    <div class="widget-subheading">➡ {{ ad.subcategories_references }}</div>-->
-                                    <div class="widget-subheading">Promotion de type <i>{{ ad.promotion_type }}</i></div>
+                                    <div class="widget">
+                                        {{ ad.min_age === "min_18" ? "Offre -18 ans" : (ad.min_age === "min_16" ? "Offre -16 ans" : "") }}
+                                    </div>
+                                    <!--                                    <div class="widget-subheading">➡ {{ ad.subcategories_references }}</div>-->
+                                    <div class="widget-subheading"><i>{{ ad.promotion_type }}</i></div>
                                 </div>
                                 <div class="widget-content-right">
                                     <button @click="edit(ad.reference)"
@@ -103,7 +106,7 @@ export default {
 
             if (ad.youtube !== null) {
                 finalLink = 'http://i3.ytimg.com/vi/' + ad.youtube.substr(ad.youtube.length - 11) + '/hqdefault.jpg';
-            } else if(ad.images !== null) {
+            } else if (ad.images !== null) {
                 finalLink = ad.images[0];
             } else {
                 finalLink = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';

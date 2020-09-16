@@ -327,10 +327,10 @@ export default {
             }
 
             let real_age = null;
-            if (this.isForbidden16 === true) {
+            if (this.isForbidden16 === true || this.isForbidden16 === "true") {
                 real_age = "min_16";
             }
-            if (this.isForbidden18 === true) {
+            if (this.isForbidden18 === true || this.isForbidden18 === "true") {
                 real_age = "min_18";
             }
 
@@ -348,7 +348,7 @@ export default {
                     min_age: real_age,
                     // grouped_advert_list_advertiser_reference: this.,
                     promotion_details: this.description,
-                    subcategories_references: this.shop_type_selected,
+                    subcategories_references: [this.shop_type_selected],
                     promotion_type: this.promotion_type_selected,
                 }, config
             ).then(() => {

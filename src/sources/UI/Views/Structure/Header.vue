@@ -34,9 +34,7 @@
     export default {
         name: "Header",
         components: {
-            // SearchBox,
             UserArea,
-            'font-awesome-icon': FontAwesomeIcon,
         },
 
         data() {
