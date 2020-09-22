@@ -112,8 +112,7 @@
                                 </b-form-group>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <b-form-group
-                                        >
+                                        <b-form-group>
                                             <b-form-input
                                                 type="password"
                                                 v-model="password"
@@ -123,8 +122,7 @@
                                         </b-form-group>
                                         <hr>
                                         <p>Organisation</p>
-                                        <b-form-group
-                                            description="XXX XXX XX"
+                                        <b-form-group description="XXX XXX XX"
                                         >
                                             <b-form-input
                                                 type="text"
@@ -133,9 +131,7 @@
                                                 placeholder="Code d'invitation">
                                             </b-form-input>
                                         </b-form-group>
-                                        <b-form-group
-                                            description="Holding Group & Co"
-                                        >
+                                        <b-form-group description="Holding Group & Co">
                                             <b-form-input
                                                 type="text"
                                                 required
@@ -269,7 +265,7 @@ export default {
                 this.$data.registerError = true;
                 return;
             }
-            this.$http.get('https://api-adresse.data.gouv.fr/search/?q=' + this.address + "&postcode=" +  this.postal_code, {}
+            this.$http.get('https://api-adresse.data.gouv.fr/search/?q=' + this.address + "&postcode=" + this.postal_code, {}
             ).then(res => {
                 this.latitude = res.data.features[0].geometry.coordinates[0];
                 this.longitude = res.data.features[0].geometry.coordinates[1];

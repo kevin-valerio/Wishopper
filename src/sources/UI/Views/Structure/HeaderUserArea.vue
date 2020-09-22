@@ -20,7 +20,7 @@
                                         <span class="widget-subheading">Crédits : </span>
                                         <router-link to="/account">
                                             <a class="widget-heading" v-if="user !== null"
-                                               style="color: #555abf">{{ user.credit }}</a>
+                                               style="color: #555abf"> {{ this.balance }}</a>
                                         </router-link>
                                         <span class="widget-subheading"> Wi</span>
                                     </h1>
@@ -77,10 +77,27 @@ library.add(
 export default {
     components: {},
     data: () => ({
-        user: JSON.parse(localStorage.getItem('user'))
+        user: JSON.parse(localStorage.getItem('user')),
+        balance: "x"
     }),
 
+    mounted() {
+        this.getBalance();
+    },
+
     methods: {
+
+        getBalance: function () {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            };
+            this.$http.get('https://api.wishopper.com/v1/private/advertiser/wallet/', config).then(res => {
+                this.balance = res.data.balance;
+            });
+        },
+
         disconnect: function () {
             localStorage.clear();
             this.$router.push({path: '/'});

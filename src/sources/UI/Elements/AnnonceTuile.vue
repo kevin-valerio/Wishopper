@@ -17,29 +17,28 @@
                                 <!--                                </div>-->
                                 <div class="widget-content-left mr-3">
                                     <div class="widget-content-left">
-                                        <b-img thumbnail left width="200"
+                                        <b-img thumbnail left width="300"
                                                v-bind:src="getUrlImage(ad)"/>
                                     </div>
                                 </div>
                                 <div class="widget-content-left">
                                     <div class="widget-subheading opacity-10">
                                         <span class="pr-2">
-                                            Postée le <i> {{ ad.date_creation }}</i>
+                                            Postée le <i> {{ ad.date_creation}},</i>
                                           </span>
-
-                                        <span>
-                                        valide du <b class="text-success">{{ ad.appearance_start }}</b> jusqu'au <b
+                                        <span>valide du <b class="text-success">{{ ad.appearance_start }}</b> jusqu'au <b
                                             class="text-success"> {{ ad.appearance_end }}</b>
                                         </span>
                                     </div>
                                     <br>
                                     <div class="widget-heading">{{ ad.name }}</div>
-                                    <div class="widget">➡ {{ ad.description }}</div>
+                                     <div class="widget">➡ {{ ad.description }}</div>
+                                    <br>
                                     <div class="widget">
                                         {{ ad.min_age === "min_18" ? "Offre -18 ans" : (ad.min_age === "min_16" ? "Offre -16 ans" : "") }}
                                     </div>
                                     <!--                                    <div class="widget-subheading">➡ {{ ad.subcategories_references }}</div>-->
-                                    <div class="widget-subheading"><i>{{ ad.promotion_type }}</i></div>
+                                    <div class="widget-subheading"><i>{{ currentTypeRemise }}</i></div>
                                 </div>
                                 <div class="widget-content-right">
                                     <button @click="edit(ad.reference)"
@@ -101,8 +100,17 @@ export default {
             this.$emit('selected')
         },
 
+        getCategoryByValue: function(key1){
+            this.$http.get('https://api.wishopper.com/v1/public/promotiontype/').then(res => {
+                this.currentTypeRemise = res.data[key1];
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+
         getUrlImage: function (ad) {
             let finalLink;
+            this.getCategoryByValue(ad.promotion_type);
 
             if (ad.youtube !== null) {
                 finalLink = 'http://i3.ytimg.com/vi/' + ad.youtube.substr(ad.youtube.length - 11) + '/hqdefault.jpg';
@@ -128,7 +136,8 @@ export default {
     data: () => ({}),
 
     props: {
-        ad: Object
+        ad: Object,
+        currentTypeRemise: null
     }
 }
 </script>

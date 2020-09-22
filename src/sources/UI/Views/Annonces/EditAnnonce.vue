@@ -31,12 +31,16 @@
                                            class="form-control"></div>
 
                             <div class="position-relative form-group">
-                                <label class="">Catégories </label>
+                                <label class="">Catégorie </label>
                                 <div>
-                                    <v-select multiple push-tags  v-model="ad.tags" :options="shop_type_flattened"></v-select>
+
+                                    <select class="form-control" v-model="shop_type_selected">
+                                        <option v-for="(type, key1) in shop_type_flattened" :value="key1">
+                                            {{ type }}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
-
 
                             <div class="position-relative form-group"><label class="">Type d'offre
                             </label>
@@ -241,13 +245,14 @@ export default {
         imageUrls: [],
         pdfMessage: 'Mettez un PDF ou une image en ligne',
         credentials: localStorage.getItem(`access_token`),
-        promotion_type_selected: 'percentage_immediate_discount',
+        promotion_type_selected: null,
         promotion_types: [],
 
         isForbidden16: false,
         isForbidden18: false,
 
         shop_type: [],
+        shop_type_selected: null,
         shop_type_flattened: []
     }),
 
@@ -278,9 +283,10 @@ export default {
             if (this.ad.tags === null || this.ad.tags === undefined) {
                 this.ad.tags = 'no-tag';
             }
+            this.promotion_type_selected =  this.ad.promotion_type;
+            this.shop_type_selected =  this.ad.subcategories_references[0];
         }).catch(error => {
-            console.log(error);
-            alert("❌ Impossible de charger les informations de l'offre");
+            alert("❌ Impossible de charger les informations de l'offre : " + error.message);
         });
 
         this.$http.get('https://api.wishopper.com/v1/public/category/').then(res => {
@@ -293,7 +299,6 @@ export default {
                 }
             }
             this.shop_type_flattened = ingredients;
-            console.log(ingredients);
 
         }).catch(error => {
             console.log(error);
@@ -357,7 +362,7 @@ export default {
                     validity_end: this.ad.validity_end,
                     // grouped_advert_list_advertiser_reference: this.ad.,
                     promotion_details: this.ad.description,
-                    subcategories_references: this.ad.tags.split(','),
+                    subcategories_references: [this.shop_type_selected],
                     promotion_type: this.ad.promotion_type,
                 }, config
             ).then(response => {

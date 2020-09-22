@@ -10,7 +10,8 @@
                             <div class="modal-body">
                                 <div class="h5 modal-title text-center">
                                     <div class="alert alert-warning" v-if="loginError" role="alert">
-                                        Les informations rentrées sont invalides.<br> Si vous avez un bloqueur de pub, désactivez le
+                                        Les informations rentrées sont invalides.<br> Si vous avez un bloqueur de pub,
+                                        désactivez le
                                     </div>
                                     <h4 class="mt-2">
                                         <div>Bienvenue sur Wishopper</div>
@@ -113,7 +114,8 @@ export default {
             passwordFieldType: 'password',
             loginError: false,
             email: "",
-            password: ""
+            password: "",
+            balance: ""
         }
     },
 
@@ -140,15 +142,27 @@ export default {
                     localStorage.setItem('access_token', response.data.access_token);
 
                     feedLocalStorageUser($http).then(res => {
-                        localStorage.setItem('user', JSON.stringify(res.data))
-                        if (localStorage.getItem('access_token') != null) {
-                            this.$emit('loggedIn')
-                            if (this.$route.params.nextUrl != null) {
-                                this.$router.push({path: this.$route.params.nextUrl});
-                            } else {
-                                this.$router.push({path: '/annonces/online'})
+                        let user = (res.data);
+
+                        const config = {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                             }
                         }
+                        this.$http.get('https://api.wishopper.com/v1/private/advertiser/wallet/', config).then(res => {
+                            this.balance = res.data.balance;
+                            user.balance = this.balance;
+                            localStorage.setItem('user', JSON.stringify(user))
+                            if (localStorage.getItem('access_token') != null) {
+                                this.$emit('loggedIn')
+                                if (this.$route.params.nextUrl != null) {
+                                    this.$router.push({path: this.$route.params.nextUrl});
+                                } else {
+                                    this.$router.push({path: '/annonces/online'})
+                                }
+                            }
+                        });
                     }).catch(error => {
                         this.$data.loginError = true;
                         console.log(error);

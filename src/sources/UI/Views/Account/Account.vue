@@ -18,7 +18,7 @@
                                         class="form-control"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="position-relative form-group"><label>Nom                                        commercial</label><input
+                                    <div class="position-relative form-group"><label>Nom commercial</label><input
                                         name="password" id="examplePassword11" v-model="nom_commercial"
                                         placeholder="Wishopper"
                                         type="text" class="form-control"></div>
@@ -124,18 +124,18 @@
                                     <div class="position-relative form-group"><label for="examplePassword11"
                                                                                      class="">Nom</label>
 
-                                            <input name="password" v-model="nom" placeholder="Dupont"
-                                                   type="text" class="form-control">
+                                        <input name="password" v-model="nom" placeholder="Dupont"
+                                               type="text" class="form-control">
 
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label
-                                                                                     class="">Prénom</label>
+                                        class="">Prénom</label>
 
-                                            <input v-model="prenom" placeholder="Jean"
-                                                   type="text" class="form-control">
+                                        <input v-model="prenom" placeholder="Jean"
+                                               type="text" class="form-control">
 
                                     </div>
                                 </div>
@@ -154,10 +154,10 @@
 
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label
-                                                                                     class="">Téléphone</label>
+                                        class="">Téléphone</label>
 
-                                            <input v-model="phone" placeholder="0601020304"
-                                                   type="text" class="form-control">
+                                        <input v-model="phone" placeholder="0601020304"
+                                               type="text" class="form-control">
 
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@
                             <div class="form-row position-relative form-group">
                                 <div class="col-md-6">
                                     <div class="position-relative form-group"><label
-                                                                                     class="">Mot de
+                                        class="">Mot de
                                         passe</label>
                                         <input name="password" v-model="password" placeholder="********"
                                                type="password" class="form-control">
@@ -211,7 +211,7 @@
                     <div class="card-body"><h5 class="card-title">Crédits Wee</h5>
                         <span> Au <b> {{
                                 new Date().getDate() + "/" + (parseInt(new Date().getMonth().toString()) + 1) + "/" + new Date().getFullYear()
-                            }}</b>, vous disposez d'un crédit de {{ user.credit }} Wee</span><br><br>
+                            }}</b>, vous disposez d'un crédit de {{ user.balance }} Wee</span><br><br>
                         <form class="">
                             <div class="row">
                                 <div class="ml-3">
@@ -223,7 +223,8 @@
                                                     <div class="widget-numbers">
                                                         <div class="widget-chart-flex">
                                                             <div class="fsize-3 ">
-                                                                <a href="#" style="color: #5A5A5A">Court-terme</a>
+                                                                <a href="#" v-on:click="addMoney(5)"
+                                                                   style="color: #5A5A5A">Court-terme</a>
 
                                                             </div>
                                                         </div>
@@ -248,7 +249,8 @@
                                                     <div class="widget-numbers">
                                                         <div class="widget-chart-flex">
                                                             <div class="fsize-3 ">
-                                                                <a href="#" style="color: #5A5A5A">Moyen-terme</a>
+                                                                <a href="#" v-on:click="addMoney(10)"
+                                                                   style="color: #5A5A5A">Moyen-terme</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -271,7 +273,8 @@
                                                     <div class="widget-numbers">
                                                         <div class="widget-chart-flex">
                                                             <div class="fsize-3 ">
-                                                                <a href="#" style="color: #5A5A5A">Long-terme</a>
+                                                                <a href="#" v-on:click="addMoney(20)"
+                                                                   style="color: #5A5A5A">Long-terme</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -336,7 +339,7 @@
 
 <script>
 import {library} from '@fortawesome/fontawesome-svg-core'
-import  'filepond/dist/filepond.min.css';
+import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
 
@@ -354,6 +357,7 @@ import vueFilePond from 'vue-filepond';
 import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 library.add(
@@ -416,6 +420,23 @@ export default {
 
 
     methods: {
+
+        addMoney: function (quantity) {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            };
+
+            this.$http.post('https://api.wishopper.com/v1/private/advertiser/wallet/?amount=' + quantity, {}, config,
+            ).then(() => {
+                this.$router.push({path: '/'})
+            }).catch(error => {
+                alert("Impossible d'ajouter de l'argent")
+                console.log(error.response);
+            });
+        },
+
         handleProcessFile: function (error, file) {
             this.logo_url = "https://api.wishopper.com/" + JSON.parse(file.serverId).path;
         },
