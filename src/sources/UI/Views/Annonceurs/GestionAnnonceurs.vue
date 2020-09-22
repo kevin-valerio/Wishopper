@@ -14,10 +14,14 @@
 
             </b-dropdown>
 
-            <button class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-primary btn-sm">
-                <b>Inviter une enseigne</b>
+            <button @click="" class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-primary btn-sm">
+                <b>Obtenir son code</b>
+            </button>
+            <button class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-outline-success btn-sm">
+                <b>Regénérer un code</b>
             </button>
         </div>
+
 
         <div class="card main-card mb-4">
             <div class="card-body"><h4 class="card-title">Liste des enseignes</h4>
