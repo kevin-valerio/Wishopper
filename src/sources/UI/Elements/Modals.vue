@@ -14,9 +14,9 @@
 
 <script>
 
-    import PageTitle from "../Views/Structure/PageTitle.vue";
+import PageTitle from "../Views/Structure/PageTitle.vue";
 
-    export default {
+export default {
     components: {
       PageTitle,
 
@@ -25,7 +25,6 @@
       heading: 'Modals',
       subheading: 'Wide selection of modal dialogs styles and animations available.',
       icon: 'pe-7s-phone icon-gradient bg-premium-dark',
-
 
 
     }),

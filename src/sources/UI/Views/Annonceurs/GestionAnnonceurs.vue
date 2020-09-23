@@ -14,10 +14,10 @@
 
             </b-dropdown>
 
-            <button @click="" class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-primary btn-sm">
+            <b-button v-b-modal.getCode class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-primary btn-sm">
                 <b>Obtenir son code</b>
-            </button>
-            <button class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-outline-success btn-sm">
+            </b-button>
+            <button @click="generateNewCode()"  class="btn-pill  btn-shadow btn-wide mb-2 mr-2 fsize-1 btn btn-outline-success btn-sm">
                 <b>Regénérer un code</b>
             </button>
         </div>
@@ -26,7 +26,7 @@
         <div class="card main-card mb-4">
             <div class="card-body"><h4 class="card-title">Liste des enseignes</h4>
                 <span>Nombre d'enseignes : <b style="color: rgb(85, 90, 191);">32</b></span>
-                <table  aria-busy="false" aria-colcount="3"
+                <table aria-busy="false" aria-colcount="3"
                        class="table b-table mt-3 table-striped table-hover table-bordered"
                        id="__BVID__200">
                     <thead role="rowgroup" class="">
@@ -67,29 +67,46 @@
 </template>
 
 <script>
-    import {library} from '@fortawesome/fontawesome-svg-core'
-    import {
-        faAngleDown, faAngleUp, faCalendarAlt, faCheck, faPlus, faStar, faTh, faTrashAlt,
-    } from '@fortawesome/free-solid-svg-icons'
-    import AnnonceTuile from "@/sources/UI/Elements/AnnonceTuile";
-    import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {
+    faAngleDown,
+    faAngleUp,
+    faCalendarAlt,
+    faCheck,
+    faPlus,
+    faStar,
+    faTh,
+    faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
+import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
 
-    library.add(faTrashAlt, faCheck, faAngleDown, faAngleUp, faTh, faCalendarAlt,);
-    library.add(faStar, faPlus,);
+library.add(faTrashAlt, faCheck, faAngleDown, faAngleUp, faTh, faCalendarAlt,);
+library.add(faStar, faPlus,);
 
 
-    export default {
-        components: {
-            AnnonceTuile,
-            PageTitle,
-        },
-        data: () => ({
-            heading: 'Gestion des enseignes',
-            subheading: 'Gerez les différernts annonceurs de l\'organisation',
-            icon: 'pe-7s-portfolio icon-gradient bg-tempting-azure',
-        }),
+export default {
+    components: {
+         PageTitle,
+    },
+    data: () => ({
+        heading: 'Gestion des enseignes',
+        subheading: 'Gerez les différernts annonceurs de l\'organisation',
+        icon: 'pe-7s-portfolio icon-gradient bg-tempting-azure',
+    }),
 
-        methods: {},
+    methods: {
+        generateNewCode: function(){
+            const config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            };
+            this.$http.get('https://api.wishopper.com/v1/private/advertiser/organization/invite/new', config).then(res => {
+               alert("✔️Le code a bien été généré. Cliquez sur \"Obtenir son code\" pour le voir !");
+            });
+        }
+    },
 
-    }
+}
 </script>
