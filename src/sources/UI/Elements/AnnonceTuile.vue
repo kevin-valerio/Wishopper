@@ -24,20 +24,24 @@
                                 <div class="widget-content-left">
                                     <div class="widget-subheading opacity-10">
                                         <span class="pr-2">
-                                            Postée le <i> {{ ad.date_creation}},</i>
+                                            Postée le <i> {{ ad.date_creation }},</i>
                                           </span>
-                                        <span>valide du <b class="text-success">{{ ad.appearance_start }}</b> jusqu'au <b
+                                        <span>valide du <b class="text-success">{{
+                                                ad.appearance_start
+                                            }}</b> jusqu'au <b
                                             class="text-success"> {{ ad.appearance_end }}</b>
                                         </span>
                                     </div>
                                     <br>
                                     <div class="widget-heading">{{ ad.name }}</div>
-                                     <div class="widget">➡ {{ ad.description }}</div>
+                                    <div class="widget">➡ {{ ad.description }}</div>
                                     <br>
                                     <div class="widget">
-                                        {{ ad.min_age === "min_18" ? "Offre -18 ans" : (ad.min_age === "min_16" ? "Offre -16 ans" : "") }}
+                                        {{
+                                            ad.min_age === "min_18" ? "Offre -18 ans" : (ad.min_age === "min_16" ? "Offre -16 ans" : "")
+                                        }}
                                     </div>
-                                    <!--                                    <div class="widget-subheading">➡ {{ ad.subcategories_references }}</div>-->
+                                    <div class="widget-subheading"> {{ shop_type_flattened[ad.subcategories_references[0]] }}</div>
                                     <div class="widget-subheading"><i>{{ currentTypeRemise }}</i></div>
                                 </div>
                                 <div class="widget-content-right">
@@ -92,6 +96,21 @@ export default {
         this.ad.date_creation = dateFormat(new Date(this.ad.validity_end), "dd/mm/yyyy à HHxxxxMM").replace('xxxx', 'h');
         this.ad.appearance_start = dateFormat(new Date(this.ad.appearance_start), "dd/mm/yyyy à HHxxxxMM").replace('xxxx', 'h');
         this.ad.appearance_end = dateFormat(new Date(this.ad.appearance_end), "dd/mm/yyyy à HHxxxxMM").replace('xxxx', 'h');
+
+        this.$http.get('https://api.wishopper.com/v1/public/category/').then(res => {
+            this.shop_type = res.data;
+
+            let ingredients = {};
+            for (let category in this.shop_type.categories) {
+                for (let type in this.shop_type.categories[category]) {
+                    ingredients[type] = (this.shop_type.categories[category][type][0]);
+                }
+            }
+            this.shop_type_flattened = ingredients;
+
+        }).catch(error => {
+            console.log(error);
+        });
     },
 
     methods: {
@@ -100,7 +119,15 @@ export default {
             this.$emit('selected')
         },
 
-        getCategoryByValue: function(key1){
+        getShopType: function (key1) {
+            this.$http.get('https://api.wishopper.com/v1/public/promotiontype/').then(res => {
+                this.currentTypeRemise = res.data[key1];
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+
+        getCategoryByValue: function (key1) {
             this.$http.get('https://api.wishopper.com/v1/public/promotiontype/').then(res => {
                 this.currentTypeRemise = res.data[key1];
             }).catch(error => {
@@ -137,7 +164,11 @@ export default {
 
     props: {
         ad: Object,
-        currentTypeRemise: null
+        currentTypeRemise: null,
+
+
+        shop_type: [],
+        shop_type_flattened: []
     }
 }
 </script>

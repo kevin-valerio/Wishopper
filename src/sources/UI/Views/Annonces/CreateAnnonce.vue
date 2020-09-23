@@ -261,6 +261,7 @@ export default {
         isForbidden16: false,
         isForbidden18: false,
         shop_type: [],
+        real_age: null,
         shop_type_selected: null,
         shop_type_flattened: {}
 
@@ -326,13 +327,13 @@ export default {
                 }
             }
 
-            let real_age = null;
-            if (this.isForbidden16 === true || this.isForbidden16 === "true") {
-                real_age = "min_16";
+             if (this.isForbidden16 === true || this.isForbidden16 === "true") {
+                this.real_age = "min_16";
             }
             if (this.isForbidden18 === true || this.isForbidden18 === "true") {
-                real_age = "min_18";
+                this.real_age = "min_18";
             }
+
 
             this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/',
                 {
@@ -345,7 +346,7 @@ export default {
                     youtube: (this.youtubeUrl === "" || this.youtubeUrl === null || this.youtubeUrl === undefined) ? null : this.youtubeUrl,
                     pdf_url: (this.pdfUrl === "" || this.pdfUrl === null || this.pdfUrl === undefined) ? null : "https://api.wishopper.com/" + this.pdfUrl,
                     validity_end: this.validity_end,
-                    min_age: real_age,
+                    min_age: this.real_age,
                     // grouped_advert_list_advertiser_reference: this.,
                     promotion_details: this.description,
                     subcategories_references: [this.shop_type_selected],
