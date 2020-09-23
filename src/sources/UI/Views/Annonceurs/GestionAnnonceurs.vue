@@ -126,11 +126,7 @@ export default {
             };
 
             this.$http.get('https://api.wishopper.com/v1/private/advertiser/organization/', config).then(res => {
-                // for (let orga in res.data.organization_advertisers) {
-                //     if (!orga.is_archived) {
-                //         this.organizations.push(orga);
-                //     }
-                // }
+
                 this.organizations = res.data.organization_advertisers;
             });
         },

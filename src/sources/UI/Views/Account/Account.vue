@@ -555,7 +555,6 @@ export default {
                 }
             }
             this.shop_type_flattened = ingredients;
-            console.log(ingredients);
 
         }).catch(error => {
             console.log(error);

@@ -41,7 +41,10 @@
                                             ad.min_age === "min_18" ? "Offre -18 ans" : (ad.min_age === "min_16" ? "Offre -16 ans" : "")
                                         }}
                                     </div>
-                                    <div class="widget-subheading"> {{ shop_type_flattened[ad.subcategories_references[0]] }}</div>
+                                    <div class="widget-subheading"> {{
+                                            shop_type_flattened !== undefined ? shop_type_flattened[ad.subcategories_references[0]] : ""
+                                        }}
+                                    </div>
                                     <div class="widget-subheading"><i>{{ currentTypeRemise }}</i></div>
                                 </div>
                                 <div class="widget-content-right">
