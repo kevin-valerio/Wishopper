@@ -6,7 +6,7 @@
                 <div class="widget-content-wrapper">
 
                     <div class="widget-content-right right">
-                        <b-img width="60" rounded-circle v-if="user !== null" :src="user.logo_url"/>
+                        <b-img width="50" rounded-circle v-if="user !== null" :src="user.logo_url"/>
                     </div>
 
                     <div class="widget-content-left button-content mr-3">

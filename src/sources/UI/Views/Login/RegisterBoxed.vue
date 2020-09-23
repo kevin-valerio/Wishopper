@@ -92,7 +92,7 @@
 
                                     <div>
                                         <select class="form-control" v-model="shop_type_selected">
-                                            <option v-for="(type, key1) in shop_type_flattened" :value="key1">
+                                            <option v-bind:key="key1" v-for="(type, key1) in shop_type_flattened" :value="key1">
                                                 {{ type }}
                                             </option>
                                         </select>
@@ -122,7 +122,7 @@
                                         </b-form-group>
                                         <hr>
                                         <p>Organisation</p>
-                                        <b-form-group description="XXX XXX XX"
+                                        <b-form-group description="6cc0503f6e044435bab06143451fXXXX"
                                         >
                                             <b-form-input
                                                 type="text"
@@ -136,7 +136,7 @@
                                                 type="text"
                                                 required
                                                 v-model="organization_legal_name"
-                                                placeholder="Nom d'organisation (si pas de code d'invitation)">
+                                                placeholder="Nom de l'organisation mère">
                                             </b-form-input>
                                         </b-form-group>
                                     </div>

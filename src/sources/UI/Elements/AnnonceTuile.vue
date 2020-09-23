@@ -17,7 +17,7 @@
                                 <!--                                </div>-->
                                 <div class="widget-content-left mr-3">
                                     <div class="widget-content-left">
-                                        <b-img thumbnail left width="300"
+                                        <b-img thumbnail left width="230"
                                                v-bind:src="getUrlImage(ad)"/>
                                     </div>
                                 </div>
