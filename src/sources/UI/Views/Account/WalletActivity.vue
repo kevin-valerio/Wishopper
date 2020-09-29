@@ -31,11 +31,13 @@
             </div>
 
 
-            <div class="card-body"><h4 class="card-title">Utilisation des points</h4>
+            <div v-if="usage.length !== 0" class="card-body">
+
+                <h4 class="card-title">Utilisation des points</h4>
 
                 <table aria-busy="false" aria-colcount="3"
                        class="table b-table mt-3 table-striped table-hover table-bordered"
-                      >
+                >
                     <thead role="rowgroup" class="">
                     <tr role="row">
                         <th role="columnheader" scope="col" aria-colindex="1" class="">Date</th>
@@ -57,7 +59,6 @@
                     </tbody>
                 </table>
             </div>
-
 
 
         </div>
@@ -92,7 +93,7 @@ export default {
     data: () => ({
         heading: 'Activité du porte-feuille',
         subheading: 'Gerez l\'activité du porte-feuille ici. Pour ajouter des crédits, veuillez vous rendre dans "Compte"',
-        icon: 'pe-7s-portfolio icon-gradient bg-tempting-azure',
+        icon: 'pe-7s-wallet icon-gradient bg-tempting-azure',
 
         achats: [],
         usage: [],
