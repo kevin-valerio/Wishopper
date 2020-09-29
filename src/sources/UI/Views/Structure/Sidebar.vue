@@ -11,10 +11,10 @@
 </template>
 
 <script>
-    import {SidebarMenu} from 'vue-sidebar-menu'
-    import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import {SidebarMenu} from 'vue-sidebar-menu'
+import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
-    export default {
+export default {
         components: {
             SidebarMenu,
             VuePerfectScrollbar
@@ -77,6 +77,13 @@
                         title: 'Compte',
                         href: '/account/',
                     },
+
+                    {
+                        icon: 'pe-7s-wallet',
+                        title: 'Porte-feuille',
+                        href: '/wallet/',
+                    },
+
                     {
                         title: 'Statistiques',
                         icon: 'pe-7s-graph2',

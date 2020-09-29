@@ -68,10 +68,20 @@ let router = new Router({
             },
             component: () => import('./sources/UI/Views/Account/Account.vue'),
         },
+
+        {
+            path: '/wallet/',
+            name: 'Activité du porte-feuille',
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('./sources/UI/Views/Account/WalletActivity.vue'),
+        },
         {
             path: '/annonces/history',
             name: 'Offres archivées',
             meta: {
+                layout: 'userpages',
                 requiresAuth: true
             },
             component: () => import('./sources/UI/Views/Annonces/GestionAnnonceHistory.vue'),
