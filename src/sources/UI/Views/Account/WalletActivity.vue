@@ -45,7 +45,7 @@
                     </tr>
                     </thead>
                     <tbody role="rowgroup" class="">
-                    <tr v-bind:key="usage.reference" role="row" class="" v-for="us in usage">
+                    <tr v-bind:key="us.reference" role="row" class="" v-for="us in usage">
 
                         <td role="cell" aria-colindex="1" class=""><b>{{ us.date.replace("T", " ") }}</b></td>
                         <td role="cell" aria-colindex="2" class="">{{ us.amount_points }}</td>
