@@ -53,11 +53,20 @@ let router = new Router({
 
         {
             path: '/promote/:id',
-            name: 'Promouvoir une annonce',
+            name: 'Promouvoir une annonce - Etape 1',
             meta: {
                 requiresAuth: true
             },
             component: () => import('./sources/UI/Views/Annonces/Promote'),
+        },
+
+        {
+            path: '/promote/steptwo/:id',
+            name: 'Promouvoir une annonce - Etape 2',
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('./sources/UI/Views/Annonces/PromoteStepTwo'),
         },
 
         {

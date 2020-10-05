@@ -210,6 +210,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
 import vueFilePond from 'vue-filepond';
+
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
