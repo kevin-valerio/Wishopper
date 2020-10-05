@@ -33,15 +33,16 @@
                                            class="form-control"></div>
 
                             <div class="position-relative form-group">
+
                                 <label class="">Catégorie </label>
-                                <div>
+                                <br>
 
                                     <select class="form-control" v-model="shop_type_selected">
                                         <option v-bind:key="key1" v-for="(type, key1) in shop_type_flattened" :value="key1">
                                             {{ type }}
                                         </option>
                                     </select>
-                                </div>
+
                             </div>
 
                             <div class="position-relative form-group"><label class="">Type d'offre

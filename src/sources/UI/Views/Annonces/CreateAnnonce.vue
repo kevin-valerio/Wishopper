@@ -28,7 +28,8 @@
                                 <label class="">Catégorie </label>
                                 <div>
 
-                                    <select class="form-control" v-model="shop_type_selected">
+                                    <select class="form-control" v-model="shop_type_selected" placeholder="xxx" >
+
                                         <option v-bind:key="key1" v-for="(type, key1) in shop_type_flattened" :value="key1">
                                             {{ type }}
                                         </option>
