@@ -38,7 +38,7 @@
                                     <br>
                                     <div class="widget">
                                         {{
-                                            ad.min_age === "min_18" ? "Offre -18 ans" : (ad.min_age === "min_16" ? "Offre -16 ans" : "")
+                                            ad.min_age === "min_18" ? "Offre +18 ans" : (ad.min_age === "min_16" ? "Offre +16 ans" : "")
                                         }}
                                     </div>
                                     <div class="widget-subheading"> {{
@@ -48,14 +48,23 @@
                                     <div class="widget-subheading"><i>{{ currentTypeRemise }}</i></div>
                                 </div>
                                 <div class="widget-content-right">
-                                    <button @click="edit(ad.reference)"
+
+                                    <button @click="promouvoir(ad.reference)"
                                             class="btn-pill btn-hover-shine btn btn-focus btn-lg">
-                                        <b> Editer l'annonce</b>
+                                        <b>Promouvoir l'annonce</b>
                                     </button>
+
                                     <br>
+                                    <br>
+
+                                    <button @click="edit(ad.reference)"
+                                            class="btn-pill  btn-block btn-hover-shine btn-secondary btn ">
+                                        Editer l'annonce
+                                    </button>
+
                                     <br>
                                     <button @click="archive(ad.reference)"
-                                            class="btn-pill btn-hover-shine btn-secondary btn ">
+                                            class="  btn-block btn-pill btn-hover-shine btn-info btn ">
                                         Archiver
                                     </button>
                                 </div>
@@ -155,6 +164,10 @@ export default {
 
         edit: function (id) {
             this.$router.push({path: `/annonces/edit/${id}`});
+        },
+
+        promouvoir: function (id) {
+            this.$router.push({path: `/promote/${id}`});
         },
 
         archive: function (id) {

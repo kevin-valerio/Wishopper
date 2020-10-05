@@ -9,7 +9,9 @@
                         <form class="">
                             <div class="position-relative form-group"><label class="">Titre de
                                 l'offre</label><input
-                                name="address" v-model="ad.name"
+                                maxlength="100"
+                                v-model="ad.name"
+
                                 placeholder="Promotion, 40% sur le rayon bio !"
                                 type="text" class="form-control">
                             </div>
@@ -17,7 +19,7 @@
                             <div class="position-relative form-group">
 
                                 <label class="">Description</label>
-                                <b-textarea name="address" v-model="ad.description" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
+                                <b-textarea   maxlength="4000" name="address" v-model="ad.description" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
 à compter du 18 janvier, pour les 30 ans du magasin !" type="text" class="form-control"/>
 
                             </div>

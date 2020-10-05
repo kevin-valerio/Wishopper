@@ -52,6 +52,15 @@ let router = new Router({
         },
 
         {
+            path: '/promote/:id',
+            name: 'Promouvoir une annonce',
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('./sources/UI/Views/Annonces/Promote'),
+        },
+
+        {
             path: '/faq/',
             name: 'FAQ',
             meta: {

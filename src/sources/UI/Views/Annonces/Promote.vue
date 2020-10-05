@@ -7,79 +7,15 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Informations sur l'offre</h5>
                         <form class="">
-                            <div class="position-relative form-group"><label class="">Titre de
-                                l'offre</label><input
-                                maxlength="100"
-                                 v-model="title"
-                                placeholder="Promotion, 40% sur le rayon bio !"
-                                type="text" class="form-control">
-                            </div>
-
-                            <div class="position-relative form-group">
-
-                                <label class="">Description</label>
-                                <b-textarea   maxlength="4000" name="address" v-model="description" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
-à compter du 18 janvier, pour les 30 ans du magasin !" type="text" class="form-control"/>
-
-                            </div>
-
-
-                            <div class="position-relative form-group">
-                                <label class="">Catégorie </label>
-                                <div>
-
-                                    <select class="form-control" v-model="shop_type_selected">
-                                        <option v-bind:key="key1" v-for="(type, key1) in shop_type_flattened" :value="key1">
-                                            {{ type }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="position-relative form-group"><label class="">Type d'offre
-                            </label>
-                                <br>
-                                <select class="form-control" v-model="promotion_type_selected">
-                                    <option v-bind:key="key1"  v-for="(type, key1) in promotion_types" :value="key1">
-                                        {{ type }}
-                                    </option>
-                                </select>
-                            </div>
-
-
-                            <b-form-checkbox v-model="isForbidden16" value="true"
-                                             unchecked-value="false">
-                                Cette annonce est interdite aux <b>-16 ans</b>
-                            </b-form-checkbox>
-                            <br>
-                            <b-form-checkbox v-model="isForbidden18" value="true"
-                                             unchecked-value="false">
-                                Cette annonce est interdite aux <b>-18 ans</b>
-                            </b-form-checkbox>
-
-
-                            <br>
-
-                            <label>Période de validité (début)</label>
-                            <input type="datetime-local" class="input-group"
-                                   value="2018-07-22" v-model="validity_start">
-
-                            <label>Période de validité (fin)</label>
-
-                            <input type="datetime-local" name="trip-start" class="input-group"
-                                   value="2020-09-01" v-model="validity_end">
 
                             <label>Date d'affichage (début)</label>
                             <input type="datetime-local" name="trip-start" class="input-group"
-                                   value="2018-07-22" v-model="appearance_start">
+                                   value="2018-07-22" v-model="ad.appearance_start">
 
                             <label>Date d'affichage (fin)</label>
 
                             <input type="datetime-local" class="input-group"
-                                   value="2020-09-01" v-model="appearance_end">
-                            <br>
-
-
+                                   value="2020-09-01" v-model="ad.appearance_end">
                         </form>
                     </div>
 
@@ -105,6 +41,7 @@
                                                         </div>
                                                         <div class="ml-5 fsize-1 ">
                                                             <input name="radio1" type="radio"
+                                                                   v-bind:checked="this.$data.youtube !== null"
                                                                    @change="selectVideo($event)"
                                                                    class="form-check-input">
                                                             <a href="#" style="color: #5A5A5A">Vidéo YouTube</a>
@@ -134,6 +71,9 @@
                                                         <div class="fsize-1 ml-5">
                                                             <input name="radio1" type="radio"
                                                                    class="form-check-input"
+
+                                                                   :checked="this.ad.pdf_url !== undefined || this.ad.images !== undefined"
+
                                                                    @change="resetMessage()">
                                                             <a href="#" style="color: #5A5A5A">Autres fichiers
                                                                 (images/PDF)</a>
@@ -141,7 +81,7 @@
                                                     </div>
                                                 </div>
                                                 <h6 class="widget-subheading opacity-5 center-elem margin-h-center">
-                                                    Mettez un <i>PDF</i> ou une <i>image</i> en ligne
+                                                    {{ pdfMessage }}
                                                 </h6>
                                                 <br>
                                             </div>
@@ -155,7 +95,7 @@
                         <file-pond
                             name="advertiser_file"
                             ref="pond"
-                            label-idle="Ajoutez un média ... "
+                            label-idle="Modifier le média ... "
                             v-bind:allow-multiple="true"
                             v-bind:server="{
                                 url: 'https://api.wishopper.com/',
@@ -173,8 +113,6 @@
                             v-bind:files="uploadedFile"
                             v-on:processfile="handleProcessFile"/>
 
-                        <p><i>La taille des images ne peut excéder 5Mo</i></p>
-
                     </div>
 
                 </div>
@@ -182,19 +120,22 @@
                     <div>
                         <button type="button" @click="publish()"
                                 class="btn-group-lg btn-lg  btn btn-transition btn-outline-primary ">
-                            <b>Créer et publier l'annonce</b>
+                            <b>Appliquer les modifications</b>
                         </button>
 
                         <b-img v-if="successApply" class="ml-2" width="30" height="30"
                                src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
                         <span v-if="successApply"
-                              class="ml-2 "><i>Annonce créee ! Vous pouvez retourner à l'accueil</i></span>
+                              class="ml-2 "><i>Annonce modifiée ! Vous pouvez retourner à l'accueil</i></span>
                     </div>
 
                 </div>
             </div>
         </div>
+
+
     </div>
+
 
 </template>
 
@@ -233,6 +174,7 @@ library.add(
     faPlus,
 );
 
+
 export default {
     components: {
         PageTitle,
@@ -240,40 +182,58 @@ export default {
 
     },
     data: () => ({
-        heading: 'Création d\'une annonce',
-        subheading: 'Mettez en ligne votre nouvelle annonce afin de la rendre visible sur l\'application mobile',
-        icon: 'pe-7s-upload icon-gradient bg-tempting-azure',
-        validity_end: '',
-        validity_start: '',
+        heading: 'Promouvoir une annonce',
+        subheading: 'Vous pouvez, ici, promouvoir une annonce',
+        icon: 'pe-7s-up-arrow icon-gradient bg-tempting-azure',
         successApply: false,
-        appearance_start: '',
         messageError: 'Mettez une vidéo YouTube ',
-        appearance_end: '',
-        title: '',
+        ad: '',
         uploadedFile: [],
         imageUrls: [],
-        pdfUrl: '',
+        pdfMessage: 'Mettez un PDF ou une image en ligne',
         credentials: localStorage.getItem(`access_token`),
-        youtubeUrl: '',
-        description: '',
-        promotion_type_selected: 'percentage_immediate_discount',
+        promotion_type_selected: null,
         promotion_types: [],
-        tags: [],
+
         isForbidden16: false,
         isForbidden18: false,
+
         shop_type: [],
-        real_age: null,
         shop_type_selected: null,
-        shop_type_flattened: {}
-
-
+        shop_type_flattened: []
     }),
 
     mounted() {
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }
+
         this.$http.get('https://api.wishopper.com/v1/public/promotiontype/').then(res => {
             this.promotion_types = res.data;
         }).catch(error => {
             console.log(error);
+        });
+
+        this.$http.get('https://api.wishopper.com/v1/private/advertiser/advert/?advert_reference=' + this.$route.params.id, config).then(res => {
+            this.ad = res.data;
+            if (this.ad.youtube !== null) {
+                this.messageError = "✅" + this.ad.youtube.substr(this.ad.youtube.length - 11) + "    ";
+            } else if (this.ad.images !== null) {
+                let image = this.ad.images[0];
+                this.pdfMessage = "✅ " + image.substring(image.lastIndexOf('/') + 1);
+            } else if (this.ad.pdf_url !== null) {
+                let pdf = this.ad.pdf;
+                this.pdfMessage = "✅ " + pdf.substring(pdf.lastIndexOf('/') + 1);
+            }
+            if (this.ad.tags === null || this.ad.tags === undefined) {
+                this.ad.tags = 'no-tag';
+            }
+            this.promotion_type_selected =  this.ad.promotion_type;
+            this.shop_type_selected =  this.ad.subcategories_references[0];
+        }).catch(error => {
+            alert("❌ Impossible de charger les informations de l'offre : " + error.message);
         });
 
         this.$http.get('https://api.wishopper.com/v1/public/category/').then(res => {
@@ -286,11 +246,11 @@ export default {
                 }
             }
             this.shop_type_flattened = ingredients;
-            console.log(ingredients);
 
         }).catch(error => {
             console.log(error);
         });
+
     },
 
     methods: {
@@ -328,36 +288,35 @@ export default {
                 }
             }
 
-             if (this.isForbidden16 === true || this.isForbidden16 === "true") {
-                this.real_age = "min_16";
-            }
-            if (this.isForbidden18 === true || this.isForbidden18 === "true") {
-                this.real_age = "min_18";
+            let real_age = null;
+            if (this.isForbidden16 === true) {
+                real_age = "min_16";
+            } else if (this.isForbidden18 === true) {
+                real_age = "min_18";
             }
 
-
-            this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/',
+            this.$http.patch('https://api.wishopper.com/v1/private/advertiser/advert/?advert_reference=' + this.$route.params.id,
                 {
-                    name: this.title,
-                    description: this.description,
-                    appearance_start: this.appearance_start,
-                    appearance_end: this.appearance_end,
-                    validity_start: this.validity_start,
-                    images: this.imageUrls,
-                    youtube: (this.youtubeUrl === "" || this.youtubeUrl === null || this.youtubeUrl === undefined) ? null : this.youtubeUrl,
-                    pdf_url: (this.pdfUrl === "" || this.pdfUrl === null || this.pdfUrl === undefined) ? null : "https://api.wishopper.com/" + this.pdfUrl,
-                    validity_end: this.validity_end,
-                    min_age: this.real_age,
-                    // grouped_advert_list_advertiser_reference: this.,
-                    promotion_details: this.description,
+                    name: this.ad.title,
+                    description: this.ad.description,
+                    appearance_start: this.ad.appearance_start,
+                    appearance_end: this.ad.appearance_end,
+                    validity_start: this.ad.validity_start,
+                    images: this.ad.imageUrls,
+                    youtube: this.youtubeUrl,
+                    min_age: real_age,
+                    pdf_url: "https://api.wishopper.com/" + this.pdfUrl,
+                    validity_end: this.ad.validity_end,
+                    // grouped_advert_list_advertiser_reference: this.ad.,
+                    promotion_details: this.ad.description,
                     subcategories_references: [this.shop_type_selected],
-                    promotion_type: this.promotion_type_selected,
+                    promotion_type: this.ad.promotion_type,
                 }, config
-            ).then(() => {
+            ).then(response => {
                 this.successApply = true;
 
             }).catch(error => {
-                alert("❌ Impossible de créer l'annonce... [ " + error + " ]");
+                alert("❌ Impossible d'éditer l'annonce... [ " + error + " ]");
             });
         }
     },
