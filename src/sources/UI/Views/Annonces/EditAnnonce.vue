@@ -44,7 +44,16 @@
                                     </select>
 
                             </div>
-
+                            <div>
+                                <div class="position-relative form-group">
+                                    <label class="">Prix </label>
+                                </div>
+                                <div class="input-group" style="margin-top: -15px; !important;">
+                                    <input placeholder="Prix de l'annonce" v-model="price" step="0.5" type="number" class="form-control">
+                                    <div class="input-group-append"><span class="input-group-text">€</span></div>
+                                </div>
+                            </div>
+                            <br>
                             <div class="position-relative form-group"><label class="">Type d'offre
                             </label>
                                 <br>
@@ -254,7 +263,7 @@ export default {
 
         isForbidden16: false,
         isForbidden18: false,
-
+        price: '',
         shop_type: [],
         shop_type_selected: null,
         shop_type_flattened: []
@@ -289,6 +298,7 @@ export default {
             }
             this.promotion_type_selected =  this.ad.promotion_type;
             this.shop_type_selected =  this.ad.subcategories_references[0];
+            this.price = this.ad.price;
         }).catch(error => {
             alert("❌ Impossible de charger les informations de l'offre : " + error.message);
         });
@@ -361,6 +371,7 @@ export default {
                     validity_start: this.ad.validity_start,
                     images: this.ad.imageUrls,
                     youtube: this.youtubeUrl,
+                    price: this.price,
                     min_age: real_age,
                     pdf_url: "https://api.wishopper.com/" + this.pdfUrl,
                     validity_end: this.ad.validity_end,

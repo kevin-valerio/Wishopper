@@ -10,7 +10,7 @@
                             <div class="position-relative form-group"><label class="">Titre de
                                 l'offre</label><input
                                 maxlength="100"
-                                 v-model="title"
+                                v-model="title"
                                 placeholder="Promotion, 40% sur le rayon bio !"
                                 type="text" class="form-control">
                             </div>
@@ -18,19 +18,31 @@
                             <div class="position-relative form-group">
 
                                 <label class="">Description</label>
-                                <b-textarea   maxlength="4000" name="address" v-model="description" id="exampleAddress" placeholder="Profitez de 40% sur le rayon bio de votre épicerie
+                                <b-textarea maxlength="4000" name="address" v-model="description" id="exampleAddress"
+                                            placeholder="Profitez de 40% sur le rayon bio de votre épicerie
 à compter du 18 janvier, pour les 30 ans du magasin !" type="text" class="form-control"/>
 
                             </div>
 
+                            <div>
+                                <div class="position-relative form-group">
+                                    <label class="">Prix </label>
+                                </div>
+                                <div class="input-group" style="margin-top: -15px; !important;">
+                                    <input placeholder="Prix de l'annonce" v-model="price" step="0.5" type="number" class="form-control">
+                                    <div class="input-group-append"><span class="input-group-text">€</span></div>
+                                </div>
+                            </div>
+                            <br>
 
                             <div class="position-relative form-group">
                                 <label class="">Catégorie </label>
                                 <div>
 
-                                    <select class="form-control" v-model="shop_type_selected" placeholder="xxx" >
+                                    <select class="form-control" v-model="shop_type_selected" placeholder="xxx">
 
-                                        <option v-bind:key="key1" v-for="(type, key1) in shop_type_flattened" :value="key1">
+                                        <option v-bind:key="key1" v-for="(type, key1) in shop_type_flattened"
+                                                :value="key1">
                                             {{ type }}
                                         </option>
                                     </select>
@@ -41,7 +53,7 @@
                             </label>
                                 <br>
                                 <select class="form-control" v-model="promotion_type_selected">
-                                    <option v-bind:key="key1"  v-for="(type, key1) in promotion_types" :value="key1">
+                                    <option v-bind:key="key1" v-for="(type, key1) in promotion_types" :value="key1">
                                         {{ type }}
                                     </option>
                                 </select>
@@ -257,6 +269,7 @@ export default {
         credentials: localStorage.getItem(`access_token`),
         youtubeUrl: '',
         description: '',
+        price: null,
         promotion_type_selected: 'percentage_immediate_discount',
         promotion_types: [],
         tags: [],
@@ -329,7 +342,7 @@ export default {
                 }
             }
 
-             if (this.isForbidden16 === true || this.isForbidden16 === "true") {
+            if (this.isForbidden16 === true || this.isForbidden16 === "true") {
                 this.real_age = "min_16";
             }
             if (this.isForbidden18 === true || this.isForbidden18 === "true") {
@@ -341,6 +354,7 @@ export default {
                 {
                     name: this.title,
                     description: this.description,
+                    price: this.price,
                     appearance_start: this.appearance_start,
                     appearance_end: this.appearance_end,
                     validity_start: this.validity_start,
