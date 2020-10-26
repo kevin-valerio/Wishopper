@@ -7,7 +7,8 @@
 
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
-                    <div class=" card-body"><h5 class="card-title">Selectionnez les dates et horaires de publication </h5>
+                    <div class=" card-body"><h5 class="card-title">Selectionnez les dates et horaires de
+                        publication </h5>
                         <br>
                         <H6>En promouvant votre annonce, tous les utilisateurs de Wishopper verront votre banière sur la
                             page principale
@@ -40,12 +41,17 @@
                                 url: '',
                                 timeout: 5000,
                                 process: {
-                                    url: 'https://api.wishopper.com/v1/private/advertiser/upload/',
+                                    url: 'https://api.wishopper.com/v1/private/advertiser/upload/advert_promotion_image',
                                     method: 'POST',
                                     headers: {
                                          'Authorization': `Bearer ` + this.credentials
                                     },
-                                    withCredentials: false
+                                    withCredentials: false,
+                                    onerror: (err) =>{
+                                        this.badSize(err);
+                                        return err;
+                                    },
+
                                 }
                             }"
                             accepted-file-types="image/*"
@@ -100,13 +106,18 @@ export default {
         heading: 'Promouvoir une annonce',
         subheading: 'Vous pouvez, ici, promouvoir une annonce',
         icon: 'pe-7s-up-arrow icon-gradient bg-tempting-azure',
-
         uploadedFile: null,
         credentials: localStorage.getItem(`access_token`),
 
     }),
 
     methods: {
+
+        badSize: function(err){
+            if(err.includes("dimension")){
+                alert("❌ Les dimensions ne sont pas respectées");
+            }
+        },
 
         handleProcessFile: function (error, file) {
             let fileName = JSON.parse(file.serverId).path;
@@ -122,12 +133,12 @@ export default {
                 }
             }
 
-            if(this.uploadedFile === null ){
+            if (this.uploadedFile === null) {
                 alert("Veuillez ajouter un média")
             } else {
                 //On next()
                 const uploadedFile = this.uploadedFile;
-                this.$router.push({path: `/promote/steptwo/${this.$route.params.id}`, params: { uploadedFile }});
+                this.$router.push({path: `/promote/steptwo/${this.$route.params.id}`, params: {uploadedFile}});
             }
         }
     },

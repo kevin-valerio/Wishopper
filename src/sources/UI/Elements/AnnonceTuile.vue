@@ -34,6 +34,7 @@
                                     </div>
                                     <br>
                                     <div class="widget-heading">{{ ad.name }}</div>
+                                    <div class="widget-heading">{{ ad.promotion_price }} €</div>
                                     <div class="widget">➡ {{ ad.description }}</div>
                                     <br>
                                     <div class="widget">

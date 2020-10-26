@@ -29,7 +29,7 @@
                                     <label class="">Prix </label>
                                 </div>
                                 <div class="input-group" style="margin-top: -15px; !important;">
-                                    <input placeholder="Prix de l'annonce" v-model="price" step="0.5" type="number" class="form-control">
+                                    <input placeholder="Prix de l'annonce" v-model="promotion_price" step="0.5" type="number" class="form-control">
                                     <div class="input-group-append"><span class="input-group-text">€</span></div>
                                 </div>
                             </div>
@@ -269,7 +269,7 @@ export default {
         credentials: localStorage.getItem(`access_token`),
         youtubeUrl: '',
         description: '',
-        price: null,
+        promotion_price: null,
         promotion_type_selected: 'percentage_immediate_discount',
         promotion_types: [],
         tags: [],
@@ -354,7 +354,7 @@ export default {
                 {
                     name: this.title,
                     description: this.description,
-                    price: this.price,
+                    promotion_price: this.promotion_price,
                     appearance_start: this.appearance_start,
                     appearance_end: this.appearance_end,
                     validity_start: this.validity_start,
