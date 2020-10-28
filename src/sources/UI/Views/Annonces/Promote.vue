@@ -51,10 +51,14 @@
                                         this.badSize(err);
                                         return err;
                                     },
+                                    ondata: (formData) => {
+                                        this.removeError(formData);
+                                        return formData;
+                                    }
 
                                 }
                             }"
-                            accepted-file-types="image/*"
+                            accepted-file-types="image/jpeg, image/png, application/json"
                             v-bind:files="uploadedFile"
                             v-on:processfile="handleProcessFile"/>
 
@@ -83,7 +87,14 @@
 <script>
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {
-    faAngleDown, faAngleUp, faCalendarAlt, faCheck, faPlus, faStar, faTh, faTrashAlt,
+    faAngleDown,
+    faAngleUp,
+    faCalendarAlt,
+    faCheck,
+    faPlus,
+    faStar,
+    faTh,
+    faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 import PageTitle from "@/sources/UI/Views/Structure/PageTitle";
@@ -113,10 +124,14 @@ export default {
 
     methods: {
 
-        badSize: function(err){
-            if(err.includes("dimension")){
-                alert("❌ Les dimensions ne sont pas respectées");
-            }
+        badSize: function (err) {
+            alert("❌ Les dimensions ne sont pas respectées");
+        },
+
+        removeError: function (err) {
+            document.querySelectorAll('.filepond--wrapper').forEach(function (a) {
+                a.remove()
+            })
         },
 
         handleProcessFile: function (error, file) {
