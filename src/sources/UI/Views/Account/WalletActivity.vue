@@ -91,8 +91,8 @@ export default {
         PageTitle,
     },
     data: () => ({
-        heading: 'Activité du porte-feuille',
-        subheading: 'Gerez l\'activité du porte-feuille ici. Pour ajouter des crédits, veuillez vous rendre dans "Compte"',
+        heading: 'Activité du portefeuille',
+        subheading: 'Gerez l\'activité du portefeuille ici. Pour ajouter des crédits, veuillez vous rendre dans "Compte"',
         icon: 'pe-7s-wallet icon-gradient bg-tempting-azure',
 
         achats: [],

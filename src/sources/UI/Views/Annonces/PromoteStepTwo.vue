@@ -19,7 +19,7 @@
 
                             <div class="calendar-parent">
                                 <calendar-view
-                                    :items="items"
+                                    :items="itemsPerDay"
                                     :show-date="showDate"
                                     :time-format-options="{ hour: 'numeric', minute: '2-digit' }"
                                     :enable-drag-drop="true"
@@ -30,7 +30,6 @@
                                     :display-period-count="displayPeriodCount"
                                     :starting-day-of-week="startingDayOfWeek"
                                     :class="themeClasses"
-                                    :period-changed-callback="periodChanged"
                                     :current-period-label="useTodayIcons ? 'icons' : ''"
                                     :displayWeekNumbers="displayWeekNumbers"
                                     :enable-date-selection="true"
@@ -123,10 +122,10 @@ export default {
 
             showDate: this.thisMonth(1),
             message: "",
-            startingDayOfWeek: 0,
+            startingDayOfWeek: 1,
             disablePast: false,
             disableFuture: false,
-            displayPeriodUom: "week",
+            displayPeriodUom: "month",
 
             displayPeriodCount: 1,
             displayWeekNumbers: false,
@@ -136,7 +135,8 @@ export default {
             useDefaultTheme: true,
             useHolidayTheme: true,
             useTodayIcons: false,
-            items: [],
+            itemsCreneau: [],
+            itemsPerDay: [],
         }
     },
 
@@ -162,24 +162,26 @@ export default {
 
             for (let date in res.data) {
                 for (let slot in res.data[date]) {
-                    this.items.push({
-                        startDate: this.thisMonthWithHour(date.split('-')[0], date.split('-')[1],
-                            date.split('-')[2], slot, 0, 0
-                        ),
-                        endDate: this.thisMonthWithHour(date.split('-')[0], date.split('-')[1],
-                            date.split('-')[2], slot, 59, 59
-                        ),
+                    this.itemsCreneau.push({
+                        startDate: this.thisMonthWithHour(date.split('-')[0], date.split('-')[1], date.split('-')[2], slot, 0, 0),
+                        endDate: this.thisMonthWithHour(date.split('-')[0], date.split('-')[1], date.split('-')[2], slot, 59, 59),
                         title: res.data[date][slot]["available_slots"] + ". Cout: " + res.data[date][slot]["cost_per_slot"],
                         id: "e" + Math.random().toString(36).substr(2, 10),
                     })
                 }
-            }
+                this.itemsPerDay.push({
+                    startDate: this.thisMonth(date.split('-')[2]),
+                    id: "e" + Math.random().toString(36).substr(2, 10),
+                    title: Math.random(),
+                });
+             }
 
         }).catch(error => {
-            alert(error);
+            alert("X " + error);
         });
 
-        console.log(this.items);
+        console.log(this.itemsPerDay);
+
     },
 
     methods: {
@@ -198,13 +200,6 @@ export default {
         },
         back: function () {
             this.$router.go(-1);
-        },
-
-        periodChanged(range, eventSource) {
-            // Demo does nothing with this information, just including the method to demonstrate how
-            // you can listen for changes to the displayed range and react to them (by loading items, etc.)
-            console.log(eventSource)
-            console.log(range)
         },
 
         thisMonthWithHour(year, day, month, hours, minutes, seconds) {
@@ -236,17 +231,11 @@ export default {
             item.originalItem.startDate = this.addDays(item.startDate, eLength)
             item.originalItem.endDate = this.addDays(item.endDate, eLength)
         },
-
     },
 }
 </script>
 
 <style>
-.calendar-controls {
-    margin-right: 1rem !important;
-    min-width: 14rem !important;
-    max-width: 14rem !important;
-}
 
 .calendar-parent {
     display: flex !important;
@@ -256,21 +245,7 @@ export default {
     overflow-y: hidden !important;
     max-height: 80vh !important;
     background-color: white !important;
-}
-
-.cv-wrapper.period-month.periodCount-2 .cv-week,
-.cv-wrapper.period-month.periodCount-3 .cv-week,
-.cv-wrapper.period-year .cv-week {
-    min-height: 6rem !important;
-}
-
-.theme-default .cv-item.birthday {
-    background-color: #e0f0e0 !important;
-    border-color: #d7e7d7 !important;
-}
-
-.theme-default .cv-item.birthday::before {
-    content: "\1F382"; /* Birthday cake */
-    margin-right: 0.5em !important;
+    height: 67vh;
+    width: 90vw;
 }
 </style>

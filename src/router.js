@@ -89,7 +89,7 @@ let router = new Router({
 
         {
             path: '/wallet/',
-            name: 'Activité du porte-feuille',
+            name: 'Activité du portefeuille',
             meta: {
                 requiresAuth: true
             },

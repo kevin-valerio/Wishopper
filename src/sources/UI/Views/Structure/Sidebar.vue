@@ -80,7 +80,7 @@ export default {
 
                     {
                         icon: 'pe-7s-wallet',
-                        title: 'Porte-feuille',
+                        title: 'Portefeuille',
                         href: '/wallet/',
                     },
 
