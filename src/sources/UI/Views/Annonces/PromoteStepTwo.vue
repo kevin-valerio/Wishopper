@@ -20,10 +20,10 @@
                             <div class="calendar-parent">
                                 <calendar-view
                                     :items="itemsPerDay"
-                                    :show-date="showDate"
                                     :time-format-options="{ hour: 'numeric', minute: '2-digit' }"
-                                    :enable-drag-drop="true"
                                     :disable-past="disablePast"
+                                    :show-date="showDate"
+
                                     :disable-future="disableFuture"
                                     :show-times="showTimes"
                                     :display-period-uom="displayPeriodUom"
@@ -40,23 +40,49 @@
                                     @date-selection-finish="finishSelection"
                                     @drop-on-date="onDrop"
                                     @click-date="onClickDay"
-                                    @click-item="onClickItem"
-                                >
+                                    @click-item="onClickItem">
+
                                     <calendar-view-header
                                         slot="header"
                                         slot-scope="{ headerProps }"
+
                                         :header-props="headerProps"
-                                        @input="setShowDate"
-                                    />
+                                        @input="setShowDate"/>
+
                                 </calendar-view>
                             </div>
+
                         </div>
                         <br>
                     </form>
 
 
                 </div>
+                <div class="card-body">
+                    <h4 class="card-title">Choix de la plage horaire</h4>
+                    <table aria-busy="false" aria-colcount="3" class="table b-table table-striped table-bordered">
+                        <thead role="rowgroup" class="">
+                        <tr role="row">
+                            <th role="columnheader" scope="col" aria-colindex="1" class="">Plage horaire</th>
+                            <th role="columnheader" scope="col" aria-colindex="2" class="">Wi par annonce</th>
+                            <th role="columnheader" scope="col" aria-colindex="3" class="">Apparition par jour</th>
+                            <th role="columnheader" scope="col" aria-colindex="3" class="">Nombre total d'apparitions
+                            </th>
+                            <th role="columnheader" scope="col" aria-colindex="3" class="">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody role="rowgroup" class="">
 
+                        <tr role="row" class="" v-bind:key="horraire" v-for="horraire in this.$data.horraires">
+                            <td role="cell" aria-colindex="1" class="">{{ horraire }}</td>
+                            <td role="cell" aria-colindex="2" class="">Macdonald</td>
+                            <td role="cell" aria-colindex="2" class="">Macdonald</td>
+                            <td role="cell" aria-colindex="2" class="">Macdonald</td>
+                            <td role="cell" aria-colindex="3" class="">40</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="center-elem custom-control mb-3">
                     <button type="button" @click="back()"
                             class="btn-group-lg btn-lg left btn btn-transition btn-outline-secondary">
@@ -119,14 +145,14 @@ export default {
 
             uploadedFile: null,
             credentials: localStorage.getItem(`access_token`),
+            horraires: [],
 
-            showDate: this.thisMonth(1),
             message: "",
             startingDayOfWeek: 1,
             disablePast: false,
             disableFuture: false,
             displayPeriodUom: "month",
-
+            showDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay()),
             displayPeriodCount: 1,
             displayWeekNumbers: false,
             showTimes: true,
@@ -160,28 +186,25 @@ export default {
 
         this.$http.get('https://api.wishopper.com/v1/private/advertiser/advert/promotion/availability/', {headers: {'Authorization': `Bearer ${localStorage.getItem("access_token")}`}}).then(res => {
 
+            this.$data.horraires = res.data;
             for (let date in res.data) {
+                let minimumCost = 999999999999999999;
                 for (let slot in res.data[date]) {
-                    this.itemsCreneau.push({
-                        startDate: this.thisMonthWithHour(date.split('-')[0], date.split('-')[1], date.split('-')[2], slot, 0, 0),
-                        endDate: this.thisMonthWithHour(date.split('-')[0], date.split('-')[1], date.split('-')[2], slot, 59, 59),
-                        title: res.data[date][slot]["available_slots"] + ". Cout: " + res.data[date][slot]["cost_per_slot"],
-                        id: "e" + Math.random().toString(36).substr(2, 10),
-                    })
+                    let currentTime = res.data[date][slot];
+                    if (currentTime["cost_per_slot"] < minimumCost) {
+                        minimumCost = currentTime["cost_per_slot"];
+                    }
                 }
                 this.itemsPerDay.push({
-                    startDate: this.thisMonth(date.split('-')[2]),
-                    id: "e" + Math.random().toString(36).substr(2, 10),
-                    title: Math.random(),
+                    startDate: date,
+                    id: Math.random().toString(36).substr(2, 9),
+                    title: "A partir de " + minimumCost + " Wi" + (minimumCost > 1 ? "s" : ""),
                 });
-             }
+            }
 
         }).catch(error => {
             alert("X " + error);
         });
-
-        console.log(this.itemsPerDay);
-
     },
 
     methods: {
@@ -194,29 +217,23 @@ export default {
             }
 
         },
-        thisMonth(d, h, m) {
-            const t = new Date()
-            return new Date(t.getFullYear(), t.getMonth(), d, h || 0, m || 0)
-        },
+
         back: function () {
             this.$router.go(-1);
         },
 
-        thisMonthWithHour(year, day, month, hours, minutes, seconds) {
-            return new Date(year, month, day, hours, minutes, seconds)
-        },
         onClickDay(d) {
-            this.selectionStart = null
-            this.selectionEnd = null
-            this.message = `You clicked: ${d.toLocaleDateString()}`
+            alert(d.toLocaleDateString());
         },
         onClickItem(e) {
-            this.message = `You clicked: ${e.title}`
+            alert(e.title);
         },
+
         setShowDate(d) {
             this.message = `Changing calendar view to ${d.toLocaleDateString()}`
             this.showDate = d
         },
+
         setSelection(dateRange) {
             this.selectionEnd = dateRange[1]
             this.selectionStart = dateRange[0]
@@ -234,7 +251,6 @@ export default {
     },
 }
 </script>
-
 <style>
 
 .calendar-parent {
