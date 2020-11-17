@@ -9,9 +9,7 @@
                     <br>
                     <p>• En promouvant votre annonce, tous les utilisateurs de Wishopper verront votre banière sur la
                         page principale de l'application mobile.
-                        <br>• Chaque publication dure <i> 20 secondes</i>, et apparaitra aléatoirement sur les dates et
-                        horaires
-                        choisies.
+                        <br>
                     </p>
 
                     <form class="">
@@ -58,36 +56,69 @@
 
 
                 </div>
-                <div class="card-body">
-                    <h4 class="card-title">Choix de la plage horaire</h4>
+                <div class="card-body" v-if="selectedHorraires.length !== 0">
+                    <h4 class="card-title">Choix de la plage horaire (le {{ this.$data.selectedDate }})</h4>
+                    <p>
+                        • Chaque publication dure <i><b>20 secondes</b> </i>, et apparaitra aléatoirement sur les dates
+                        et
+                        horaires
+                        choisies.<br>
+                    </p>
                     <table aria-busy="false" aria-colcount="3" class="table b-table table-striped table-bordered">
                         <thead role="rowgroup" class="">
                         <tr role="row">
                             <th role="columnheader" scope="col" aria-colindex="1" class="">Plage horaire</th>
-                            <th role="columnheader" scope="col" aria-colindex="2" class="">Wi par annonce</th>
-                            <th role="columnheader" scope="col" aria-colindex="3" class="">Apparition par jour</th>
-                            <th role="columnheader" scope="col" aria-colindex="3" class="">Nombre total d'apparitions
+                            <th role="columnheader" scope="col" aria-colindex="2" class="">Wi(s) par annonce</th>
+                            <th role="columnheader" scope="col" aria-colindex="3" class="">Nombre d’apparitions
+                                souhaitées par jour
                             </th>
-                            <th role="columnheader" scope="col" aria-colindex="3" class="">Total</th>
+                            <th role="columnheader" scope="col" aria-colindex="3" class="">Nombre d'apparitions
+                                disponibles
+                            </th>
+                            <!--                            <th role="columnheader" scope="col" aria-colindex="3" class="">Sous-coutTotal</th>-->
                         </tr>
                         </thead>
                         <tbody role="rowgroup" class="">
 
-                        <tr role="row" class="" v-bind:key="horraire" v-for="horraire in this.$data.horraires">
-                            <td role="cell" aria-colindex="1" class="">{{ horraire }}</td>
-                            <td role="cell" aria-colindex="2" class="">Macdonald</td>
-                            <td role="cell" aria-colindex="2" class="">Macdonald</td>
-                            <td role="cell" aria-colindex="2" class="">Macdonald</td>
-                            <td role="cell" aria-colindex="3" class="">40</td>
+                        <tr role="row" class="" v-bind:key="index"
+                            v-for="(horraire, index) in this.$data.horraires[this.$data.selectedDate]">
+                            <td style="text-align: center;" role="cell" aria-colindex="1" class="">
+                                {{ index + "h à " + (index + 1) + "h" }}
+                            </td>
+                            <td style="text-align: center;" role="cell" aria-colindex="2" class="">
+                                {{ horraire.cost_per_slot }}
+                            </td>
+                            <td style="text-align: center;" role="cell" aria-colindex="3" class="">
+                                <input max="180" @change="nbrApparitionChanged(index)" min="0"
+                                       v-model="apparitionNumber[selectedDate][index]" step="1" type="number"
+                                       class="form-control">
+                            </td>
+                            <td style="text-align: center;" role="cell" aria-colindex="4" class="">
+                                {{ horraire.available_slots }}
+                            </td>
+                            <!--                            <td style="text-align: center;" role="cell" aria-colindex="5" class="">40</td>-->
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="center-elem custom-control mb-3">
-                    <button type="button" @click="back()"
+                    <div style="align-self: flex-end;" v-if="this.$data.selectedDate !== ''">
+                        <p><b style="color: rgb(85, 90, 191);">{{ coutTotal }} Wi </b> seront déduits de votre crédit de
+                            <b style="color: rgb(85, 90, 191);">{{ balance }} Wi</b>. Il vous restera
+                            <b v-bind:style="{color: (balance - coutTotal < 0 ? 'red' : 'rgb(85, 90, 191)')}"> {{ balance - coutTotal }} Wi. </b></p>
+                    </div>
+
+                    <button type="button" @click="back()" style="margin-left:2%"
                             class="btn-group-lg btn-lg left btn btn-transition btn-outline-secondary">
                         <b>Précédent</b>
                     </button>
+
+                    <button type="button" @click="validate()" style="margin-left:2%"
+                            class="btn-group-lg btn-lg right btn btn-transition btn-outline-primary ">
+                        <b>Valider</b>
+                    </button>
+
+
                 </div>
 
                 <div style="justify-content: flex-end; margin-right: 20px"
@@ -95,11 +126,6 @@
 
                     <div class="page-title-actions">
 
-
-                        <button type="button" @click="validate()"
-                                class="btn-group-lg btn-lg right btn btn-transition btn-outline-primary ">
-                            <b>Valider</b>
-                        </button>
                     </div>
 
                 </div>
@@ -143,9 +169,14 @@ export default {
             subheading: 'Dernière étape de la promotion d\'une annonce',
             icon: 'pe-7s-up-arrow icon-gradient bg-tempting-azure',
 
+            balance: 0,
+            apparitionNumber: [[]],
             uploadedFile: null,
             credentials: localStorage.getItem(`access_token`),
+            selectedHorraires: [],
+            selectedDate: '',
             horraires: [],
+            coutTotal: 0,
 
             message: "",
             startingDayOfWeek: 1,
@@ -184,30 +215,65 @@ export default {
 
     mounted() {
 
-        this.$http.get('https://api.wishopper.com/v1/private/advertiser/advert/promotion/availability/', {headers: {'Authorization': `Bearer ${localStorage.getItem("access_token")}`}}).then(res => {
+        this.getBalance();
+        this.getAvailabilities();
 
-            this.$data.horraires = res.data;
-            for (let date in res.data) {
-                let minimumCost = 999999999999999999;
-                for (let slot in res.data[date]) {
-                    let currentTime = res.data[date][slot];
-                    if (currentTime["cost_per_slot"] < minimumCost) {
-                        minimumCost = currentTime["cost_per_slot"];
-                    }
-                }
-                this.itemsPerDay.push({
-                    startDate: date,
-                    id: Math.random().toString(36).substr(2, 9),
-                    title: "A partir de " + minimumCost + " Wi" + (minimumCost > 1 ? "s" : ""),
-                });
-            }
-
-        }).catch(error => {
-            alert("X " + error);
-        });
     },
 
     methods: {
+
+        nbrApparitionChanged: function (index) {
+            this.coutTotal = 0;
+            for (let date in this.apparitionNumber) {
+                for (let indexTwo in this.apparitionNumber[date]) {
+                    this.coutTotal += parseInt(this.apparitionNumber[date][indexTwo]);
+                }
+            }
+        },
+
+        getBalance: function () {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            };
+            this.$http.get('https://api.wishopper.com/v1/private/advertiser/wallet/', config).then(res => {
+                this.balance = res.data.balance;
+            });
+        },
+
+        getAvailabilities: function () {
+
+            this.$http.get('https://api.wishopper.com/v1/private/advertiser/advert/promotion/availability/', {headers: {'Authorization': `Bearer ${localStorage.getItem("access_token")}`}}).then(res => {
+
+                for (let date in res.data) {
+                    this.$data.horraires = res.data;
+                    let minimumCost = 999999999999999999;
+
+                    for (let i = 0; i <= 24; i++) {
+                        this.apparitionNumber[date] = [];
+                    }
+
+                    for (let slot in res.data[date]) {
+
+                        let currentTime = res.data[date][slot];
+                        if (currentTime["cost_per_slot"] < minimumCost) {
+                            minimumCost = currentTime["cost_per_slot"];
+                        }
+                        this.apparitionNumber[date][slot] = 0;
+
+                    }
+                    this.itemsPerDay.push({
+                        startDate: date,
+                        id: date,
+                        title: "A partir de " + minimumCost + " Wi" + (minimumCost > 1 ? "s" : ""),
+                    });
+                }
+
+            }).catch(error => {
+                alert("X " + error);
+            });
+        },
 
         validate: function () {
             const config = {
@@ -223,10 +289,12 @@ export default {
         },
 
         onClickDay(d) {
-            alert(d.toLocaleDateString());
+            alert("Veuillez cliquer sur une tuile")
         },
+
         onClickItem(e) {
-            alert(e.title);
+            this.selectedDate = e.id;
+            this.selectedHorraires = this.horraires[e.id];
         },
 
         setShowDate(d) {
