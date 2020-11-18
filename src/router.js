@@ -54,6 +54,7 @@ let router = new Router({
         {
             path: '/promote/:id',
             name: 'Promouvoir une annonce - Etape 1',
+            props: {uploadedFile: ""},
             meta: {
                 requiresAuth: true
             },
@@ -63,6 +64,8 @@ let router = new Router({
         {
             path: '/promote/steptwo/:id',
             name: 'Promouvoir une annonce - Etape 2',
+            props: {uploadedFile: ""},
+
             meta: {
                 requiresAuth: true
             },

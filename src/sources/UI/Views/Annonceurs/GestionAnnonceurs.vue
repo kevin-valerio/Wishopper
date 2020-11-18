@@ -53,7 +53,7 @@
                         <td role="cell" aria-colindex="3" class="">{{ org.latitude + ", " + org.longitude }}</td>
                         <td role="cell" aria-colindex="3" class="">
 
-                                <button type="button" @click="archiver(org)"
+                                <button disabled type="button" @click="archiver(org)"
                                         class="pe-7s-close-circle  icon-gradient   btn-shadow mr-3 btn btn-danger"></button>
 
                         </td>

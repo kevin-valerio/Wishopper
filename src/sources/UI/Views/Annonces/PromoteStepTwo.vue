@@ -112,14 +112,16 @@
                         <b>Précédent</b>
                     </button>
 
-                    <button type="button" :disabled="this.drySuccess" @click="dryrun()" style="margin-left:2%"
+                    <button :disabled="this.drySuccess || (balance - coutTotal < 0)" style="margin-left:2%"
+                            type="button" @click="dryrun()"
                             class="btn-group-lg btn-lg right btn btn-transition  btn-outline-info">
                         <b-img v-if="this.drySuccess" class="ml-2 mr-3" width="20" height="20"
                                src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
-                        <b v-if="!drySuccess">Simuler</b> <span v-if="drySuccess">Simuler</span>
+                        <b v-if="!drySuccess">Simuler</b> <span v-if="drySuccess ">Simuler</span>
                     </button>
 
-                    <button type="button" @click="validate()" :disabled="!drySuccess" style="margin-left:2%"
+                    <button :disabled="!drySuccess || (balance - coutTotal < 0)" style="margin-left:2%" type="button"
+                            @click="validate()"
                             class="btn-group-lg btn-lg right btn btn-transition btn-outline-primary ">
                         <b v-if="drySuccess">Valider</b> <span v-if="!drySuccess">Valider</span>
                     </button>
@@ -178,7 +180,6 @@ export default {
             balance: 0,
             apparitionNumber: [[]],
             toSend: [[]],
-            uploadedFile: null,
             credentials: localStorage.getItem(`access_token`),
             selectedHorraires: [],
             selectedDate: '',
@@ -186,6 +187,7 @@ export default {
             coutTotal: 0,
             drySuccess: false,
             dryRunResult: {},
+            uploadedFile: '',
 
             message: "",
             startingDayOfWeek: 1,
@@ -224,13 +226,13 @@ export default {
 
     mounted() {
 
-        if (this.$route.params.uploadedFile === "" || this.$route.params.uploadedFile === undefined || this.$route.params.uploadedFile === null) {
+        this.uploadedFile = localStorage.getItem("uploadedFile");
+        if (this.uploadedFile === undefined) {
             this.$router.push({path: '/promote/' + this.$route.params.id});
-         }
-
+        }
+        localStorage.removeItem("uploadedFile");
         this.getBalance();
         this.getAvailabilities();
-
     },
 
     methods: {
@@ -318,7 +320,7 @@ export default {
             let promotions = this.dryRunResult;
             this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/promotion/', {
                     promotions,
-                    promotion_image: this.$route.params.uploadedFile,
+                    promotion_image: this.uploadedFile,
                     advert_reference: this.$route.params.id
                 }, config
             ).then((response) => {

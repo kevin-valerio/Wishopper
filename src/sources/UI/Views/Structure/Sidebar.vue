@@ -48,6 +48,8 @@ export default {
                             {
                                 href: '/annonces/history',
                                 title: 'Annonces archivées',
+                                disabled: true,
+
                             },
                         ]
 

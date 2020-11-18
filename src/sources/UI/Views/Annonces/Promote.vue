@@ -142,18 +142,12 @@ export default {
 
         next: function () {
 
-            const config = {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                }
-            }
-
             if (this.uploadedFile === null) {
                 alert("Veuillez ajouter un média")
             } else {
-                //On next()
-                const uploadedFile = this.uploadedFile;
-                this.$router.push({path: `/promote/steptwo/${this.$route.params.id}`, params: {uploadedFile}});
+                localStorage.setItem("uploadedFile", this.uploadedFile);
+
+                this.$router.push({path: `/promote/steptwo/${this.$route.params.id}`});
             }
         }
     },
