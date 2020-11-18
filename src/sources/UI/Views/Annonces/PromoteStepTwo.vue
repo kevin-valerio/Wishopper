@@ -89,7 +89,7 @@
                                 {{ horraire.cost_per_slot }}
                             </td>
                             <td style="text-align: center;" role="cell" aria-colindex="3" class="">
-                                <input max="180" @change="nbrApparitionChanged(index)" min="0"
+                                <input :max="horraire.available_slots" @change="nbrApparitionChanged(index)" min="0"
                                        v-model="apparitionNumber[selectedDate][index]" step="1" type="number"
                                        class="form-control">
                             </td>
@@ -105,7 +105,8 @@
                     <div style="align-self: flex-end;" v-if="this.$data.selectedDate !== ''">
                         <p><b style="color: rgb(85, 90, 191);">{{ coutTotal }} Wi </b> seront déduits de votre crédit de
                             <b style="color: rgb(85, 90, 191);">{{ balance }} Wi</b>. Il vous restera
-                            <b v-bind:style="{color: (balance - coutTotal < 0 ? 'red' : 'rgb(85, 90, 191)')}"> {{ balance - coutTotal }} Wi. </b></p>
+                            <b v-bind:style="{color: (balance - coutTotal < 0 ? 'red' : 'rgb(85, 90, 191)')}">
+                                {{ balance - coutTotal }} Wi. </b></p>
                     </div>
 
                     <button type="button" @click="back()" style="margin-left:2%"
@@ -113,8 +114,15 @@
                         <b>Précédent</b>
                     </button>
 
-                    <button type="button" @click="validate()" style="margin-left:2%"
+                    <button type="button" @click="dryrun()" style="margin-left:2%"
+                            class="btn-group-lg btn-lg right btn btn-transition  btn-outline-info">
+                        <b>Simuler</b>
+                    </button>
+
+                    <button type="button" @click="validate()" :disabled="!drySuccess" style="margin-left:2%"
                             class="btn-group-lg btn-lg right btn btn-transition btn-outline-primary ">
+                        <b-img v-if="this.drySuccess" class="ml-2 mr-3" width="20" height="20"
+                               src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
                         <b>Valider</b>
                     </button>
 
@@ -171,12 +179,15 @@ export default {
 
             balance: 0,
             apparitionNumber: [[]],
+            toSend: [[]],
             uploadedFile: null,
             credentials: localStorage.getItem(`access_token`),
             selectedHorraires: [],
             selectedDate: '',
             horraires: [],
             coutTotal: 0,
+            drySuccess: false,
+            dryRunResult: {},
 
             message: "",
             startingDayOfWeek: 1,
@@ -215,6 +226,11 @@ export default {
 
     mounted() {
 
+        if (this.$route.params.uploadedFile === "" || this.$route.params.uploadedFile === undefined || this.$route.params.uploadedFile === null) {
+            // this.$router.push({path: '/promote/' + this.$route.params.id});
+            // TODO: DECOMMENT THIS
+        }
+
         this.getBalance();
         this.getAvailabilities();
 
@@ -232,11 +248,8 @@ export default {
         },
 
         getBalance: function () {
-            const config = {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                }
-            };
+            const config = {headers: {'Authorization': `Bearer ${localStorage.getItem("access_token")}`}}
+
             this.$http.get('https://api.wishopper.com/v1/private/advertiser/wallet/', config).then(res => {
                 this.balance = res.data.balance;
             });
@@ -275,17 +288,51 @@ export default {
             });
         },
 
-        validate: function () {
-            const config = {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+        dryrun: function () {
+            const config = {headers: {'Authorization': `Bearer ${localStorage.getItem("access_token")}`}}
+            delete this.apparitionNumber["0"];
+
+            let promotions = {}, indexObj = {};
+
+            for (let _date in this.apparitionNumber) {
+                for (let _indx in this.apparitionNumber[_date]) {
+                    indexObj[_indx] = {
+                        "no_slots": parseInt(this.apparitionNumber[_date][_indx]),
+                        "cost_per_slot": 1
+                    }
                 }
+                promotions[_date] = indexObj;
+                indexObj = {};
             }
 
+
+            this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/promotion/dry-run', {promotions}, config
+            ).then(response => {
+                this.drySuccess = true;
+                this.dryRunResult = response.data;
+            }).catch(error => {
+                alert("Une erreure est parvenue. Veuillez vérifier les données rentrées, ou réessayer. " + error.response.detail[0].loc.toString() + " : " + error.data.detail[0].msg);
+                this.drySuccess = false;
+            });
+
+        },
+        validate: function () {
+            const config = {headers: {'Authorization': `Bearer ${localStorage.getItem("access_token")}`}}
+            let promotions = this.dryRunResult;
+            this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/promotion/', {
+                    promotions,
+                    promotion_image: this.$route.params.uploadedFile,
+                    advert_reference: this.$route.params.id
+                }, config
+            ).then(response => {
+
+            }).catch(error => {
+                alert("Une erreure est parvenue. Veuillez vérifier les données rentrées, ou réessayer. " + error.response.detail[0].loc.toString() + " : " + error.data.detail[0].msg);
+            });
         },
 
         back: function () {
-            this.$router.go(-1);
+            this.$router.push({path: '/promote/' + this.$route.params.id});
         },
 
         onClickDay(d) {
