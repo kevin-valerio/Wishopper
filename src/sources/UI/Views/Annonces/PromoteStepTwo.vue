@@ -75,7 +75,6 @@
                             <th role="columnheader" scope="col" aria-colindex="3" class="">Nombre d'apparitions
                                 disponibles
                             </th>
-                            <!--                            <th role="columnheader" scope="col" aria-colindex="3" class="">Sous-coutTotal</th>-->
                         </tr>
                         </thead>
                         <tbody role="rowgroup" class="">
@@ -96,7 +95,6 @@
                             <td style="text-align: center;" role="cell" aria-colindex="4" class="">
                                 {{ horraire.available_slots }}
                             </td>
-                            <!--                            <td style="text-align: center;" role="cell" aria-colindex="5" class="">40</td>-->
                         </tr>
                         </tbody>
                     </table>
@@ -114,16 +112,16 @@
                         <b>Précédent</b>
                     </button>
 
-                    <button type="button" @click="dryrun()" style="margin-left:2%"
+                    <button type="button" :disabled="this.drySuccess" @click="dryrun()" style="margin-left:2%"
                             class="btn-group-lg btn-lg right btn btn-transition  btn-outline-info">
-                        <b>Simuler</b>
+                        <b-img v-if="this.drySuccess" class="ml-2 mr-3" width="20" height="20"
+                               src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
+                        <b v-if="!drySuccess">Simuler</b> <span v-if="drySuccess">Simuler</span>
                     </button>
 
                     <button type="button" @click="validate()" :disabled="!drySuccess" style="margin-left:2%"
                             class="btn-group-lg btn-lg right btn btn-transition btn-outline-primary ">
-                        <b-img v-if="this.drySuccess" class="ml-2 mr-3" width="20" height="20"
-                               src="https://image.flaticon.com/icons/svg/845/845646.svg"/>
-                        <b>Valider</b>
+                        <b v-if="drySuccess">Valider</b> <span v-if="!drySuccess">Valider</span>
                     </button>
 
 
@@ -227,8 +225,8 @@ export default {
     mounted() {
 
         if (this.$route.params.uploadedFile === "" || this.$route.params.uploadedFile === undefined || this.$route.params.uploadedFile === null) {
-            // this.$router.push({path: '/promote/' + this.$route.params.id});
-            // TODO: DECOMMENT THIS
+            this.$router.push({path: '/promote/' + this.$route.params.id});
+            DECOMMENT THIS
         }
 
         this.getBalance();
@@ -261,6 +259,7 @@ export default {
 
                 for (let date in res.data) {
                     this.$data.horraires = res.data;
+                    console.log(this.$data.horraires);
                     let minimumCost = 999999999999999999;
 
                     for (let i = 0; i <= 24; i++) {
@@ -297,25 +296,24 @@ export default {
             for (let _date in this.apparitionNumber) {
                 for (let _indx in this.apparitionNumber[_date]) {
                     indexObj[_indx] = {
-                        "no_slots": parseInt(this.apparitionNumber[_date][_indx]),
-                        "cost_per_slot": 1
+                        "no_slots": 12312312,
+                        "cost_per_slot": 1232
                     }
                 }
                 promotions[_date] = indexObj;
                 indexObj = {};
             }
 
-
-            this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/promotion/dry-run', {promotions}, config
-            ).then(response => {
+            this.$http.post('https://api.wishopper.com/v1/private/advertiser/advert/promotion/dry-run', {promotions}, config).then(response => {
                 this.drySuccess = true;
                 this.dryRunResult = response.data;
             }).catch(error => {
-                alert("Une erreure est parvenue. Veuillez vérifier les données rentrées, ou réessayer. " + error.response.detail[0].loc.toString() + " : " + error.data.detail[0].msg);
+                alert("Une erreure est parvenue. Veuillez vérifier les données rentrées, ou réessayer. (" + error.response.data.detail[0].loc.toString() + " : " + error.response.data.detail[0].msg + ")");
                 this.drySuccess = false;
             });
 
         },
+
         validate: function () {
             const config = {headers: {'Authorization': `Bearer ${localStorage.getItem("access_token")}`}}
             let promotions = this.dryRunResult;
@@ -324,10 +322,10 @@ export default {
                     promotion_image: this.$route.params.uploadedFile,
                     advert_reference: this.$route.params.id
                 }, config
-            ).then(response => {
-
+            ).then((response) => {
+                alert("Votre annonce a été promue ! Vous pouvez quitter cette page.")
             }).catch(error => {
-                alert("Une erreure est parvenue. Veuillez vérifier les données rentrées, ou réessayer. " + error.response.detail[0].loc.toString() + " : " + error.data.detail[0].msg);
+                alert("Une erreure est parvenue. Veuillez vérifier les données rentrées, ou réessayer  (" + error.response.data.detail[0].loc.toString() + " : " + error.response.data.detail[0].msg + ")");
             });
         },
 
