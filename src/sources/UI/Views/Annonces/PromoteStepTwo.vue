@@ -226,8 +226,7 @@ export default {
 
         if (this.$route.params.uploadedFile === "" || this.$route.params.uploadedFile === undefined || this.$route.params.uploadedFile === null) {
             this.$router.push({path: '/promote/' + this.$route.params.id});
-            DECOMMENT THIS
-        }
+         }
 
         this.getBalance();
         this.getAvailabilities();
